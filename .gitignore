@@ -72,3 +72,6 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 /Assets/Imports
 /Assets/Resources/Sound
+/Assets/Scripts/ADB/Effect
+/Assets/Scripts/ADB/Animator
+/Assets/Scripts/ADB/Weapon Effects
