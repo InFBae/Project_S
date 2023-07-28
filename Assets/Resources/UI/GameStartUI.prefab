@@ -8690,6 +8690,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: QuitButton
       objectReference: {fileID: 0}
+    - target: {fileID: 4006715118232086706, guid: faf72926bc734ef4ebf2e8a85d566758,
+        type: 3}
+      propertyPath: m_text
+      value: QUIT
+      objectReference: {fileID: 0}
+    - target: {fileID: 5927651940847589453, guid: faf72926bc734ef4ebf2e8a85d566758,
+        type: 3}
+      propertyPath: m_text
+      value: QUIT
+      objectReference: {fileID: 0}
     - target: {fileID: 7789668459027263726, guid: faf72926bc734ef4ebf2e8a85d566758,
         type: 3}
       propertyPath: m_Pivot.x
@@ -8820,6 +8830,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: LogInButton
       objectReference: {fileID: 0}
+    - target: {fileID: 4006715118232086706, guid: faf72926bc734ef4ebf2e8a85d566758,
+        type: 3}
+      propertyPath: m_text
+      value: LOGIN
+      objectReference: {fileID: 0}
+    - target: {fileID: 5927651940847589453, guid: faf72926bc734ef4ebf2e8a85d566758,
+        type: 3}
+      propertyPath: m_text
+      value: LOGIN
+      objectReference: {fileID: 0}
     - target: {fileID: 7789668459027263726, guid: faf72926bc734ef4ebf2e8a85d566758,
         type: 3}
       propertyPath: m_Pivot.x
@@ -8949,6 +8969,18 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SignInButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 4006715118232086706, guid: faf72926bc734ef4ebf2e8a85d566758,
+        type: 3}
+      propertyPath: m_text
+      value: SIGN IN
+      objectReference: {fileID: 0}
+    - target: {fileID: 5927651940847589453, guid: faf72926bc734ef4ebf2e8a85d566758,
+        type: 3}
+      propertyPath: m_text
+      value: 'SIGN IN
+
+'
       objectReference: {fileID: 0}
     - target: {fileID: 7789668459027263726, guid: faf72926bc734ef4ebf2e8a85d566758,
         type: 3}
