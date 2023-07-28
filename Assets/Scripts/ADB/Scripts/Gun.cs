@@ -10,6 +10,7 @@ namespace ahndabi
     public abstract class Gun : MonoBehaviour
     {
         public UnityEvent OnFire;
+        [SerializeField] protected Transform muzzlePos;
 
         private void Start()
         {
@@ -18,7 +19,7 @@ namespace ahndabi
         public void ForwardDirection()
         {
             // 총이 카메라와 같은 방향을 바라보도록
-            transform.localRotation = Camera.main.transform.localRotation;
+            // transform.localRotation = Camera.main.transform.localRotation;
         }
 
         public abstract void Fire();    // 총마다 Fire 방식이 다르니까 abstract로
