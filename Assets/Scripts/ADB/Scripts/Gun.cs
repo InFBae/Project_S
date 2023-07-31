@@ -11,6 +11,7 @@ namespace ahndabi
     {
         public UnityEvent OnFire;
         [SerializeField] protected Transform muzzlePos;
+        [SerializeField] float damage;
 
         private void Start()
         {

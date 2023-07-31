@@ -9,11 +9,19 @@ namespace ahndabi
     public class PlayerAttack : MonoBehaviour
     {
         [SerializeField] Gun gun;
+        Animator anim;
+
+
+        private void Awake()
+        {
+            anim = GetComponentInChildren<Animator>();
+        }
 
         void Fire()   // ÃÑÀ» ½ô
         {
             // °ø°ÝÇÒ ¶© ÃÑ¿¡ ÀÖ´Â Fire()¸¦ È£ÃâÇÑ´Ù.
             gun.Fire();
+            anim.SetTrigger("Fire");
         }
 
         void OnFire(InputValue value)
@@ -21,5 +29,6 @@ namespace ahndabi
             // ¸¶¿ì½º ÁÂÅ¬¸¯ÇÏ¸é FireµÊ
             Fire();
         }
+
     }
 }
