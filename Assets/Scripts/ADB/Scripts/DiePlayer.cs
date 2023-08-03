@@ -6,10 +6,11 @@ public class DiePlayer : MonoBehaviour
 {
     // Player의 transform와 계속 똑같아야 함
 
-    [SerializeField] GameObject Player;
-    private void Start()
+    [SerializeField] Transform Player;
+
+    private void OnEnable()
     {
-        Player = GameManager.Resource.Load<GameObject>("ADB_VisiblePlayer 1");
+        Destroy(gameObject.transform.parent.gameObject, 1.5f);
     }
 
     private void LateUpdate()
