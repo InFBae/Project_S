@@ -11,14 +11,17 @@ public class PlayerMover : MonoBehaviour
     [SerializeField] private Camera cam;
 
     private Rigidbody rb;
+    private Animator anim;
     private Vector3 moveDir;
     private Vector3 moveVec;
     private Vector3 dir;
     private float curSpeed;
+    private float zSpeed = 0; // 위, 아래
     private bool isWalk = false;
 
     private void Awake()
     {
+        anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody>();
         // 부딪혔을 떄 회전 방지
         rb.freezeRotation = true;
@@ -30,17 +33,41 @@ public class PlayerMover : MonoBehaviour
 
     private void Move()
     {
-        dir = cam.transform.localRotation * moveDir;
-        dir = new Vector3(dir.x, 0f, dir.z);
+        if (moveDir.magnitude == 0)
+        {
+            curSpeed = 0;
+        }
+        else
+        {
+            dir = cam.transform.localRotation * moveDir;
+            dir = new Vector3(dir.x, 0f, dir.z);
 
-        curSpeed = isWalk ? walkSpeed : nomalSpeed;
+            curSpeed = isWalk ? walkSpeed : nomalSpeed;
 
-        moveVec = dir * curSpeed;
-        rb.velocity = moveVec + Vector3.up * rb.velocity.y;
+            moveVec = dir * curSpeed;
+            rb.velocity = moveVec + Vector3.up * rb.velocity.y;
+        }
+        anim.SetFloat("XSpeed", moveDir.x, 0.1f, Time.deltaTime);
+        anim.SetFloat("YSpeed", moveDir.z, 0.1f, Time.deltaTime);
+        anim.SetFloat("Speed", curSpeed);
     }
     public void Jump()
     {
         rb.AddForce(Vector3.up * jumpSpeed, ForceMode.Impulse);
+        StartCoroutine(JumpRoutine());
+    }
+    IEnumerator JumpRoutine()
+    {
+        while (true)
+        {
+            zSpeed += Physics.gravity.y * Time.deltaTime;
+            if(IsGrounded() && zSpeed < 0)
+            {
+                zSpeed = -1;
+                anim.SetTrigger("JumpEnd");
+            }
+            yield return null;
+        }
     }
     private bool IsGrounded()
     {
@@ -62,6 +89,7 @@ public class PlayerMover : MonoBehaviour
     {
         if (IsGrounded())
         {
+            anim.SetTrigger("Jump");
             Jump();
         }
     }
