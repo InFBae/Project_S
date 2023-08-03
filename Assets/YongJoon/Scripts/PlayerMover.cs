@@ -33,6 +33,11 @@ public class PlayerMover : MonoBehaviour
 
     private void Move()
     {
+        // 떠있을때 벽에 매달리기 방지
+        if (!IsGrounded())
+        {
+            return;
+        }
         if (moveDir.magnitude == 0)
         {
             curSpeed = 0;
