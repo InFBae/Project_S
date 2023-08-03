@@ -11,7 +11,6 @@ namespace ahndabi
     public class GunName : Gun
     {
         [SerializeField] float maxDistance;     // 최대 사거리. 60
-        [SerializeField] float fireDamage;          // 데미지
         [SerializeField] GameObject hitParticle;
         [SerializeField] TrailRenderer trailEffect;
         [SerializeField] CinemachineRecomposer camera;
@@ -21,9 +20,16 @@ namespace ahndabi
         bool isMousePress = false;
         PlayerTakeDamage playerTakeDamage;
 
+        private void Start()
+        {
+            playerTakeDamage = GetComponentInParent<PlayerTakeDamage>();
+            allBullet = 100;
+            fireDamage = 30;
+        }
+
         private void Update()
         {
-            // Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * maxDistance, Color.green);
+            Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * maxDistance, Color.green);
             ContinueousFire();      // 연발
 
             // ForwardDirection();     // 총이 카메라 가운데 위치를 바라보도록
@@ -66,33 +72,37 @@ namespace ahndabi
             // 카메라 위치에서 카메라 앞(가운데)에 레이캐스트를 maxDistance만큼 쐈는데 부딪힌 물체가 있다면
             if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, maxDistance))
             {
-                // 오브젝트 풀로 hit 파티클 생성   
-                GameObject hitEffect = GameManager.Pool.Get(hitParticle);   // TODO : 이거 트레일처럼 밑에것들 한 줄로 다 적기
-                hitEffect.transform.position = hit.point;
-                hitEffect.transform.rotation = Quaternion.LookRotation(hit.normal);
-                hitEffect.transform.parent = hit.transform;
-                StartCoroutine(ReleaseRoutine(hitEffect));
+                // TODO : 바디/헤드샷 감지는 layer로 함. 콜라이더 붙인 곳에 다 layer를 붙이고(바디layer, 헤드layer) 그 layer가 감지되면 데미지 줌
 
-                if (hit.transform.tag == "Player")
+                if (hit.transform.parent.CompareTag("Player"))
                 {
-                    playerTakeDamage.TakeDamage(fireDamage);        // 데미지 받는 함수 호출
-                }
-
-
-                /*
-                if (만약 부딪힌 게 Player. 사람이라면)
+                    if (hit.transform.name == "mixamorig:Head")
                     {
-                        playerTakeDamage.TakeDamage(damage);        // 데미지 받는 함수 호출
-                        
-                            if (헤드 맞췄다면)
-                            {
-                                playerTakeDamage.TakeDamage(damage * 2);        // 2배 데미지 받는 함수 호출
-                            }
-                }*/
+                        // 상대방의 playerTakeDamage(fireDamage)를 호출해야함 -> hit.transform.gameObject.playerTakeDamage(fireDamage) 이런 식으로!
+                        hit.transform.gameObject.GetComponentInChildren<PlayerTakeDamage>().TakeDamage(fireDamage);
+                        Debug.Log("헤드샷");
+                        // 피 나오는 파티클
+                    }
+
+                    Debug.Log("사람 맞춤");
+                    hit.transform.gameObject.GetComponentInParent<PlayerTakeDamage>().TakeDamage(fireDamage);
+
+                    // hit 파티클 말고 사람 때리면 피 나오는 파티클로 바꿔주면 될듯
+                }
+                else
+                {
+                    // 오브젝트 풀로 hit 파티클 생성   
+                    GameObject hitEffect = GameManager.Pool.Get(hitParticle);   // TODO : 이거 트레일처럼 밑에것들 한 줄로 다 적기
+                    hitEffect.transform.position = hit.point;
+                    hitEffect.transform.rotation = Quaternion.LookRotation(hit.normal);
+                    hitEffect.transform.parent = hit.transform;
+                    StartCoroutine(ReleaseRoutine(hitEffect));
+                }
 
                 // 트레일 생성 -> 트레일 이상해서 잠시 뺐음..
                 // StartCoroutine(TrailRoutine(muzzlePos.position, hit.point));
                 // ReleaseRoutine(trailEffect.gameObject);
+
                 Rebound();
                 OnFire?.Invoke();
             }

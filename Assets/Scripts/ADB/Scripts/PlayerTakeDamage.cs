@@ -2,24 +2,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerTakeDamage : Player
+namespace ahndabi
 {
-    // 몸은 damage만큼 hp가 깎이고, 헤드는 2배 damage만큼 hp가 깎임
-
-    public void TakeDamage(float damage)
+    public class PlayerTakeDamage : Player
     {
-        // 콜라이더를 머리에 하나 만들어서 그 머리 콜라이더를 맞으면 데미지 2배로 하면 안되나
-        // 근데 캐릭터에 머리만 따로 있는데 이 머리에 태그 달아서 이 태그를 맞추면 2배로 하면안되나
+        public void TakeDamage(float damage)    // 데미지 받기
+        {
+            Debug.Log($"{damage}");
 
+            DecreaseHP(damage);     // hp 감소
 
-        // if (머리면)
+            if (hp <= 0)    // hp가 0이 되면 죽는다.
+            {
+                hp = 0;
+                Die();
+            }
+        }
 
-        // else (몸이면)
+        void Die()
+        {
+            // 충돌체 등의 문제 때문에 죽는 애니메이션을 하는 플레이어를 하나 따로 두어서
+            // 이 함수가 호출되면 기존의 플레이어는 비활성화, DIe플레이어는 활성화시키고 애니메이션 발동한뒤에
+            // 애니메이션 끝나면 플레이어 Destroy
+            // diePlayer는 기존플레이어의 transform을 계속 따라다녀야 함
 
-    }
+            gameObject.SetActive(false);    // 기존 Player는 비활성화
+            diePlayer.SetActive(true);      // diePlayer 활성화(죽는 애니메이터를 따로 달아줘서 활성화 되자마자 알아서 Die 애니메이션 실행)
+        }
 
-    void DecreaseHP(float damage)
-    {
-        hp -= damage;
+        void DecreaseHP(float damage)
+        {
+            hp -= damage;
+        }
     }
 }
