@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.SceneManagement;
@@ -11,6 +12,8 @@ namespace ahndabi
     {
         public UnityEvent OnFire;
         [SerializeField] protected Transform muzzlePos;
+        [SerializeField] protected float fireDamage;
+        [SerializeField] protected int allBullet;     // ÃÑÅº °³¼ö
 
         private void Start()
         {
