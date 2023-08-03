@@ -35,10 +35,10 @@ RectTransform:
   m_Father: {fileID: 3648915760483473167}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 50.045, y: -25}
-  m_SizeDelta: {x: 100.09, y: 50}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 50.045, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3648915759839107712
 CanvasRenderer:
@@ -459,7 +459,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3648915759921990170
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1873,10 +1873,10 @@ RectTransform:
   m_Father: {fileID: 3648915760872593934}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 75, y: -25}
-  m_SizeDelta: {x: 103.13, y: 50}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 75, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &3648915760306183248
 CanvasGroup:
@@ -1965,10 +1965,10 @@ RectTransform:
   m_Father: {fileID: 3648915760306183251}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 51.565, y: -25}
-  m_SizeDelta: {x: 103.13, y: 50}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 51.565, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3648915760309447039
 CanvasRenderer:
@@ -3067,10 +3067,10 @@ RectTransform:
   m_Father: {fileID: 3648915760175177227}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 75, y: -25}
-  m_SizeDelta: {x: 100.09, y: 50}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 75, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &3648915760483473164
 CanvasGroup:
@@ -4179,8 +4179,8 @@ MonoBehaviour:
   m_VerticalScrollbarEventHandler: {fileID: 0}
   m_LayoutGroup: {fileID: 0}
   m_ScrollSensitivity: 1
-  m_ContentType: 0
-  m_InputType: 0
+  m_ContentType: 7
+  m_InputType: 2
   m_AsteriskChar: 42
   m_KeyboardType: 0
   m_LineType: 0
@@ -4724,8 +4724,8 @@ MonoBehaviour:
   m_VerticalScrollbarEventHandler: {fileID: 0}
   m_LayoutGroup: {fileID: 0}
   m_ScrollSensitivity: 1
-  m_ContentType: 0
-  m_InputType: 0
+  m_ContentType: 7
+  m_InputType: 2
   m_AsteriskChar: 42
   m_KeyboardType: 0
   m_LineType: 0
@@ -7053,8 +7053,8 @@ MonoBehaviour:
   m_VerticalScrollbarEventHandler: {fileID: 0}
   m_LayoutGroup: {fileID: 0}
   m_ScrollSensitivity: 1
-  m_ContentType: 0
-  m_InputType: 0
+  m_ContentType: 7
+  m_InputType: 2
   m_AsteriskChar: 42
   m_KeyboardType: 0
   m_LineType: 0
