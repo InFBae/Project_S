@@ -80,7 +80,10 @@ public class PlayerMover : MonoBehaviour
             {
                 zSpeed = -1;
                 anim.SetTrigger("JumpEnd");
+                StopAllCoroutines();
             }
+            transform.Translate(Vector3.up * jumpSpeed * Time.deltaTime);
+            //rb.velocity = new Vector3(moveVec.x, zSpeed, moveVec.z);
             yield return null;
         }
     }
@@ -155,6 +158,17 @@ public class PlayerMover : MonoBehaviour
         {
             anim.SetTrigger("Jump");
             Jump();
+        }
+    }
+    private void OnSit(InputValue value)
+    {
+        if (value.isPressed)
+        {
+            anim.SetBool("Crouch", true);
+        }
+        else
+        {
+            anim.SetBool("Crouch", false);
         }
     }
 }
