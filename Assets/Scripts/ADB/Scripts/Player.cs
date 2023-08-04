@@ -14,8 +14,7 @@ namespace ahndabi
 
         private void Start()
         {
-            diePlayer.SetActive(false);
-            anim = GetComponent<Animator>();
+            anim = GetComponentInChildren<Animator>();
             hp = 200f;
         }
     }
