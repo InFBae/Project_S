@@ -6,9 +6,10 @@ using Photon.Realtime;
 using MySql.Data.MySqlClient;
 using System;
 using TMPro;
-using UnityEditor.MemoryProfiler;
-using UnityEditor.Search;
-using UnityEditor.Rendering.Universal;
+using UnityEngine.Animations.Rigging;
+//using UnityEditor.MemoryProfiler;
+//using UnityEditor.Search;
+//using UnityEditor.Rendering.Universal;
 
 public class GameStartSceneManager : MonoBehaviourPunCallbacks
 {
@@ -30,14 +31,14 @@ public class GameStartSceneManager : MonoBehaviourPunCallbacks
     {
         ConnectDataBase();
         
-        if (PhotonNetwork.IsConnected)
+        /*if (PhotonNetwork.IsConnected)
             OnConnectedToMaster();
         else if (PhotonNetwork.InRoom)
             OnJoinedRoom();
         else if (PhotonNetwork.InLobby)
             OnJoinedLobby();
         else
-            OnDisconnected(DisconnectCause.None);
+            OnDisconnected(DisconnectCause.None);*/
     }
 
     private void ConnectDataBase()
@@ -60,7 +61,13 @@ public class GameStartSceneManager : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
-        gameStartUI.SetActive(true);
+        PhotonNetwork.JoinLobby();
+    }
+
+
+    public override void OnJoinedLobby()
+    {
+        Debug.Log(123);
     }
 
     public void OpenLoginUI()
@@ -117,11 +124,15 @@ public class GameStartSceneManager : MonoBehaviourPunCallbacks
                         con.Close();
                         //이름이 있을 경우 해당 플레이어의 이름을 inputField내의 값으로 지정 (이름 중복되지 않게)
                         PhotonNetwork.LocalPlayer.NickName = readId;
+
+
+                        //PhotonNetwork.ConnectUsingSettings();
+
                         PhotonNetwork.LoadLevel("LobbyScene_");
                         //GameManager.Scene.LoadScene("LobbyScene_");
 
                         //이후 네트워크 서버에 연결 시도
-                        PhotonNetwork.ConnectUsingSettings();
+                        //PhotonNetwork.ConnectUsingSettings();
                     }
                     else
                     {
@@ -140,6 +151,8 @@ public class GameStartSceneManager : MonoBehaviourPunCallbacks
         catch (Exception e)
         {
             Debug.Log(e.Message);
+            if (!reader.IsClosed)
+                reader.Close();
         }
     }
 

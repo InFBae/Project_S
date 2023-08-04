@@ -8,10 +8,12 @@ using UnityEngine.UI;
 using TMPro;
 using ExitGames.Client.Photon;
 using UnityEngine.Rendering;
+using Photon.Chat;
 
-public class LobbySceneManager : MonoBehaviour
+public class LobbySceneManager : MonoBehaviourPunCallbacks , IChatClientListener
 {
     [SerializeField] TMP_InputField nickNameInputField;
+    [SerializeField] GameObject nickNamePopUp;
 
     private MySqlDataReader reader;
     private MySqlConnection con;
@@ -19,6 +21,8 @@ public class LobbySceneManager : MonoBehaviour
     void Start()
     {
         ConnectDataBase();
+
+        PhotonNetwork.ConnectUsingSettings();
 
         if (NickNameChecking())
         {
@@ -44,14 +48,25 @@ public class LobbySceneManager : MonoBehaviour
         }
     }
 
+    public override void OnConnectedToMaster()
+    {
+        PhotonNetwork.JoinLobby();
+    }
+
+    public override void OnJoinedLobby()
+    {
+        Debug.Log(123);
+    }
+
+
     public void OpenNicknameSetting()
     {
-        Debug.Log("open");
+        nickNamePopUp.SetActive(true);
         //nickname 함수실행
     }
     public void CloseNicknameSetting()
     {
-        // 동일
+        nickNamePopUp.SetActive(false);
     }
     public void Confirm()
     {
@@ -63,10 +78,19 @@ public class LobbySceneManager : MonoBehaviour
         if (reader.Read())
         {
             Debug.Log("Same NickName is exist");
+            if (!reader.IsClosed)
+                reader.Close();
         }
         else
         {
-            string query2 = $"UPDATE user_info SET U_Nickname='{nick}' WHERE U_ID = {id}";
+            if (!reader.IsClosed)
+                reader.Close();
+
+            string query2 = $"UPDATE user_info SET U_Nickname='{nick}' WHERE U_ID = '{id}'";
+            MySqlCommand cmd2 = new MySqlCommand(query2, con);
+            cmd2.ExecuteNonQuery();
+            CloseNicknameSetting();
+            
         }
     }
 
@@ -81,20 +105,72 @@ public class LobbySceneManager : MonoBehaviour
             string readNick = reader["U_Nickname"].ToString();
             if (readNick == "")
             {
+                if (!reader.IsClosed)
+                    reader.Close();
                 return true;
             }
+        
         }
+        if (!reader.IsClosed)
+            reader.Close();
         return false;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
         
     }
 
     public void LogOut()
     {
         GameManager.Scene.LoadScene("GameStartScene_");
+    }
+
+    //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
+    public void DebugReturn(DebugLevel level, string message)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void OnDisconnected()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void OnChatStateChange(ChatState state)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void OnGetMessages(string channelName, string[] senders, object[] messages)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void OnPrivateMessage(string sender, object message, string channelName)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void OnSubscribed(string[] channels, bool[] results)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void OnUnsubscribed(string[] channels)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void OnStatusUpdate(string user, int status, bool gotMessage, object message)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void OnUserSubscribed(string channel, string user)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void OnUserUnsubscribed(string channel, string user)
+    {
+        throw new NotImplementedException();
     }
 }
