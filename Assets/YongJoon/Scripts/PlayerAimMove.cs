@@ -12,9 +12,15 @@ public class PlayerAimMove : MonoBehaviour
     [SerializeField] float cameraSensitivity;
     [SerializeField] float lookDistance;
 
+    private Transform curRoot;
     private Vector2 lookDelta;
     private float xRotation;
     private float yRotation;
+
+    private void Awake()
+    {
+        curRoot = cameraRoot;
+    }
 
     private void Update()
     {
