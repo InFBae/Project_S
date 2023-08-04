@@ -1,0 +1,82 @@
+{
+    "name": "DaBiInputAction",
+    "maps": [
+        {
+            "name": "Player",
+            "id": "cb404fa9-2257-4686-a2b9-74746197b345",
+            "actions": [
+                {
+                    "name": "Fire",
+                    "type": "Button",
+                    "id": "fcd1a0c5-37a6-49c0-bf27-75caac4d511e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Aim",
+                    "type": "Value",
+                    "id": "907b00f4-41ca-400d-af1b-5937c4f58660",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "88f2f8e3-f590-4af6-b228-06f28d10e88f",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Fire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cedad708-d57f-462c-8afc-050c159a6e28",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Aim",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "UI",
+            "id": "e18fed88-a3d5-481d-a0f0-791565819887",
+            "actions": [
+                {
+                    "name": "Menu",
+                    "type": "Button",
+                    "id": "ec11ed23-1d7f-4702-8762-b5ab7017c3c1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "8592ed18-a3fc-4cb1-976c-8f581647ef8c",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Menu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
