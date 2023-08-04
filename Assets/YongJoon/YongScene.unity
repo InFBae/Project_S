@@ -11432,6 +11432,12 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 340386379}
   m_Mesh: {fileID: 4300000, guid: dfb93e0a365cc3f4d910741727c05e03, type: 3}
+--- !u!20 &342798549 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 1642178366500946164, guid: 39aae48dd9db5c247b81fe3b0b2a7586,
+    type: 3}
+  m_PrefabInstance: {fileID: 3470792366312866128}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &344106316
 GameObject:
   m_ObjectHideFlags: 0
@@ -101675,16 +101681,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1788310559060358945, guid: dcdf61e9b8958724dbe66daefbaf93b4,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1788310559060359134, guid: dcdf61e9b8958724dbe66daefbaf93b4,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1788310560436834564, guid: dcdf61e9b8958724dbe66daefbaf93b4,
         type: 3}
       propertyPath: m_Name
@@ -101745,26 +101741,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3670637011174966283, guid: dcdf61e9b8958724dbe66daefbaf93b4,
-        type: 3}
-      propertyPath: m_WarningMessage
-      value: "\nBinding warning: Some generic clip(s) animate transforms that are
-        already bound by a Humanoid avatar. These transforms can only be changed
-        by Humanoid clips.\n\tTransform 'mixamorig:Spine1'\n\tTransform 'mixamorig:RightArm'\n\tTransform
-        'mixamorig:Neck1'\n\tTransform 'mixamorig:Head'\n\tTransform 'mixamorig:LeftArm'\n\tTransform
-        'mixamorig:LeftForeArm'\n\tTransform 'mixamorig:Spine2'\n\tTransform 'mixamorig:RightForeArm'\n\tTransform
-        'mixamorig:Spine1'\n\tTransform 'mixamorig:RightArm'\n\tand more ..."
-      objectReference: {fileID: 0}
-    - target: {fileID: 3670637011174966283, guid: dcdf61e9b8958724dbe66daefbaf93b4,
-        type: 3}
-      propertyPath: m_ApplyRootMotion
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4871208369423756844, guid: dcdf61e9b8958724dbe66daefbaf93b4,
         type: 3}
       propertyPath: cameraRoot
       value: 
       objectReference: {fileID: 1238271582987454511}
+    - target: {fileID: 6578449326581637262, guid: dcdf61e9b8958724dbe66daefbaf93b4,
+        type: 3}
+      propertyPath: cam
+      value: 
+      objectReference: {fileID: 342798549}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dcdf61e9b8958724dbe66daefbaf93b4, type: 3}
 --- !u!1001 &3470792366312866128
@@ -101774,6 +101760,41 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1642178366500946164, guid: 39aae48dd9db5c247b81fe3b0b2a7586,
+        type: 3}
+      propertyPath: m_HDR
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1642178366500946166, guid: 39aae48dd9db5c247b81fe3b0b2a7586,
+        type: 3}
+      propertyPath: m_CameraType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1642178366500946166, guid: 39aae48dd9db5c247b81fe3b0b2a7586,
+        type: 3}
+      propertyPath: m_Cameras.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1642178366500946166, guid: 39aae48dd9db5c247b81fe3b0b2a7586,
+        type: 3}
+      propertyPath: m_RenderPostProcessing
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1642178366500946166, guid: 39aae48dd9db5c247b81fe3b0b2a7586,
+        type: 3}
+      propertyPath: m_Cameras.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1642178366500946166, guid: 39aae48dd9db5c247b81fe3b0b2a7586,
+        type: 3}
+      propertyPath: m_Cameras.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1642178366500946166, guid: 39aae48dd9db5c247b81fe3b0b2a7586,
+        type: 3}
+      propertyPath: m_VolumeLayerMask.m_Bits
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3189539675860145858, guid: 39aae48dd9db5c247b81fe3b0b2a7586,
         type: 3}
       propertyPath: m_Follow
@@ -101838,6 +101859,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: CameraPrefabs
+      objectReference: {fileID: 0}
+    - target: {fileID: 9162032757490547271, guid: 39aae48dd9db5c247b81fe3b0b2a7586,
+        type: 3}
+      propertyPath: m_XDamping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9162032757490547271, guid: 39aae48dd9db5c247b81fe3b0b2a7586,
+        type: 3}
+      propertyPath: m_YDamping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9162032757490547271, guid: 39aae48dd9db5c247b81fe3b0b2a7586,
+        type: 3}
+      propertyPath: m_ZDamping
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39aae48dd9db5c247b81fe3b0b2a7586, type: 3}
