@@ -8,11 +8,14 @@ using UnityEngine;
 using Photon.Pun;
 using AuthenticationValues = Photon.Chat.AuthenticationValues;
 using UnityEngine.Events;
+using MySql.Data.MySqlClient;
+using JBB;
+using static UnityEditor.ShaderData;
 
 public class ChatManager : MonoBehaviour, IChatClientListener
 {
     [SerializeField] private ChatClient chatClient;
-    [SerializeField] private string userName;
+    [SerializeField] private string nickname;
     private string lobbyChannel;
     private string noticeChannel;
 
@@ -35,10 +38,32 @@ public class ChatManager : MonoBehaviour, IChatClientListener
         noticeChannel = "System";
     }
 
-    public void Connect(string username)
+    public void Connect(string userId)
     {
-        this.userName = username;
-        chatClient.Connect(PhotonNetwork.PhotonServerSettings.AppSettings.AppIdChat, "1.0", new AuthenticationValues(userName));
+        try
+        {
+            string sqlCommand = string.Format("U_Nickname FROM user_info WHERE U_ID='{0}'", userId);
+            MySqlDataReader reader = null;
+            reader = GameManager.DB.Execute(sqlCommand);
+
+            // 리더가 읽었는데 있을경우 없을경우 구분
+            if (reader.HasRows)
+            {
+                string readNick = reader["U_Nickname"].ToString();
+                nickname = readNick;
+                Debug.Log($"ID : {userId}, Nickname : {readNick}");
+            }
+            else
+            {
+                Debug.Log($"There is no player id[{userId}]");
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e.Message);
+        }
+
+        chatClient.Connect(PhotonNetwork.PhotonServerSettings.AppSettings.AppIdChat, "1.0", new AuthenticationValues(nickname));
     }
 
     public void Update()
