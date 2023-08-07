@@ -6,6 +6,7 @@ using UnityEngine;
 using System;
 using AuthenticationValues = Photon.Chat.AuthenticationValues;
 using Photon.Chat.Demo;
+using UnityEditor.PackageManager;
 
 public class PhotonChatManager : MonoBehaviour, IChatClientListener
 {
@@ -32,21 +33,28 @@ public class PhotonChatManager : MonoBehaviour, IChatClientListener
 
         chatClient = new ChatClient(this);
 
-        this.chatAppSettings = PhotonNetwork.PhotonServerSettings.AppSettings.GetChatSettings();
+        /*this.chatAppSettings = PhotonNetwork.PhotonServerSettings.AppSettings.GetChatSettings();
 
 
         bool appIdPresent = !string.IsNullOrEmpty(this.chatAppSettings.AppIdChat);
         // 백그라운드로 갈때 연걸
         //chatClient.UseBackgroundWorkerForSending = true;
         this.chatClient.AuthValues = new AuthenticationValues(this.userName);
-        this.chatClient.ConnectUsingSettings(this.chatAppSettings);
+        
+        this.chatClient.ConnectUsingSettings(this.chatAppSettings);*/
 
+        chatClient.Connect(PhotonNetwork.PhotonServerSettings.AppSettings.AppIdChat, "1.0", new AuthenticationValues(userName));
 
         Debug.Log("Connecting as: " + this.userName);
 
 
         //chatClient.Connect(PhotonNetwork.PhotonServerSettings.AppSettings.AppIdChat, "1.0", new AuthenticationValues(userName));
         Debug.Log($"connecting {userName}");
+    }
+
+    public void Update()
+    {
+        chatClient.Service();
     }
 
     public void AddLine(string lineString)
