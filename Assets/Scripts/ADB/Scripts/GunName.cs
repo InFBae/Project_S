@@ -39,8 +39,6 @@ namespace ahndabi
         {
             Debug.DrawRay(muzzlePos.transform.position, Camera.main.transform.forward * maxDistance, Color.green);
             ContinueousFire();      // 연발
-
-            // ForwardDirection();     // 총이 카메라 가운데 위치를 바라보도록
         }
 
         private void OnDisable()
@@ -78,10 +76,6 @@ namespace ahndabi
             if (curAvailavleBullet == 0)   // 총알 없으면 쏘지 못하도록
                 return;
 
-            // TODO : Relaoding 애니메이션 중에는 쏘지 못하도록
-            if (anim.GetCurrentAnimatorStateInfo(1).IsName("reloading"))
-                return;
-
             --curAvailavleBullet;
 
             // 레이캐스트를 솼는데 부딪힌 물체가 있다면
@@ -117,7 +111,6 @@ namespace ahndabi
                 ReleaseRoutine(trailEffect.gameObject);
 
                 Rebound();
-                OnFire?.Invoke();
             }
             else
             {
@@ -126,23 +119,14 @@ namespace ahndabi
                 ReleaseRoutine(trailEffect.gameObject);
 
                 Rebound();
-                OnFire?.Invoke();
             }
-            anim.SetTrigger("Fire");
+            Debug.Log("Fire");
         }
 
         public override void Reload()    // 재장전
         {
-            // 재장전은 Gun에서 할까?
-
-            anim.SetTrigger("Reload");
             allBullet = allBullet - (availableBullet - curAvailavleBullet);
             curAvailavleBullet = availableBullet;
-        }
-
-        void OnReload(InputValue value)
-        {
-            Reload();
         }
 
         IEnumerator ReleaseRoutine(GameObject effect)   // 오브젝트 풀 Release 하기
