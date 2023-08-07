@@ -9,8 +9,10 @@ using TMPro;
 using ExitGames.Client.Photon;
 using UnityEngine.Rendering;
 using Photon.Chat;
+using UnityEngine.Animations.Rigging;
+using static UnityEngine.Rendering.DebugUI;
 
-public class LobbySceneManager : MonoBehaviourPunCallbacks , IChatClientListener
+public class LobbySceneManager : MonoBehaviourPunCallbacks
 {
     [SerializeField] TMP_InputField nickNameInputField;
     [SerializeField] GameObject nickNamePopUp;
@@ -75,6 +77,12 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks , IChatClientListener
         string query = $"SELECT U_ID FROM user_info WHERE U_Nickname = '{nick}'";
         MySqlCommand cmd = new MySqlCommand(query, con);
         reader = cmd.ExecuteReader();
+
+        if(nick == "")
+        {
+            Debug.Log("please make your username");
+            return;
+        }
         if (reader.Read())
         {
             Debug.Log("Same NickName is exist");
@@ -122,55 +130,15 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks , IChatClientListener
         GameManager.Scene.LoadScene("GameStartScene_");
     }
 
+    //방만들기 실패했을때 ?
+    public override void OnCreateRoomFailed(short returnCode, string message)
+    {
+        // 방만들기가 실패할경우 menu화면 돌아가야함
+
+
+        // 어떤 이유로 실패했는지 로그 찍어줌
+        Debug.Log($"create room failed with error({returnCode}) : {message}");
+        //statePanel.AddMessage($"create room failed with error({returnCode}) : {message}");
+    }
     //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-
-    public void DebugReturn(DebugLevel level, string message)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void OnDisconnected()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void OnChatStateChange(ChatState state)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void OnGetMessages(string channelName, string[] senders, object[] messages)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void OnPrivateMessage(string sender, object message, string channelName)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void OnSubscribed(string[] channels, bool[] results)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void OnUnsubscribed(string[] channels)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void OnStatusUpdate(string user, int status, bool gotMessage, object message)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void OnUserSubscribed(string channel, string user)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void OnUserUnsubscribed(string channel, string user)
-    {
-        throw new NotImplementedException();
-    }
 }

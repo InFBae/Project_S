@@ -8,9 +8,14 @@ public class DiePlayer : MonoBehaviour
 
     [SerializeField] Transform Player;
 
+    private void Awake()
+    {
+        gameObject.SetActive(false);
+    }
+
     private void OnEnable()
     {
-        Destroy(gameObject.transform.parent.gameObject, 1.5f);
+        Destroy(gameObject.transform.parent.gameObject, 5f);
     }
 
     private void LateUpdate()

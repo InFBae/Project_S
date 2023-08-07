@@ -236,8 +236,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa642a3c656185c479ce0f9fd7a5e265, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  userID: 
-  chatInputField: {fileID: 1267416006}
+  ChatInputField: {fileID: 1267416006}
+  currentChannelText: {fileID: 1544117637}
+  outputText: {fileID: 1122082611}
 --- !u!4 &911760999
 Transform:
   m_ObjectHideFlags: 0
@@ -245,7 +246,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 911760997}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 960, y: 540, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -299,6 +300,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nickNameInputField: {fileID: 1267416005}
   nickNamePopUp: {fileID: 2060798302}
+--- !u!114 &1122082611 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5006451229056670790, guid: d1aba84357e5a524eb7e93909180a4bc,
+    type: 3}
+  m_PrefabInstance: {fileID: 1267416004}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1267416004
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -671,6 +684,41 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5006451229498288218, guid: d1aba84357e5a524eb7e93909180a4bc,
+        type: 3}
+      propertyPath: m_OnEndEdit.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5006451229498288218, guid: d1aba84357e5a524eb7e93909180a4bc,
+        type: 3}
+      propertyPath: m_OnEndEdit.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5006451229498288218, guid: d1aba84357e5a524eb7e93909180a4bc,
+        type: 3}
+      propertyPath: m_OnEndEdit.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 911760998}
+    - target: {fileID: 5006451229498288218, guid: d1aba84357e5a524eb7e93909180a4bc,
+        type: 3}
+      propertyPath: m_OnEndEdit.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5006451229498288218, guid: d1aba84357e5a524eb7e93909180a4bc,
+        type: 3}
+      propertyPath: m_OnEndEdit.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnEnterSend
+      objectReference: {fileID: 0}
+    - target: {fileID: 5006451229498288218, guid: d1aba84357e5a524eb7e93909180a4bc,
+        type: 3}
+      propertyPath: m_OnEndEdit.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PhotonChatManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5006451229498288218, guid: d1aba84357e5a524eb7e93909180a4bc,
+        type: 3}
+      propertyPath: m_OnEndEdit.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 5006451229521181937, guid: d1aba84357e5a524eb7e93909180a4bc,
         type: 3}
       propertyPath: m_SizeDelta.y
@@ -810,6 +858,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2da0c512f12947e489f739169773d7ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1544117637 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5006451230692989249, guid: d1aba84357e5a524eb7e93909180a4bc,
+    type: 3}
+  m_PrefabInstance: {fileID: 1267416004}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1649238562
