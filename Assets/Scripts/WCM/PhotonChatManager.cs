@@ -5,24 +5,25 @@ using TMPro;
 using UnityEngine;
 using System;
 using AuthenticationValues = Photon.Chat.AuthenticationValues;
-using Photon.Chat.Demo;
-using UnityEditor.PackageManager;
 
 public class PhotonChatManager : MonoBehaviour, IChatClientListener
 {
     private ChatClient chatClient;
     private string userName;
     private string currentChannelName;
+    private string noticeChannel;
 
     public TMP_InputField ChatInputField;
     public TMP_Text currentChannelText;
     public TMP_Text outputText;
 
     protected internal ChatAppSettings chatAppSettings;
+
     public ChatAppSettings ChatAppSettings
     {
         get { return this.chatAppSettings; }
     }
+
     private void Start()
     {
         Application.runInBackground = true;
@@ -30,33 +31,21 @@ public class PhotonChatManager : MonoBehaviour, IChatClientListener
         //테스트용 시간으로 유저네임지정
         userName = DateTime.Now.ToShortTimeString();
         currentChannelName = "Channel 001";
+        noticeChannel = "System";
 
         chatClient = new ChatClient(this);
 
-        /*this.chatAppSettings = PhotonNetwork.PhotonServerSettings.AppSettings.GetChatSettings();
-
-
-        bool appIdPresent = !string.IsNullOrEmpty(this.chatAppSettings.AppIdChat);
         // 백그라운드로 갈때 연걸
         //chatClient.UseBackgroundWorkerForSending = true;
-        this.chatClient.AuthValues = new AuthenticationValues(this.userName);
-        
-        this.chatClient.ConnectUsingSettings(this.chatAppSettings);*/
 
-        chatClient.Connect(PhotonNetwork.PhotonServerSettings.AppSettings.AppIdChat, "1.0", new AuthenticationValues(userName));
-
-        Debug.Log("Connecting as: " + this.userName);
-
-
-        //chatClient.Connect(PhotonNetwork.PhotonServerSettings.AppSettings.AppIdChat, "1.0", new AuthenticationValues(userName));
-        Debug.Log($"connecting {userName}");
+        //client연결
+        chatClient.Connect(PhotonNetwork.PhotonServerSettings.AppSettings.AppIdChat, "1.0", new AuthenticationValues(userName)); 
     }
 
     public void Update()
     {
         chatClient.Service();
     }
-
     public void AddLine(string lineString)
     {
         outputText.text += lineString + "\r\n";
@@ -168,7 +157,7 @@ public class PhotonChatManager : MonoBehaviour, IChatClientListener
 
     public void OnEnterSend()
     {
-        if (Input.GetKey(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Return) || Input.GetKey(KeyCode.KeypadEnter))
         {
             this.SendChatMessage(this.ChatInputField.text);
             this.ChatInputField.text = "";
@@ -182,7 +171,6 @@ public class PhotonChatManager : MonoBehaviour, IChatClientListener
         {
             return;
         }
-
         this.chatClient.PublishMessage(currentChannelName, inputLine);
     }
 }
