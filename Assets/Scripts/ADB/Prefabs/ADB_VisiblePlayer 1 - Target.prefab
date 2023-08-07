@@ -1012,6 +1012,7 @@ MonoBehaviour:
   maxDistance: 60
   hitParticle: {fileID: 2878998193633755065, guid: 37e8f135196358041bb39d6945c6e185,
     type: 3}
+  bloodParticle: {fileID: 0}
   trailEffect: {fileID: 0}
   camera: {fileID: 0}
   bulletSpeed: 50
@@ -2101,7 +2102,7 @@ Animator:
   m_GameObject: {fileID: 5147411173755285923}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: fccf9c3a9fe47914999b6fc3a89da926, type: 3}
-  m_Controller: {fileID: 9100000, guid: d29af8517534bc2448a5c2de0e4b8aec, type: 2}
+  m_Controller: {fileID: 9100000, guid: 267219155f5997049a6460c3e6479858, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 1

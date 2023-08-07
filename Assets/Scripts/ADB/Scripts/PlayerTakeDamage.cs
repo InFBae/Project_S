@@ -8,9 +8,8 @@ namespace ahndabi
     {
         public void TakeDamage(float damage)    // 데미지 받기
         {
-            Debug.Log($"{damage}");
-
             DecreaseHP(damage);     // hp 감소
+            anim.SetTrigger("TakeDamage");
 
             if (hp <= 0)    // hp가 0이 되면 죽는다.
             {
@@ -26,8 +25,8 @@ namespace ahndabi
             // 애니메이션 끝나면 플레이어 Destroy
             // diePlayer는 기존플레이어의 transform을 계속 따라다녀야 함
 
-            gameObject.SetActive(false);    // 기존 Player는 비활성화
             diePlayer.SetActive(true);      // diePlayer 활성화(죽는 애니메이터를 따로 달아줘서 활성화 되자마자 알아서 Die 애니메이션 실행)
+            gameObject.SetActive(false);    // 기존 Player는 비활성화
         }
 
         void DecreaseHP(float damage)

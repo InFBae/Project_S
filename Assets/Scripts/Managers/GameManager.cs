@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     private static UIManager uiManager;
     private static SceneManager sceneManager;
     private static SoundManager soundManager;
+    private static DatabaseManager databaseManager;
+    private static ChatManager chatManager;
 
     public static GameManager Instance { get { return instance; } }
     public static DataManager Data { get { return dataManager; } }
@@ -19,6 +21,9 @@ public class GameManager : MonoBehaviour
     public static UIManager UI { get { return uiManager; } }
     public static SceneManager Scene { get { return sceneManager; } }
     public static SoundManager Sound { get { return soundManager; } }
+    public static DatabaseManager DB { get { return databaseManager; } }
+    public static ChatManager Chat { get { return chatManager; } }
+
 
     private void Awake()
 
@@ -72,5 +77,20 @@ public class GameManager : MonoBehaviour
         soundObj.transform.parent = transform;
         soundManager = soundObj.AddComponent<SoundManager>();
         
+        GameObject dbObj = new GameObject();
+        dbObj.name = "DatabaseManager";
+        dbObj.transform.parent = transform;
+        databaseManager = dbObj.AddComponent<DatabaseManager>();
+
+        GameObject chatObj = new GameObject();
+        chatObj.name = "ChatManager";
+        chatObj.transform.parent = transform;
+        chatManager = chatObj.AddComponent<ChatManager>();
+    }
+
+    public void SceneLoadInit()
+    {
+        UI.SceneLoadInit();
+        Pool.SceneLoadInit();
     }
 }
