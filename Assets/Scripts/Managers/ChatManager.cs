@@ -42,7 +42,7 @@ public class ChatManager : MonoBehaviour, IChatClientListener
     {
         try
         {
-            string sqlCommand = string.Format("U_Nickname FROM user_info WHERE U_ID='{0}'", userId);
+            string sqlCommand = string.Format("SELECT U_Nickname FROM user_info WHERE U_ID='{0}'", userId);
             MySqlDataReader reader = null;
             reader = GameManager.DB.Execute(sqlCommand);
 
