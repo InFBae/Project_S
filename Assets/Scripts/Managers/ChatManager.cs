@@ -1,21 +1,25 @@
 using ExitGames.Client.Photon;
 using Photon.Chat;
-using Photon.Pun;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using System;
+using Photon.Pun;
 using AuthenticationValues = Photon.Chat.AuthenticationValues;
+using UnityEngine.Events;
+using MySql.Data.MySqlClient;
+using JBB;
+using static UnityEditor.ShaderData;
 
-public class PhotonChatManager : MonoBehaviour, IChatClientListener
+public class ChatManager : MonoBehaviour, IChatClientListener
 {
-    private ChatClient chatClient;
-    private string userName;
-    private string currentChannelName;
+    [SerializeField] private ChatClient chatClient;
+    [SerializeField] private string nickname;
+    private string lobbyChannel;
     private string noticeChannel;
 
-    public TMP_InputField ChatInputField;
-    public TMP_Text currentChannelText;
-    public TMP_Text outputText;
+    public static UnityEvent<string> OnGetLobbyMessage = new UnityEvent<string>();
 
     protected internal ChatAppSettings chatAppSettings;
 
@@ -28,27 +32,44 @@ public class PhotonChatManager : MonoBehaviour, IChatClientListener
     {
         Application.runInBackground = true;
 
-        //테스트용 시간으로 유저네임지정
-        userName = DateTime.Now.ToShortTimeString();
-        currentChannelName = "Channel 001";
-        noticeChannel = "System";
-
         chatClient = new ChatClient(this);
 
-        // 백그라운드로 갈때 연걸
-        //chatClient.UseBackgroundWorkerForSending = true;
+        lobbyChannel = "Lobby";
+        noticeChannel = "System";
+    }
 
-        //client연결
-        chatClient.Connect(PhotonNetwork.PhotonServerSettings.AppSettings.AppIdChat, "1.0", new AuthenticationValues(userName)); 
+    public void Connect(string userId)
+    {
+        try
+        {
+            string sqlCommand = string.Format("SELECT U_Nickname FROM user_info WHERE U_ID='{0}'", userId);
+            MySqlDataReader reader = null;
+            reader = GameManager.DB.Execute(sqlCommand);
+
+            // 리더가 읽었는데 있을경우 없을경우 구분
+            if (reader.HasRows)
+            {
+                reader.Read();
+                string readNick = reader["U_Nickname"].ToString();
+                nickname = readNick;
+                Debug.Log($"ID : {userId}, Nickname : {readNick}");
+            }
+            else
+            {
+                Debug.Log($"There is no player id[{userId}]");
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e.Message);
+        }
+
+        chatClient.Connect(PhotonNetwork.PhotonServerSettings.AppSettings.AppIdChat, "1.0", new AuthenticationValues(nickname));
     }
 
     public void Update()
     {
         chatClient.Service();
-    }
-    public void AddLine(string lineString)
-    {
-        outputText.text += lineString + "\r\n";
     }
 
     public void OnApplicationQuit()
@@ -83,31 +104,29 @@ public class PhotonChatManager : MonoBehaviour, IChatClientListener
     public void OnConnected()
     {
         Debug.Log("connected server");
-        AddLine("connected server");
 
-        chatClient.Subscribe(new string[] { currentChannelName }, 10);
+        chatClient.Subscribe(new string[] { noticeChannel, lobbyChannel }, 10);
     }
 
     public void OnDisconnected()
     {
-        AddLine("disconnected server");
+        Debug.Log("Disconnected server");
     }
 
     //업데이트 마다 chatclient.service가 ongetmessage 호출
     public void OnGetMessages(string channelName, string[] senders, object[] messages)
     {
-        if (channelName.Equals(currentChannelName))
+        if (channelName.Equals(lobbyChannel))
         {
-            //update text
-            this.ShowChannel(currentChannelName);
+            OnGetLobbyMessage?.Invoke(ShowChannel(lobbyChannel));
         }
     }
 
-    public void ShowChannel(string channelName)
+    public string ShowChannel(string channelName)
     {
         if (string.IsNullOrEmpty(channelName))
         {
-            return;
+            return null ;
         }
 
         ChatChannel channel = null;
@@ -115,15 +134,12 @@ public class PhotonChatManager : MonoBehaviour, IChatClientListener
         if (!found)
         {
             Debug.Log("ShowChannel failed to find channel: " + channelName);
-            return;
+            return null;
         }
-
-        this.currentChannelName = channelName;
-        // 채널에 저장 된 모든 채팅 메세지를 불러온다.
-        // 유저 이름과 채팅 내용이 한꺼번에 불러와진다.
-        this.currentChannelText.text = channel.ToStringMessages();
-        Debug.Log("ShowChannel: " + currentChannelName);
+        return channel.ToStringMessages();
     }
+
+
 
     public void OnPrivateMessage(string sender, object message, string channelName)
     {
@@ -137,12 +153,12 @@ public class PhotonChatManager : MonoBehaviour, IChatClientListener
 
     public void OnSubscribed(string[] channels, bool[] results)
     {
-        AddLine($"channel entered , {channels}");
+        
     }
 
     public void OnUnsubscribed(string[] channels)
     {
-        AddLine($"channel left , {channels}");
+        
     }
 
     public void OnUserSubscribed(string channel, string user)
@@ -155,22 +171,19 @@ public class PhotonChatManager : MonoBehaviour, IChatClientListener
         throw new System.NotImplementedException();
     }
 
-    public void OnEnterSend()
-    {
-        if (Input.GetKey(KeyCode.Return) || Input.GetKey(KeyCode.KeypadEnter))
-        {
-            this.SendChatMessage(this.ChatInputField.text);
-            this.ChatInputField.text = "";
-        }
-    }
 
     // 입력한 채팅을 서버로 전송한다.
-    private void SendChatMessage(string inputLine)
+    public void SendChatMessage(string inputLine)
     {
         if (string.IsNullOrEmpty(inputLine))
         {
             return;
         }
-        this.chatClient.PublishMessage(currentChannelName, inputLine);
+        this.chatClient.PublishMessage(lobbyChannel, inputLine);
+    }
+
+    public void UnSubscribe(string[] channel)
+    {
+        this.chatClient.Unsubscribe(channel);
     }
 }

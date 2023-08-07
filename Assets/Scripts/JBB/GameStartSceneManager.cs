@@ -10,9 +10,6 @@ namespace JBB
     {
         [SerializeField] GameStartUI gameStartUI;
 
-        private MySqlConnection con;
-        private MySqlDataReader reader;
-
         public override void OnEnable()
         {
             base.OnEnable();
@@ -27,44 +24,10 @@ namespace JBB
             SignInUI.OnSignInClicked.RemoveListener(SignIn);
         }
 
-        public void Start()
-        {
-            ConnectDataBase();
-
-            /*if (PhotonNetwork.IsConnected)
-                OnConnectedToMaster();
-            else if (PhotonNetwork.InRoom)
-                OnJoinedRoom();
-            else if (PhotonNetwork.InLobby)
-                OnJoinedLobby();
-            else
-                OnDisconnected(DisconnectCause.None);*/
-        }
-
-
-        private void ConnectDataBase()
-        {
-            try
-            {
-                string serverInfo = "Server=43.200.178.18; Database=userdb; Uid=root; Pwd=1234; Port=3306; CharSet=utf8;";
-                con = new MySqlConnection(serverInfo);
-                con.Open();
-
-                // 성공 확인
-                Debug.Log("DataBase connect success");
-            }
-            catch (Exception e)
-            {
-
-                Debug.Log(e.Message);
-            }
-        }
-
         public override void OnConnectedToMaster()
         {
             PhotonNetwork.JoinLobby();
         }
-
 
         public override void OnJoinedLobby()
         {
@@ -77,8 +40,8 @@ namespace JBB
             try
             {
                 string sqlCommand = string.Format("SELECT U_ID,U_Password,U_Nickname FROM user_info WHERE U_ID='{0}'", id);
-                MySqlCommand cmd = new MySqlCommand(sqlCommand, con);
-                reader = cmd.ExecuteReader();
+                MySqlDataReader reader = null;                
+                reader = GameManager.DB.Execute(sqlCommand);
 
                 // 리더가 읽었는데 있을경우 없을경우 구분
                 if (reader.HasRows)
@@ -97,18 +60,10 @@ namespace JBB
                             if (!reader.IsClosed)
                                 reader.Close();
 
-                            con.Close();
                             //이름이 있을 경우 해당 플레이어의 이름을 inputField내의 값으로 지정 (이름 중복되지 않게)
                             PhotonNetwork.LocalPlayer.NickName = readId;
 
-
-                            //PhotonNetwork.ConnectUsingSettings();
-
-                            PhotonNetwork.LoadLevel("LobbyScene");
-                            //GameManager.Scene.LoadScene("LobbyScene_");
-
-                            //이후 네트워크 서버에 연결 시도
-                            //PhotonNetwork.ConnectUsingSettings();
+                            GameManager.Scene.LoadScene("LobbyScene");
                         }
                         else
                         {
@@ -131,8 +86,6 @@ namespace JBB
             catch (Exception e)
             {
                 Debug.Log(e.Message);
-                if (!reader.IsClosed)
-                    reader.Close();
             }
         }
 
@@ -150,8 +103,8 @@ namespace JBB
                 else
                 {
                     string sqlCommand = string.Format("SELECT U_ID FROM user_info WHERE U_ID='{0}'", id);
-                    MySqlCommand cmd = new MySqlCommand(sqlCommand, con);
-                    reader = cmd.ExecuteReader();
+                    MySqlDataReader reader = null;
+                    reader = GameManager.DB.Execute(sqlCommand);
 
                     if (reader.HasRows)
                     {
@@ -163,16 +116,14 @@ namespace JBB
                         }
 
                     }
-
                     else
                     {
                         if (!reader.IsClosed)
                         {
                             reader.Close();
                         }
-                        string sqlCommand2 = $"INSERT INTO user_info(U_ID, U_Password) VALUES({id}, {password})";
-                        using MySqlCommand command = new MySqlCommand(sqlCommand2, con);
-                        command.ExecuteNonQuery();
+                        string sqlCommand2 = $"INSERT INTO user_info(U_ID, U_Password) VALUES({id}, {password})";                        
+                        GameManager.DB.ExecuteNonQuery(sqlCommand2);
                         Debug.Log("Complete sign up");
                         gameStartUI.CloseSignInUI();
                     }
