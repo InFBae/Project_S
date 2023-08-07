@@ -11,10 +11,16 @@ namespace ahndabi
         protected Animator anim;
         [SerializeField] protected GameObject diePlayer;
         [SerializeField] protected float hp;
+        [SerializeField] protected Gun gun;
+
+        private void Awake()
+        {
+            anim = GetComponentInChildren<Animator>();
+            gun = GetComponentInChildren<Gun>();
+        }
 
         private void Start()
         {
-            anim = GetComponentInChildren<Animator>();
             hp = 200f;
         }
     }
