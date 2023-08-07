@@ -73,4 +73,10 @@ public class GameManager : MonoBehaviour
         soundManager = soundObj.AddComponent<SoundManager>();
         
     }
+
+    public void SceneLoadInit()
+    {
+        UI.SceneLoadInit();
+        Pool.SceneLoadInit();
+    }
 }

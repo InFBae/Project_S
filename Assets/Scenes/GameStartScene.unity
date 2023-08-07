@@ -252,8 +252,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameStartUI: {fileID: 1679580225}
-  loginUI: {fileID: 0}
-  signInUI: {fileID: 0}
 --- !u!1001 &1679580223
 PrefabInstance:
   m_ObjectHideFlags: 0

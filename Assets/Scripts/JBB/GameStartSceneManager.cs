@@ -1,15 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-using Photon.Realtime;
 using MySql.Data.MySqlClient;
 using System;
-using TMPro;
-using UnityEngine.Animations.Rigging;
-//using UnityEditor.MemoryProfiler;
-//using UnityEditor.Search;
-//using UnityEditor.Rendering.Universal;
+
 
 namespace JBB
 {
@@ -75,7 +68,7 @@ namespace JBB
 
         public override void OnJoinedLobby()
         {
-            Debug.Log(123);
+            Debug.Log("Joined Lobby");
         }
 
         //로그인 함수 -> 버튼연동
@@ -111,7 +104,7 @@ namespace JBB
 
                             //PhotonNetwork.ConnectUsingSettings();
 
-                            PhotonNetwork.LoadLevel("LobbyScene_");
+                            PhotonNetwork.LoadLevel("LobbyScene");
                             //GameManager.Scene.LoadScene("LobbyScene_");
 
                             //이후 네트워크 서버에 연결 시도
@@ -119,6 +112,7 @@ namespace JBB
                         }
                         else
                         {
+                            GameManager.UI.CreatePopUpMessage("Wrong password");
                             Debug.Log("Wrong password");
                             if (!reader.IsClosed)
                                 reader.Close();
@@ -128,6 +122,7 @@ namespace JBB
                 }
                 else
                 {
+                    GameManager.UI.CreatePopUpMessage("There is no player id");
                     Debug.Log("There is no player id");
                     if (!reader.IsClosed)
                         reader.Close();
@@ -147,6 +142,7 @@ namespace JBB
             {
                 if (password != passwordCheck)
                 {
+                    GameManager.UI.CreatePopUpMessage("password don't match");
                     Debug.Log("password don't match");
                     return;
                 }
@@ -159,6 +155,7 @@ namespace JBB
 
                     if (reader.HasRows)
                     {
+                        GameManager.UI.CreatePopUpMessage("same name exist");
                         Debug.Log("same name exist");
                         if (!reader.IsClosed)
                         {
