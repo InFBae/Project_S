@@ -24,12 +24,11 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
     {
         ConnectDataBase();
 
-        PhotonNetwork.ConnectUsingSettings();
-
         if (NickNameChecking())
         {
             OpenNicknameSetting();
         }
+        GameManager.Chat.Connect(PhotonNetwork.LocalPlayer.NickName);
     }
 
     private void ConnectDataBase()
@@ -97,8 +96,8 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
             string query2 = $"UPDATE user_info SET U_Nickname='{nick}' WHERE U_ID = '{id}'";
             MySqlCommand cmd2 = new MySqlCommand(query2, con);
             cmd2.ExecuteNonQuery();
+            GameManager.Chat.Connect(PhotonNetwork.LocalPlayer.NickName);
             CloseNicknameSetting();
-            
         }
     }
 
@@ -128,6 +127,7 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
     public void LogOut()
     {
         GameManager.Scene.LoadScene("GameStartScene_");
+        PhotonNetwork.LeaveLobby();
     }
 
     //방만들기 실패했을때 ?

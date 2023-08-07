@@ -126,7 +126,7 @@ public class GameStartSceneManager : MonoBehaviourPunCallbacks
                         PhotonNetwork.LocalPlayer.NickName = readId;
 
 
-                        //PhotonNetwork.ConnectUsingSettings();
+                        PhotonNetwork.ConnectUsingSettings();
 
                         PhotonNetwork.LoadLevel("LobbyScene_");
                         //GameManager.Scene.LoadScene("LobbyScene_");
