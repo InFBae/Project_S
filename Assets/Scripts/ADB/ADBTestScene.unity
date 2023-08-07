@@ -17589,12 +17589,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1079141545}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1086610236 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7458531151274414240, guid: 83d65f53dd09c0e428bc2e0ed415fe12,
-    type: 3}
-  m_PrefabInstance: {fileID: 2367152968308550454}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1087151404
 GameObject:
   m_ObjectHideFlags: 0
@@ -33655,11 +33649,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 47220283880391209, guid: 83d65f53dd09c0e428bc2e0ed415fe12,
-        type: 3}
-      propertyPath: diePlayer
-      value: 
-      objectReference: {fileID: 1086610236}
     - target: {fileID: 187801864966539603, guid: 83d65f53dd09c0e428bc2e0ed415fe12,
         type: 3}
       propertyPath: cameraRoot
@@ -33740,11 +33729,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8160237846780639595, guid: 83d65f53dd09c0e428bc2e0ed415fe12,
-        type: 3}
-      propertyPath: diePlayer
-      value: 
-      objectReference: {fileID: 1086610236}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 83d65f53dd09c0e428bc2e0ed415fe12, type: 3}
 --- !u!4 &2379451143849044988 stripped
