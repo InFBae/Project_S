@@ -1,95 +1,148 @@
 using ExitGames.Client.Photon;
 using Photon.Chat;
 using Photon.Pun;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
+using System;
+using AuthenticationValues = Photon.Chat.AuthenticationValues;
 
-public class PhotonChatManager : MonoBehaviour
+public class PhotonChatManager : MonoBehaviour, IChatClientListener
 {
-/*
-    [SerializeField] 
     private ChatClient chatClient;
-    private bool isConnected;
-
-    [SerializeField] string username;
-    [SerializeField] string userID;
-
-    public void UsernameOnValueChange(string valueIn)
-    {
-        username = valueIn;
-    }
-    public void ChatConnect()
-    {
-        chatClient = new ChatClient(this);
-        chatClient.ChatRegion = "kr";
-        chatClient.Connect(this.appId, "1.0", this.UserName, null);
-    }
+    private string userName;
     private string currentChannelName;
+    private string noticeChannel;
 
-    [SerializeField] TMP_InputField chatInputField;
-    [SerializeField] TMP_Text chatDisplay;
+    public TMP_InputField ChatInputField;
+    public TMP_Text currentChannelText;
+    public TMP_Text outputText;
 
+    protected internal ChatAppSettings chatAppSettings;
 
+    public ChatAppSettings ChatAppSettings
+    {
+        get { return this.chatAppSettings; }
+    }
 
     private void Start()
     {
+        Application.runInBackground = true;
+
+        //테스트용 시간으로 유저네임지정
+        userName = DateTime.Now.ToShortTimeString();
+        currentChannelName = "Channel 001";
+        noticeChannel = "System";
+
+        chatClient = new ChatClient(this);
+
+        // 백그라운드로 갈때 연걸
+        //chatClient.UseBackgroundWorkerForSending = true;
+
+        //client연결
+        chatClient.Connect(PhotonNetwork.PhotonServerSettings.AppSettings.AppIdChat, "1.0", new AuthenticationValues(userName)); 
     }
 
-    private void Update()
+    public void Update()
     {
-        if (isConnected)
+        chatClient.Service();
+    }
+    public void AddLine(string lineString)
+    {
+        outputText.text += lineString + "\r\n";
+    }
+
+    public void OnApplicationQuit()
+    {
+        if (chatClient != null)
         {
-            chatClient.Service();
+            chatClient.Disconnect();
         }
     }
 
     public void DebugReturn(DebugLevel level, string message)
     {
-        throw new System.NotImplementedException();
+        if (level == DebugLevel.ERROR)
+        {
+            Debug.LogError(message);
+        }
+        else if (level == DebugLevel.WARNING)
+        {
+            Debug.LogWarning(message);
+        }
+        else
+        {
+            Debug.Log(message);
+        }
     }
 
     public void OnChatStateChange(ChatState state)
     {
-        throw new System.NotImplementedException();
+        Debug.Log($"OnChatStateChange {state}");
     }
 
+    public void OnConnected()
+    {
+        Debug.Log("connected server");
+        AddLine("connected server");
+
+        chatClient.Subscribe(new string[] { currentChannelName }, 10);
+    }
 
     public void OnDisconnected()
     {
-        throw new System.NotImplementedException();
+        AddLine("disconnected server");
     }
 
+    //업데이트 마다 chatclient.service가 ongetmessage 호출
     public void OnGetMessages(string channelName, string[] senders, object[] messages)
     {
-        string msgs = "";
-        for (int i = 0; i < senders.Length; i++)
+        if (channelName.Equals(currentChannelName))
         {
-            msgs += senders[i] + "=" + messages[i] + ", ";
+            //update text
+            this.ShowChannel(currentChannelName);
         }
-        Concole.wri
+    }
+
+    public void ShowChannel(string channelName)
+    {
+        if (string.IsNullOrEmpty(channelName))
+        {
+            return;
+        }
+
+        ChatChannel channel = null;
+        bool found = this.chatClient.TryGetChannel(channelName, out channel);
+        if (!found)
+        {
+            Debug.Log("ShowChannel failed to find channel: " + channelName);
+            return;
+        }
+
+        this.currentChannelName = channelName;
+        // 채널에 저장 된 모든 채팅 메세지를 불러온다.
+        // 유저 이름과 채팅 내용이 한꺼번에 불러와진다.
+        this.currentChannelText.text = channel.ToStringMessages();
+        Debug.Log("ShowChannel: " + currentChannelName);
     }
 
     public void OnPrivateMessage(string sender, object message, string channelName)
     {
-        throw new System.NotImplementedException();
+        Debug.Log($"OnPrivateMessage : {message}");
     }
 
     public void OnStatusUpdate(string user, int status, bool gotMessage, object message)
     {
-        throw new System.NotImplementedException();
+        Debug.Log($"status : {user} is {status}, Msg : {message}");
     }
 
     public void OnSubscribed(string[] channels, bool[] results)
     {
-        throw new System.NotImplementedException();
+        AddLine($"channel entered , {channels}");
     }
 
     public void OnUnsubscribed(string[] channels)
     {
-        throw new System.NotImplementedException();
+        AddLine($"channel left , {channels}");
     }
 
     public void OnUserSubscribed(string channel, string user)
@@ -102,8 +155,22 @@ public class PhotonChatManager : MonoBehaviour
         throw new System.NotImplementedException();
     }
 
-    public void OnConnected()
+    public void OnEnterSend()
     {
-        throw new System.NotImplementedException();
-    }*/
+        if (Input.GetKey(KeyCode.Return) || Input.GetKey(KeyCode.KeypadEnter))
+        {
+            this.SendChatMessage(this.ChatInputField.text);
+            this.ChatInputField.text = "";
+        }
+    }
+
+    // 입력한 채팅을 서버로 전송한다.
+    private void SendChatMessage(string inputLine)
+    {
+        if (string.IsNullOrEmpty(inputLine))
+        {
+            return;
+        }
+        this.chatClient.PublishMessage(currentChannelName, inputLine);
+    }
 }
