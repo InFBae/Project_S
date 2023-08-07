@@ -17589,6 +17589,12 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1079141545}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1086610236 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7458531151274414240, guid: 83d65f53dd09c0e428bc2e0ed415fe12,
+    type: 3}
+  m_PrefabInstance: {fileID: 2367152968308550454}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1087151404
 GameObject:
   m_ObjectHideFlags: 0
@@ -17687,18 +17693,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1087151404}
   m_Mesh: {fileID: 4300000, guid: dfb93e0a365cc3f4d910741727c05e03, type: 3}
---- !u!4 &1090449299 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8699369793575795144, guid: 83d65f53dd09c0e428bc2e0ed415fe12,
-    type: 3}
-  m_PrefabInstance: {fileID: 2367152968308550454}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &1090449302 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 8354614987169817460, guid: 83d65f53dd09c0e428bc2e0ed415fe12,
-    type: 3}
-  m_PrefabInstance: {fileID: 2367152968308550454}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1098201696
 GameObject:
   m_ObjectHideFlags: 0
@@ -23928,43 +23922,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1557656728}
   m_Mesh: {fileID: 4300000, guid: af7c0ef8f213c984d8b0ba2643c5addf, type: 3}
---- !u!1 &1568454806 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2772019241724002371, guid: 83d65f53dd09c0e428bc2e0ed415fe12,
-    type: 3}
-  m_PrefabInstance: {fileID: 2367152968308550454}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1568454812
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1568454806}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 5e4f416fa56431e41811f16d625a4aa8,
-    type: 3}
-  m_NotificationBehavior: 0
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents: []
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Player
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
 --- !u!1 &1592924301
 GameObject:
   m_ObjectHideFlags: 0
@@ -33698,6 +33655,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 47220283880391209, guid: 83d65f53dd09c0e428bc2e0ed415fe12,
+        type: 3}
+      propertyPath: diePlayer
+      value: 
+      objectReference: {fileID: 1086610236}
     - target: {fileID: 187801864966539603, guid: 83d65f53dd09c0e428bc2e0ed415fe12,
         type: 3}
       propertyPath: cameraRoot
@@ -33708,16 +33670,6 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 738010963}
-    - target: {fileID: 3020100779003078280, guid: 83d65f53dd09c0e428bc2e0ed415fe12,
-        type: 3}
-      propertyPath: Player
-      value: 
-      objectReference: {fileID: 1090449299}
-    - target: {fileID: 4037435194757036288, guid: 83d65f53dd09c0e428bc2e0ed415fe12,
-        type: 3}
-      propertyPath: anim
-      value: 
-      objectReference: {fileID: 1090449302}
     - target: {fileID: 4037435194757036288, guid: 83d65f53dd09c0e428bc2e0ed415fe12,
         type: 3}
       propertyPath: camera
@@ -33788,6 +33740,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8160237846780639595, guid: 83d65f53dd09c0e428bc2e0ed415fe12,
+        type: 3}
+      propertyPath: diePlayer
+      value: 
+      objectReference: {fileID: 1086610236}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 83d65f53dd09c0e428bc2e0ed415fe12, type: 3}
 --- !u!4 &2379451143849044988 stripped
