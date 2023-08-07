@@ -49,6 +49,7 @@ public class ChatManager : MonoBehaviour, IChatClientListener
             // 리더가 읽었는데 있을경우 없을경우 구분
             if (reader.HasRows)
             {
+                reader.Read();
                 string readNick = reader["U_Nickname"].ToString();
                 nickname = readNick;
                 Debug.Log($"ID : {userId}, Nickname : {readNick}");
