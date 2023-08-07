@@ -7,7 +7,6 @@ using UnityEngine;
 public class DatabaseManager : MonoBehaviour
 {
     private MySqlConnection con;
-    private MySqlDataReader reader;
     private void Awake()
     {
         ConnectDataBase();
@@ -39,12 +38,5 @@ public class DatabaseManager : MonoBehaviour
     {
         MySqlCommand cmd = new MySqlCommand(sqlCommand, con);
         cmd.ExecuteNonQuery();
-    }
-
-    public void CloseReader()
-    {
-        if (reader == null) return;
-        if (!reader.IsClosed)
-            reader.Close();
     }
 }
