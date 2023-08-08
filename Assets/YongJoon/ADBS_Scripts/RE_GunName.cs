@@ -37,7 +37,7 @@ namespace Yong
 
         private void Update()
         {
-            Debug.DrawRay(muzzlePos.transform.position, transform.forward * maxDistance, Color.green);
+            Debug.DrawRay(muzzlePos.transform.position, cam.transform.forward * maxDistance, Color.green);
             ContinueousFire();      // 연발
         }
 
@@ -79,7 +79,7 @@ namespace Yong
             --curAvailavleBullet;
 
             // 레이캐스트를 솼는데 부딪힌 물체가 있다면
-            if (Physics.Raycast(muzzlePos.transform.position, transform.forward, out hit, maxDistance))
+            if (Physics.Raycast(muzzlePos.transform.position, cam.transform.forward, out hit, maxDistance))
             {
                 if (hit.transform.gameObject.layer == 7)  // 바디 레이어를 맞췄다면?
                 {
