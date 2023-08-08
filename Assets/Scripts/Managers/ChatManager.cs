@@ -118,28 +118,12 @@ public class ChatManager : MonoBehaviour, IChatClientListener
     {
         if (channelName.Equals(lobbyChannel))
         {
-            OnGetLobbyMessage?.Invoke(ShowChannel(lobbyChannel));
+            for (int i = 0; i < senders.Length; i++)
+            {
+                OnGetLobbyMessage?.Invoke($"{senders[i]} : {messages[i]}");
+            }
         }
     }
-
-    public string ShowChannel(string channelName)
-    {
-        if (string.IsNullOrEmpty(channelName))
-        {
-            return null ;
-        }
-
-        ChatChannel channel = null;
-        bool found = this.chatClient.TryGetChannel(channelName, out channel);
-        if (!found)
-        {
-            Debug.Log("ShowChannel failed to find channel: " + channelName);
-            return null;
-        }
-        return channel.ToStringMessages();
-    }
-
-
 
     public void OnPrivateMessage(string sender, object message, string channelName)
     {
@@ -153,12 +137,12 @@ public class ChatManager : MonoBehaviour, IChatClientListener
 
     public void OnSubscribed(string[] channels, bool[] results)
     {
-        
+
     }
 
     public void OnUnsubscribed(string[] channels)
     {
-        
+
     }
 
     public void OnUserSubscribed(string channel, string user)
