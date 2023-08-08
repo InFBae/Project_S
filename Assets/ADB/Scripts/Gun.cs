@@ -11,11 +11,11 @@ namespace ahndabi
     public abstract class Gun : MonoBehaviour
     {
         [SerializeField] protected Transform muzzlePos;
-        [SerializeField] PlayerAttacker playerAttacker;
-        [SerializeField] protected float fireDamage;
-        [SerializeField] protected int allBullet;             // 총탄 개수
+        [SerializeField] protected int fireDamage;
+        [SerializeField] protected int remainBullet;             // 총탄 개수
         [SerializeField] protected int availableBullet;       // 재장전 하기 전 사용 가능한 총탄 개수 
         [SerializeField] protected int curAvailavleBullet;    // 계속 사용 중인 현재 총알 개수   
+        [SerializeField] protected StatusUI statusUI;
 
         public void ForwardDirection()
         {

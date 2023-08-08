@@ -379,6 +379,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5573593200824595596, guid: ff55fb9b258379b4d88a0c1a1a450b75,
         type: 3}
+      propertyPath: anim
+      value: 
+      objectReference: {fileID: 1418805286887507973}
+    - target: {fileID: 5573593200824595596, guid: ff55fb9b258379b4d88a0c1a1a450b75,
+        type: 3}
       propertyPath: diePlayer
       value: 
       objectReference: {fileID: 7689812099477111805}
@@ -604,6 +609,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff55fb9b258379b4d88a0c1a1a450b75, type: 3}
+--- !u!95 &1418805286887507973 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5147411173755285925, guid: ff55fb9b258379b4d88a0c1a1a450b75,
+    type: 3}
+  m_PrefabInstance: {fileID: 6115849624615860640}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1800115251640799929 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5486676942956473113, guid: ff55fb9b258379b4d88a0c1a1a450b75,

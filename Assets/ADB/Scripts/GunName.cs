@@ -29,10 +29,12 @@ namespace ahndabi
 
         private void Start()
         {
-            allBullet = 1000;
+            remainBullet = 15;
             availableBullet = 60;
-            fireDamage = 20;
+            fireDamage = 12;
             curAvailavleBullet = availableBullet;
+            statusUI.DecreaseCurrentBulletUI(curAvailavleBullet);
+            statusUI.DecreaseRemainBulletUI(remainBullet);
         }
 
         private void Update()
@@ -77,6 +79,7 @@ namespace ahndabi
                 return;
 
             --curAvailavleBullet;
+            statusUI.DecreaseCurrentBulletUI(curAvailavleBullet);
 
             // 레이캐스트를 솼는데 부딪힌 물체가 있다면
             if (Physics.Raycast(muzzlePos.transform.position, Camera.main.transform.forward, out hit, maxDistance))
@@ -120,18 +123,27 @@ namespace ahndabi
 
                 Rebound();
             }
-
-
-
-
-
             Debug.Log("Fire");
         }
 
         public override void Reload()    // 재장전
         {
-            allBullet = allBullet - (availableBullet - curAvailavleBullet);
-            curAvailavleBullet = availableBullet;
+            if (remainBullet == 0)
+                return;
+
+            if ((remainBullet + curAvailavleBullet) <= availableBullet)
+            {
+                remainBullet = 0;
+                curAvailavleBullet = remainBullet + curAvailavleBullet;
+            }
+            else
+            {
+                remainBullet = remainBullet - (availableBullet - curAvailavleBullet);
+                curAvailavleBullet = availableBullet;
+            }
+
+            statusUI.DecreaseCurrentBulletUI(curAvailavleBullet);
+            statusUI.DecreaseRemainBulletUI(remainBullet);
         }
 
         IEnumerator ReleaseRoutine(GameObject effect)   // 오브젝트 풀 Release 하기
@@ -165,6 +177,5 @@ namespace ahndabi
             // 카메라 위로 살짝 움직이기
             camera.m_Tilt = Mathf.Lerp(camera.m_Tilt, camera.m_Tilt - 0.8f, 0.5f);
         }
-
     }
 }

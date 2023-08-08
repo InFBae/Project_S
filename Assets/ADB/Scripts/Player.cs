@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 namespace ahndabi
@@ -8,10 +9,11 @@ namespace ahndabi
     {
         // 플레이어가 가지고 있는 것들
 
-        protected Animator anim;
+        [SerializeField] protected Animator anim;
         [SerializeField] protected GameObject diePlayer;
-        [SerializeField] protected float hp;
         [SerializeField] protected Gun gun;
+        [SerializeField] int hp;
+        [SerializeField] public int Hp { get { return hp; } private set { if (hp <= 0) hp = 0; else hp = value; } }
 
         private void Awake()
         {
@@ -21,7 +23,15 @@ namespace ahndabi
 
         private void Start()
         {
-            hp = 200f;
+            hp = 200;
+        }
+
+        protected int DecreaseHp(int damage)
+        {
+            hp -= damage;
+            if (hp <= 0)
+                hp = 0;
+            return hp;
         }
     }
 }

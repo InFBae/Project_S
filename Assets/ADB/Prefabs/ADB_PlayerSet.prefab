@@ -318,9 +318,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cdee8f6f543a01449380b57294ce00b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 0}
   diePlayer: {fileID: 7458531151274414240}
-  hp: 0
   gun: {fileID: 0}
+  hp: 0
 --- !u!95 &8354614987169817460 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 3670637011174966283, guid: 0bde9abf3c4b7434eb34d5b659d5899f,

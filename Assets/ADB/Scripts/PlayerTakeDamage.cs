@@ -6,14 +6,21 @@ namespace ahndabi
 {
     public class PlayerTakeDamage : Player
     {
-        public void TakeDamage(float damage)    // 데미지 받기
+        [SerializeField] StatusUI statusUI;
+
+        private void Start()
         {
-            DecreaseHP(damage);     // hp 감소
+            statusUI.HpTextUI.text = Hp.ToString();
+        }
+
+        public void TakeDamage(int damage)    // 데미지 받기
+        {
+            DecreaseHp(damage);
+            statusUI.DecreaseHPUI(damage);
             anim.SetTrigger("TakeDamage");
 
-            if (hp <= 0)    // hp가 0이 되면 죽는다.
+            if (Hp <= 0)    // hp가 0이 되면 죽는다.
             {
-                hp = 0;
                 Die();
             }
         }
@@ -27,11 +34,6 @@ namespace ahndabi
 
             diePlayer.SetActive(true);      // diePlayer 활성화(죽는 애니메이터를 따로 달아줘서 활성화 되자마자 알아서 Die 애니메이션 실행)
             gameObject.SetActive(false);    // 기존 Player는 비활성화
-        }
-
-        void DecreaseHP(float damage)
-        {
-            hp -= damage;
         }
     }
 }
