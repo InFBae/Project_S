@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerMover : MonoBehaviour
 {
+    [SerializeField] GameObject playerBody;
     [SerializeField] private float nomalSpeed;
     [SerializeField] private float walkSpeed;
     [SerializeField] private float jumpSpeed;
@@ -27,6 +28,10 @@ public class PlayerMover : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         // ºÎµúÇûÀ» ‹š È¸Àü ¹æÁö
         rb.freezeRotation = true;
+    }
+    private void Start()
+    {
+        playerBody.SetActive(false);
     }
     private void Update()
     {
@@ -54,7 +59,7 @@ public class PlayerMover : MonoBehaviour
         }
         else
         {
-            dir = cam.transform.localRotation * moveDir;
+            dir = transform.localRotation * moveDir;
             dir = new Vector3(dir.x, 0f, dir.z);
 
             curSpeed = isWalk ? walkSpeed : nomalSpeed;
@@ -91,7 +96,7 @@ public class PlayerMover : MonoBehaviour
     {
         RaycastHit hit;
         return Physics.SphereCast(transform.position + Vector3.up * 1f,
-            0.5f, Vector3.down, out hit, 0.6f);
+            0.5f, Vector3.down, out hit, 0.6f, layerMask);
     }
     //private bool IsFloating()
     //{
