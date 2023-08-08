@@ -1,29 +1,48 @@
 using MySql.Data.MySqlClient;
 using Photon.Pun;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
-using ExitGames.Client.Photon;
-using UnityEngine.Rendering;
-using Photon.Chat;
-using UnityEngine.Animations.Rigging;
-using static UnityEngine.Rendering.DebugUI;
+using Photon.Realtime;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
+using UnityEngine.UI;
+using System.Collections.Generic;
+using UnityEngine.Events;
 
 public class LobbySceneManager : MonoBehaviourPunCallbacks
 {
     [SerializeField] TMP_InputField nickNameInputField;
     [SerializeField] GameObject nickNamePopUp;
+    [SerializeField] GameObject lobbyUI;
+    [SerializeField] GameObject roomUI;
+
 
     private MySqlDataReader reader;
     private MySqlConnection con;
     // Start is called before the first frame update
+
+    [SerializeField] GameObject roomMenu;
+    [SerializeField] GameObject roomSetting;
+    [SerializeField] TMP_Text maxPlayerInput;
+    [SerializeField] TMP_Text gameTimeInput;
+    [SerializeField] TMP_Text maxKillInput;
+
+    [SerializeField] string a;
+    [SerializeField] bool b;
+    [SerializeField] float c;
+
+
+
     void Start()
     {
         ConnectDataBase();
 
+        if (!PhotonNetwork.IsConnected)
+        {
+            PhotonNetwork.LocalPlayer.NickName = $"DebugPlayer{UnityEngine.Random.Range(1000, 10000)}";
+            PhotonNetwork.ConnectUsingSettings();
+        }
+        
         if (NickNameChecking())
         {
             OpenNicknameSetting();
@@ -49,6 +68,50 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
         }
     }
 
+    public void CreateRoomConfirm()
+    {
+        //룸 만들었을때 ?
+        // 로비에서 나가서 룸으로 들어가고
+        // 로비챗 구독 취소 해주고
+        string roomName = $"room {UnityEngine.Random.Range(1000,2000)}";
+        
+
+        //값 받아오기
+        int maxPlayer = maxPlayerInput.text == "" ? 8 : int.Parse(maxPlayerInput.text);
+        string gameTime = gameTimeInput.text;
+        int maxKill = int.Parse(maxPlayerInput.text);
+        bool canIrrupt = roomMenu.GetComponentInChildren<Toggle>().isOn;
+
+        // 방설정 해주고 
+        //RoomOptions options = new RoomOptions { MaxPlayers = (byte)maxPlayer };
+
+        RoomOptions roomOptions = new RoomOptions() { IsVisible = true, IsOpen = true, MaxPlayers = maxPlayer };
+        Hashtable RoomCustomProps = new Hashtable()
+        {
+            {"gameTime", gameTime},
+            {"maxKill", maxKill },
+            {"canIrrupt", canIrrupt}
+        };
+
+        Hashtable PlayerCustomProps = new Hashtable() { { "Nickname", nick} };
+
+        Player player = null;
+        player.CustomProperties = PlayerCustomProps;
+
+
+        roomOptions.CustomRoomProperties = RoomCustomProps;
+       
+        //방만들기 시도
+        PhotonNetwork.CreateRoom(roomName, roomOptions);
+        //bool dfaf = PhotonNetwork.CurrentRoom.GetRoomInfo_canIrrupt();
+        //Debug.Log(dfaf);
+        //Debug.Log(PhotonNetwork.CurrentRoom.CustomProperties["gameTime"].ToString());
+    }
+
+    public override void OnRoomListUpdate(List<RoomInfo> roomList)
+    {
+        base.OnRoomListUpdate(roomList);
+    }
     public override void OnConnectedToMaster()
     {
         PhotonNetwork.JoinLobby();
@@ -69,6 +132,7 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
     {
         nickNamePopUp.SetActive(false);
     }
+
     public void Confirm()
     {
         string id = PhotonNetwork.LocalPlayer.NickName;
@@ -130,15 +194,60 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
         PhotonNetwork.LeaveLobby();
     }
 
+    public override void OnJoinedRoom()
+    {
+        lobbyUI.SetActive(false);
+        roomUI.SetActive(true);
+        roomMenu.SetActive(false);
+
+        PhotonNetwork.LocalPlayer.SetReady(false);
+        PhotonNetwork.LocalPlayer.SetLoad(false);
+
+        //자동 동기화
+        //PhotonNetwork.AutomaticallySyncScene = true;
+        UpdateRoomSetting();
+    }
+
+    public void UpdateRoomSetting()
+    {
+        a = PhotonNetwork.CurrentRoom.GetRoomInfo_gameTime();
+        b = PhotonNetwork.CurrentRoom.GetRoomInfo_canIrrupt();
+        c = PhotonNetwork.CurrentRoom.GetRoomInfo_maxKill();
+    }
+    public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
+    {
+
+        UpdateRoomSetting();
+    }
+
+    //룸 인포 값 변경
+    public void RoomInfoChange()
+    {
+        //현재 room properties값 읽어와서 roominfo change ui열기
+        roomSetting.SetActive(true);
+    }
+
+    public void RoomInfoChangeConfirm()
+    {
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            return;
+        }
+
+        //roominfo 가 바뀐값 참고해서 룸 프로퍼티 변경
+        roomSetting.SetActive(false);
+    }
+
+    public void ExitRoom()
+    {
+        PhotonNetwork.LeaveRoom();
+    }
+
     //방만들기 실패했을때 ?
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
-        // 방만들기가 실패할경우 menu화면 돌아가야함
-
-
         // 어떤 이유로 실패했는지 로그 찍어줌
         Debug.Log($"create room failed with error({returnCode}) : {message}");
         //statePanel.AddMessage($"create room failed with error({returnCode}) : {message}");
     }
-    //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 }
