@@ -1,5 +1,6 @@
 using MySql.Data.MySqlClient;
 using Photon.Pun;
+using Photon.Realtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -32,6 +33,7 @@ namespace JBB
                 lobbyUI.EnableNicknameUI();
             }
             GameManager.Chat.Connect(nick);
+            PhotonNetwork.ConnectUsingSettings();
         }
 
         public override void OnConnectedToMaster()
