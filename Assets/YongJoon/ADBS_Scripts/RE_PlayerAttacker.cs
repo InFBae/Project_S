@@ -20,7 +20,7 @@ public class RE_PlayerAttacker : RE_Player
         Fire();
     }
 
-    void Reload(InputValue value)
+    void OnReload(InputValue value)
     {
         gun.Reload();
         anim.SetTrigger("Reload");

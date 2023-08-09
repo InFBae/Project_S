@@ -18,6 +18,8 @@ public class RE_GunName : RE_Gun
     [SerializeField] float fireCoolTime;        // 연발 나가는 쿨타임
     float timer = 0f;
     bool isMousePress = false;
+    bool isReload = false;
+    Coroutine reloadRoutine;
 
     private void Awake()
     {
@@ -29,7 +31,7 @@ public class RE_GunName : RE_Gun
     private void Start()
     {
         allBullet = 1000;
-        availableBullet = 100;
+        availableBullet = 30;
         fireDamage = 20;
         curAvailavleBullet = availableBullet;
     }
@@ -38,6 +40,10 @@ public class RE_GunName : RE_Gun
     {
         Debug.DrawRay(muzzlePos.transform.position, cam.transform.forward * maxDistance, Color.green);
         ContinueousFire();      // 연발
+        if (!isReload)
+        {
+            StopCoroutine(reloadRoutine);
+        }
     }
 
     private void OnDisable()
@@ -72,10 +78,11 @@ public class RE_GunName : RE_Gun
     {
         RaycastHit hit;
 
-        if (curAvailavleBullet == 0)   // 총알 없으면 쏘지 못하도록
+        if (curAvailavleBullet <= 0 || isReload)   // 총알 없으면 쏘지 못하도록
             return;
 
         --curAvailavleBullet;
+        if (curAvailavleBullet < 0) curAvailavleBullet = 0;
 
         // 레이캐스트를 솼는데 부딪힌 물체가 있다면
         if (Physics.Raycast(muzzlePos.transform.position, cam.transform.forward, out hit, maxDistance))
@@ -124,8 +131,26 @@ public class RE_GunName : RE_Gun
 
     public override void Reload()    // 재장전
     {
-        allBullet = allBullet - (availableBullet - curAvailavleBullet);
-        curAvailavleBullet = availableBullet;
+        if(reloadRoutine != null)
+        {
+            isReload = false;
+
+            return;
+        }
+        isReload = true;
+        reloadRoutine = StartCoroutine(ReloadRoutine());
+    }
+
+    IEnumerator ReloadRoutine()
+    {
+        while (true)
+        {
+            allBullet = allBullet - (availableBullet - curAvailavleBullet);
+            curAvailavleBullet = availableBullet;
+            yield return new WaitForSeconds(3.08f);
+            isReload = false;
+            yield return null;
+        }
     }
 
     IEnumerator ReleaseRoutine(GameObject effect)   // 오브젝트 풀 Release 하기

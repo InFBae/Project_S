@@ -11,6 +11,8 @@ public class FPSPlayerAnim : MonoBehaviour
 
     private Animator anim;
     private bool isFire = false;
+    private bool isReload = false;
+    Coroutine reloadRoutine;
 
     private void Awake()
     {
@@ -19,6 +21,13 @@ public class FPSPlayerAnim : MonoBehaviour
     private void Start()
     {
         StartCoroutine(FireAnimRoutine());
+    }
+    private void Update()
+    {
+        if (!isReload)
+        {
+            StopCoroutine(reloadRoutine);
+        }
     }
 
     private void OnFire(InputValue value)
@@ -36,16 +45,38 @@ public class FPSPlayerAnim : MonoBehaviour
     {
         while (true)
         {
-            if (isFire && gun.IsBulletRemain())
+            if (isFire && gun.IsBulletRemain() && !isReload)
             {
                 anim.SetTrigger("Fire");
                 yield return new WaitForSeconds(0.1f);
             }
-            else if(isFire && !gun.IsBulletRemain())
-            {
-                anim.SetTrigger("Reload");
-                yield return new WaitForSeconds(3.08f);
-            }
+            //else if(isFire && !gun.IsBulletRemain())
+            //{
+            //    anim.SetTrigger("Reload");
+            //    yield return new WaitForSeconds(3.08f);
+            //}
+            yield return null;
+        }
+    }
+
+    private void OnReload(InputValue value)
+    {
+        if(reloadRoutine != null)
+        {
+            isReload = false;
+            return;
+        }
+        isReload = true;
+        reloadRoutine = StartCoroutine(ReloadRoutine());
+    }
+
+    IEnumerator ReloadRoutine()
+    {
+        while (true)
+        {
+            anim.SetTrigger("Reload");
+            yield return new WaitForSeconds(3.08f);
+            isReload = false;
             yield return null;
         }
     }
