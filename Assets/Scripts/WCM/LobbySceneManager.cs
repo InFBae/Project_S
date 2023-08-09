@@ -8,6 +8,7 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using UnityEngine.Events;
+using ExitGames.Client.Photon;
 
 public class LobbySceneManager : MonoBehaviourPunCallbacks
 {
@@ -37,11 +38,11 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
     {
         ConnectDataBase();
 
-        if (!PhotonNetwork.IsConnected)
+        /*if (!PhotonNetwork.IsConnected)
         {
             PhotonNetwork.LocalPlayer.NickName = $"DebugPlayer{UnityEngine.Random.Range(1000, 10000)}";
             PhotonNetwork.ConnectUsingSettings();
-        }
+        }*/
         
         if (NickNameChecking())
         {
@@ -93,10 +94,10 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
             {"canIrrupt", canIrrupt}
         };
 
-        Hashtable PlayerCustomProps = new Hashtable() { { "Nickname", nick} };
+        //Hashtable PlayerCustomProps = new Hashtable() { { "Nickname", nick} };
 
         Player player = null;
-        player.CustomProperties = PlayerCustomProps;
+        //player.CustomProperties = PlayerCustomProps;
 
 
         roomOptions.CustomRoomProperties = RoomCustomProps;
@@ -159,6 +160,8 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
 
             string query2 = $"UPDATE user_info SET U_Nickname='{nick}' WHERE U_ID = '{id}'";
             MySqlCommand cmd2 = new MySqlCommand(query2, con);
+            PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable { { "Nick", nick } });
+
             cmd2.ExecuteNonQuery();
             GameManager.Chat.Connect(PhotonNetwork.LocalPlayer.NickName);
             CloseNicknameSetting();
@@ -167,25 +170,31 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
 
     public bool NickNameChecking()
     {
-        string nick2 = PhotonNetwork.LocalPlayer.NickName;
-        string sqlCommand = $"SELECT U_Nickname FROM user_info WHERE U_ID='{nick2}'";
+        string readNick;
+        string id = PhotonNetwork.LocalPlayer.NickName;
+        string sqlCommand = $"SELECT U_Nickname FROM user_info WHERE U_ID='{id}'";
         MySqlCommand cmd = new MySqlCommand(sqlCommand, con);
         reader = cmd.ExecuteReader();
         if (reader.Read())
         {
-            string readNick = reader["U_Nickname"].ToString();
-            if (readNick == "")
+            readNick = reader["U_Nickname"].ToString();
+            if (readNick == "" || readNick == null)
             {
                 if (!reader.IsClosed)
                     reader.Close();
                 return true;
             }
-        
+            else
+            {
+                if (!reader.IsClosed)
+                    reader.Close();
+                PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable { { "Nick", readNick } });
+                return false;
+            }
         }
         if (!reader.IsClosed)
             reader.Close();
-        return false;
-        
+        return false;        
     }
 
     public void LogOut()
@@ -200,9 +209,11 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
         roomUI.SetActive(true);
         roomMenu.SetActive(false);
 
+        string Nick = PhotonNetwork.LocalPlayer.GetNick();
         PhotonNetwork.LocalPlayer.SetReady(false);
         PhotonNetwork.LocalPlayer.SetLoad(false);
 
+        Debug.Log(Nick);
         //자동 동기화
         //PhotonNetwork.AutomaticallySyncScene = true;
         UpdateRoomSetting();

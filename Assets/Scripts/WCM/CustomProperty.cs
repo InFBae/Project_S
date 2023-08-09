@@ -43,8 +43,8 @@ public static class CustomProperty
     public static string GetNick(this Player player)
     {
         PhotonHashtable property = player.CustomProperties;
-        if (property.ContainsKey("Nickname"))
-            return (string)property["Nickname"];
+        if (property.ContainsKey("Nick"))
+            return (string)property["Nick"];
         else
             return "";
     }

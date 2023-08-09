@@ -10,7 +10,6 @@ public class PlayerEntry : MonoBehaviour
 
     public void SetPlayer(Player player)
     {
-        playerName.text =
 
     }
 
