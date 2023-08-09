@@ -19,12 +19,14 @@ namespace JBB
 
         private void OnEnable()
         {
-            ChatManager.OnFriedntStatusChanged.AddListener(UpdateFriendStatus);
+            ChatManager.OnFriendStatusChanged.AddListener(UpdateFriendStatus);
+            ChatManager.OnFriendListChanged.AddListener(UpdateFriendList);
         }
 
         private void OnDisable()
         {
-            ChatManager.OnFriedntStatusChanged.RemoveListener(UpdateFriendStatus);
+            ChatManager.OnFriendStatusChanged.RemoveListener(UpdateFriendStatus);
+            ChatManager.OnFriendListChanged.RemoveListener(UpdateFriendList);
         }
 
         private void Start()
@@ -34,6 +36,7 @@ namespace JBB
 
         public void UpdateFriendList()
         {
+            // TODO 리스트 안에 객체들이 있을 때 비우고 재생성해야 함
             string sqlCommand = $"SELECT * FROM friend_info WHERE Owner = '{PhotonNetwork.LocalPlayer.NickName}'";
             MySqlDataReader reader = null ;
             reader = GameManager.DB.Execute(sqlCommand);
@@ -43,27 +46,16 @@ namespace JBB
                 reader.Read();
                 for (int i = 0; i < 10; i++)
                 {
-                    string userId = reader[$"friend{i+1}"].ToString();
+                    string nickname = reader[$"friend{i+1}"].ToString();
                     // TODO : 프렌드슬롯 추가
-                    if (userId != "")
+                    if (nickname != "")
                     {
                         FriendSlotUI friendSlot = GameManager.Pool.GetUI(GameManager.Resource.Load<FriendSlotUI>("UI/FriendSlot"));
-                        string sqlCommand2 = $"SELECT U_Nick FROM user_info WHERE U_ID = '{userId}'";
-                        MySqlDataReader nicknameReader = null;
-                        nicknameReader = GameManager.DB.Execute(sqlCommand2);
-                        if (nicknameReader.HasRows)
-                        {
-                            nicknameReader.Read();
-                            string nickname = nicknameReader["U_Nick"].ToString();
-                            friendSlot.SetState(nickname, 2);
-                            friendSlot.transform.SetParent(content.transform, false);
-                        }
-                        else
-                        {
-                            Debug.Log("Nickname query Failed");
-                        }
+
+                        friendSlot.SetState(nickname, 0);
+                        friendSlot.transform.SetParent(content.transform, false);
                     }
-                    Debug.Log(i+1 + userId);
+                    Debug.Log(i+1 + nickname);
                 }
             }            
         }
