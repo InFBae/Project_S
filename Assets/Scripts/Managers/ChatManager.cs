@@ -64,6 +64,11 @@ public class ChatManager : MonoBehaviour, IChatClientListener
         chatClient.Connect(PhotonNetwork.PhotonServerSettings.AppSettings.AppIdChat, "1.0", new AuthenticationValues(nickname));
     }
 
+    public void DisConnect()
+    {
+        chatClient.Disconnect();
+    }
+
     public void Update()
     {
         chatClient.Service();
