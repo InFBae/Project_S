@@ -27,7 +27,7 @@ namespace ahndabi
             trailEffect = GameManager.Resource.Load<TrailRenderer>("BulletTrail");
         }
 
-        private void Start()
+        private void OnEnable()
         {
             remainBullet = 1000;
             availableBullet = 60;
@@ -35,6 +35,7 @@ namespace ahndabi
             curAvailavleBullet = availableBullet;
             statusUI.DecreaseCurrentBulletUI(curAvailavleBullet);
             statusUI.DecreaseRemainBulletUI(remainBullet);
+
         }
 
         private void Update()
@@ -51,7 +52,7 @@ namespace ahndabi
         void ContinueousFire()      // ¿¬¹ß
         {
             timer += Time.deltaTime;
-
+            // 0 
             if (Input.GetMouseButtonDown(0))
             {
                 isMousePress = true;

@@ -23,7 +23,6 @@ namespace ahndabi
 
         void OnReload(InputValue value)
         {
-            Debug.Log("Reload");
             gun.Reload();
             anim.SetTrigger("Reload");
         }

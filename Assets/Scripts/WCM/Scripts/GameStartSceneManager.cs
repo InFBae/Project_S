@@ -222,7 +222,7 @@ public class GameStartSceneManager : MonoBehaviourPunCallbacks
     //지속적으로 디버깅해야하므로 랜덤하게 들어가도록 설정.
     /*private void OnEnable()
     {
-        idInputField.text = string.Format("Player {0}", Random.Range(1000, 10000));
+        idInputField.text = string.Format("player {0}", Random.Range(1000, 10000));
     }*/
 
     /*
@@ -257,22 +257,22 @@ public class GameStartSceneManager : MonoBehaviourPunCallbacks
             SetActivePanel(Panel.Menu);
         }
 
-        public override void OnPlayerEnteredRoom(Player newPlayer)
+        public override void OnPlayerEnteredRoom(player newPlayer)
         {
             roomPanel.PlayerEnterRoom(newPlayer);
         }
 
-        public override void OnPlayerLeftRoom(Player otherPlayer)
+        public override void OnPlayerLeftRoom(player otherPlayer)
         {
             roomPanel.PlayerLeftRoom(otherPlayer);
         }
 
-        public override void OnPlayerPropertiesUpdate(Player targetPlayer, PhotonHashtable changedProps)
+        public override void OnPlayerPropertiesUpdate(player targetPlayer, PhotonHashtable changedProps)
         {
             roomPanel.PlayerPropertiesUpdate(targetPlayer, changedProps);
         }
 
-        public override void OnMasterClientSwitched(Player newMasterClient)
+        public override void OnMasterClientSwitched(player newMasterClient)
         {
             roomPanel.MasterClientSwitched(newMasterClient);
         }
