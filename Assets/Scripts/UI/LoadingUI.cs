@@ -16,16 +16,16 @@ public class LoadingUI : MonoBehaviour
 
     public void FadeIn()
     {
-        anim.SetTrigger("FadeIn");
+        //anim.SetTrigger("FadeIn");
     }
 
     public void FadeOut()
     {
-        anim.SetTrigger("FadeOut");
+        //anim.SetTrigger("FadeOut");
     }
 
     public void SetProgress(float progress)
     {
-        slider.value = progress;
+        //slider.value = progress;
     }
 }
