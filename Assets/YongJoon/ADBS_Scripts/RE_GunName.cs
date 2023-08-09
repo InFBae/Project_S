@@ -38,7 +38,7 @@ public class RE_GunName : RE_Gun
     private void Start()
     {
         allBullet = 1000;
-        availableBullet = 30;
+        availableBullet = 100;
         fireDamage = 20;
         curAvailavleBullet = availableBullet;
 
@@ -92,9 +92,19 @@ public class RE_GunName : RE_Gun
 
         --curAvailavleBullet;
         if (curAvailavleBullet < 0) curAvailavleBullet = 0;
+        Vector3 camFwd = cam.transform.forward;
+
+        Vector2 dir = new Vector2(Random.Range(-boundValue, boundValue), Random.Range(-boundValue, boundValue));
+        Vector2 clampedDir = Vector2.ClampMagnitude(dir, boundValue);
+
+        Vector3 rayShootDir = camFwd + Vector3.right * clampedDir.x * 2.5f + Vector3.up * clampedDir.y * 0.8f;
+        //float radius = Random.Range(0, boundValue);
+        //float angle = Random.Range(0, 10* Mathf.PI);
+        //float maxValue = Mathf.(Mathf.Cos(angle));
+        //Vector3 rayShootDir = new Vector3(camFwd.x + radius * Mathf.Cos(angle), camFwd.y + radius * Mathf.Sin(angle), camFwd.z * Mathf.Sin(angle));
 
         // 레이캐스트를 솼는데 부딪힌 물체가 있다면
-        if (Physics.Raycast(muzzlePos.transform.position, cam.transform.forward + Vector3.right * Random.Range(-boundValue,boundValue)  + Vector3.up * Random.Range(-boundValue,boundValue), out hit, maxDistance))
+        if (Physics.Raycast(muzzlePos.transform.position, rayShootDir /*cam.transform.forward + Vector3.right * 3f *Random.Range(-boundValue,boundValue)  + Vector3.up * Random.Range(-boundValue,boundValue)*/, out hit, maxDistance))
         {
 
             if (hit.transform.gameObject.layer == 7)  // 바디 레이어를 맞췄다면?

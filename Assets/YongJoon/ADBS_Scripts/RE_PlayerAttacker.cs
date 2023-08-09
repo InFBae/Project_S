@@ -46,7 +46,7 @@ public class RE_PlayerAttacker : RE_Player
             else if (gun.fireStack > 0)
             {
                 gun.fireStack--;
-                yield return new WaitForSeconds(0.1f);
+                yield return new WaitForSeconds(0.05f);
 
             }
             yield return null;
