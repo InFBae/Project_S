@@ -6,23 +6,69 @@ using UnityEngine.InputSystem;
 
 public class RE_PlayerAttacker : RE_Player
 {
-    void Fire()
+    Coroutine fireRoutine;
+    Coroutine fireStackRoutine;
+
+
+    bool isFire = false;
+
+
+
+    private void Start()
     {
-        if (anim.GetCurrentAnimatorStateInfo(1).IsName("reloading"))
-            return;
-
-        gun.Fire();
-        anim.SetTrigger("Fire");
+        fireStackRoutine = StartCoroutine(FireStackRoutine());
     }
-
-    void OnFire(InputValue value)
+    IEnumerator FireRoutine()
     {
-        Fire();
+        while (true)
+        {
+            if (isFire)
+            {
+                gun.Fire();
+                yield return new WaitForSeconds(gun.FireCoolTime);
+            }
+            else
+            {
+                yield return null;
+            }
+        }
     }
+    IEnumerator FireStackRoutine()
+    {
+        while (true)
+        {
+            if (isFire)
+            {
+                gun.fireStack++;
+                yield return new WaitForSeconds(0.1f);
 
+            }
+            else if (gun.fireStack > 0)
+            {
+                gun.fireStack--;
+                yield return new WaitForSeconds(0.1f);
+
+            }
+            yield return null;
+        }
+    }
+    private void OnFire(InputValue value)
+    {
+        if (isFire == false)
+        {
+            fireRoutine = StartCoroutine(FireRoutine());
+            Debug.Log(gun.boundValue);
+            isFire = true;
+        }
+        else if(!value.isPressed)
+        {
+            StopCoroutine(fireRoutine);
+            isFire = false;
+        }
+    }
     void OnReload(InputValue value)
     {
         gun.Reload();
-        anim.SetTrigger("Reload");
+        //anim.SetTrigger("Reload");
     }
 }

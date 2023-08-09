@@ -16,10 +16,17 @@ public class RE_GunName : RE_Gun
     [SerializeField] float maxDistance;     // 최대 사거리. 60
     [SerializeField] float bulletSpeed;
     [SerializeField] float fireCoolTime;        // 연발 나가는 쿨타임
+    public float FireCoolTime { get { return fireCoolTime; } }
+
+    //float lastFireTime = 0f;
     float timer = 0f;
-    bool isMousePress = false;
-    bool isReload = false;
+    //bool isMousePress = false;
+    public bool isReload = false;
+    public float boundValue = 0f;
+    public int fireStack = 0;
     Coroutine reloadRoutine;
+
+
 
     private void Awake()
     {
@@ -34,16 +41,23 @@ public class RE_GunName : RE_Gun
         availableBullet = 30;
         fireDamage = 20;
         curAvailavleBullet = availableBullet;
+
+
     }
 
     private void Update()
     {
         Debug.DrawRay(muzzlePos.transform.position, cam.transform.forward * maxDistance, Color.green);
-        ContinueousFire();      // 연발
-        if (!isReload)
+        if (isReload)
         {
-            StopCoroutine(reloadRoutine);
+            fireStack = 0;
         }
+        else if (boundValue > 0)
+        {
+            boundValue -= 0.01f;
+            if (boundValue < 0) boundValue = 0f;
+        }
+        boundValue = Mathf.Clamp(0.02f * fireStack, 0f, 0.15f);
     }
 
     private void OnDisable()
@@ -51,42 +65,38 @@ public class RE_GunName : RE_Gun
         StopAllCoroutines();
     }
 
-    void ContinueousFire()      // 연발
-    {
-        timer += Time.deltaTime;
 
-        if (Input.GetMouseButtonDown(0))
-        {
-            isMousePress = true;
-        }
-        else if (Input.GetMouseButtonUp(0))
-        {
-            isMousePress = false;
-        }
 
-        if (isMousePress)
-        {
-            if (timer >= fireCoolTime)
-            {
-                Fire();
-                timer = 0f;
-            }
-        }
-    }
+    //void ContinueousFire()      // 연발
+    //{
+    //    timer += Time.deltaTime;
+
+    //    if (isFire)
+    //    {
+    //        if (timer >= fireCoolTime)
+    //        {
+    //            Fire();
+    //            timer = 0f;
+    //        }
+    //    }
+    //}
+
+
 
     public override void Fire()
     {
         RaycastHit hit;
 
-        if (curAvailavleBullet <= 0 || isReload)   // 총알 없으면 쏘지 못하도록
+        if (curAvailavleBullet <= 0 || isReload/*anim.GetCurrentAnimatorStateInfo(0).IsName("reloading")*/)   // 총알 없으면 쏘지 못하도록
             return;
 
         --curAvailavleBullet;
         if (curAvailavleBullet < 0) curAvailavleBullet = 0;
 
         // 레이캐스트를 솼는데 부딪힌 물체가 있다면
-        if (Physics.Raycast(muzzlePos.transform.position, cam.transform.forward, out hit, maxDistance))
+        if (Physics.Raycast(muzzlePos.transform.position, cam.transform.forward + Vector3.right * Random.Range(-boundValue,boundValue)  + Vector3.up * Random.Range(-boundValue,boundValue), out hit, maxDistance))
         {
+
             if (hit.transform.gameObject.layer == 7)  // 바디 레이어를 맞췄다면?
             {
                 hit.transform.gameObject.GetComponentInParent<RE_PlayerTakeDamage>().TakeDamage(fireDamage);
@@ -116,7 +126,6 @@ public class RE_GunName : RE_Gun
             StartCoroutine(TrailRoutine(muzzlePos.position, hit.point));
             ReleaseRoutine(trailEffect.gameObject);
 
-            Rebound();
         }
         else
         {
@@ -124,33 +133,47 @@ public class RE_GunName : RE_Gun
             StartCoroutine(TrailRoutine(muzzlePos.position, hit.point));
             ReleaseRoutine(trailEffect.gameObject);
 
-            Rebound();
+
         }
         Debug.Log("Fire");
     }
 
     public override void Reload()    // 재장전
     {
-        if(reloadRoutine != null)
+        if(isReload)
         {
-            isReload = false;
-
             return;
         }
-        isReload = true;
-        reloadRoutine = StartCoroutine(ReloadRoutine());
+        else
+        {
+            isReload = true;
+            reloadRoutine = StartCoroutine(ReloadRoutine());
+        }
     }
 
     IEnumerator ReloadRoutine()
     {
+        bool tempIsReload = isReload;
         while (true)
         {
-            allBullet = allBullet - (availableBullet - curAvailavleBullet);
-            curAvailavleBullet = availableBullet;
-            yield return new WaitForSeconds(3.08f);
-            isReload = false;
-            yield return null;
+            if(tempIsReload != isReload)
+            {
+                isReload = tempIsReload;
+                StopReload();
+                yield return null;
+            }
+            else
+            {
+                allBullet = allBullet - (availableBullet - curAvailavleBullet);
+                curAvailavleBullet = availableBullet;
+                tempIsReload = false;
+                yield return new WaitForSeconds(3.08f);
+            }
         }
+    }
+    private void StopReload()
+    {
+        StopCoroutine(reloadRoutine); 
     }
 
     IEnumerator ReleaseRoutine(GameObject effect)   // 오브젝트 풀 Release 하기
@@ -177,12 +200,6 @@ public class RE_GunName : RE_Gun
             yield return null;
         }
         GameManager.Pool.Release(trailrenderer.gameObject);
-    }
-
-    void Rebound()      // 반동
-    {
-        // 카메라 위로 살짝 움직이기
-        //camera.m_Tilt = Mathf.Lerp(camera.m_Tilt, camera.m_Tilt - 0.8f, 0.5f);
     }
 
 }

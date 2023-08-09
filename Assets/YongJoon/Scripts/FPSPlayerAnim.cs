@@ -24,10 +24,7 @@ public class FPSPlayerAnim : MonoBehaviour
     }
     private void Update()
     {
-        if (!isReload)
-        {
-            StopCoroutine(reloadRoutine);
-        }
+
     }
 
     private void OnFire(InputValue value)
@@ -61,23 +58,38 @@ public class FPSPlayerAnim : MonoBehaviour
 
     private void OnReload(InputValue value)
     {
-        if(reloadRoutine != null)
+        if(isReload)
         {
-            isReload = false;
             return;
         }
-        isReload = true;
-        reloadRoutine = StartCoroutine(ReloadRoutine());
+        else
+        {
+            isReload = true;
+            reloadRoutine = StartCoroutine(ReloadRoutine());
+        }
     }
 
     IEnumerator ReloadRoutine()
     {
+        bool tempIsReload = isReload;
         while (true)
         {
-            anim.SetTrigger("Reload");
-            yield return new WaitForSeconds(3.08f);
-            isReload = false;
-            yield return null;
+            if (tempIsReload != isReload)
+            {
+                isReload = tempIsReload;
+                StopReload();
+                yield return null;
+            }
+            else
+            {
+                anim.SetTrigger("Reload");
+                tempIsReload = false;
+                yield return new WaitForSeconds(3.08f);
+            }
         }
+    }
+    private void StopReload()
+    {
+        StopCoroutine(reloadRoutine);
     }
 }
