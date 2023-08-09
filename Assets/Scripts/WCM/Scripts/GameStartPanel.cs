@@ -42,7 +42,7 @@ public class GameStartPanel : MonoBehaviour
     //지속적으로 디버깅해야하므로 랜덤하게 들어가도록 설정.
     /*private void OnEnable()
     {
-        idInputField.text = string.Format("player {0}", Random.Range(1000, 10000));
+        idInputField.text = string.Format("Player {0}", Random.Range(1000, 10000));
     }*/
 
     //로그인 함수 -> 버튼연동
