@@ -13,6 +13,8 @@ public class RoomSceneManager : MonoBehaviour
 
     public Player[] playerList;
 
+    ChatClient chatclient;
+
     //방 유저목록 초기화
     public void UpdatePlayerList()
     {
@@ -40,10 +42,11 @@ public class RoomSceneManager : MonoBehaviour
         PhotonNetwork.LoadLevel("GameScnee");
     }
 
-    //방나가는 함수
-    public void LeaveRoom()
+    /*//방나가는 함수
+    public void ExitRoom()
     {
         PhotonNetwork.LeaveRoom();
-        //로비구독
-    }
+        PhotonNetwork.JoinLobby();
+        //챗 클라이언트 chatclient.Subscribe["noticechannel"];
+    }*/
 }

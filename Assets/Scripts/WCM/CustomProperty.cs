@@ -97,4 +97,13 @@ public static class CustomProperty
         else
             return false;
     }
+    /*public static bool GetRoomInfo_IsPlayingNow(this Room room)
+    {
+        PhotonHashtable property = room.CustomProperties;
+        if (property.ContainsKey("IsPlayingNow"))
+            return (bool)property["IsPlayingNow"];
+        else
+            return false;
+    }*/
+
 }

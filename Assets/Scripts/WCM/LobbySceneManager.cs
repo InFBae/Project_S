@@ -1,14 +1,13 @@
 using MySql.Data.MySqlClient;
+using Photon.Realtime;
 using Photon.Pun;
 using System;
 using UnityEngine;
 using TMPro;
-using Photon.Realtime;
-using Hashtable = ExitGames.Client.Photon.Hashtable;
+using PhotonHashtable = ExitGames.Client.Photon.Hashtable;
 using UnityEngine.UI;
 using System.Collections.Generic;
-using UnityEngine.Events;
-using ExitGames.Client.Photon;
+
 
 public class LobbySceneManager : MonoBehaviourPunCallbacks
 {
@@ -17,6 +16,10 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
     [SerializeField] GameObject lobbyUI;
     [SerializeField] GameObject roomUI;
 
+    [SerializeField] RoomEntry roomEntry;
+    [SerializeField] RectTransform roomContent;
+
+    Dictionary<string, RoomInfo> roomDic;
 
     private MySqlDataReader reader;
     private MySqlConnection con;
@@ -32,7 +35,62 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
     [SerializeField] bool b;
     [SerializeField] float c;
 
+    //룸 dic생성
+    private void Awake()
+    {
+        roomDic = new Dictionary<string, RoomInfo>();
+    }
+    
+    //룸 list 업데이트
+    public void UpdateRoomList(List<RoomInfo> roomList)
+    {
+        for (int i = 0; i < roomContent.childCount; i++)
+        {
+            Destroy(roomContent.GetChild(i).gameObject);
+        }
 
+        // 룸 리스트 update
+        foreach (RoomInfo info in roomList)
+        {
+            // 방이 사라졌으면
+            // photon 에서 제공해주는 roominfo 안에 사라질 예정인 방을 마킹해놓음 + 방이 비공개가 되었을 경우 + 방이 닫혔으면(게임시작)
+            if (info.RemovedFromList || !info.IsVisible || !info.IsOpen)
+            {
+                // 삭제예정인 방이지만 dic에 추가가 안된경우도 존재 할 수 있음.
+                if (roomDic.ContainsKey(info.Name))
+                {
+                    roomDic.Remove(info.Name);
+                }
+                continue;
+            }
+
+            // 방이 변경됐으면
+            // 이름이 있었던 방일경우 최신으로 갱신 dic내에 존재하는 방이면
+            if (roomDic.ContainsKey(info.Name))
+            {
+                roomDic[info.Name] = info;
+            }
+
+            // 방이 생성됐으면
+            else
+            {
+                roomDic.Add(info.Name, info);
+            }
+        }
+
+        // create room list
+        // Dic이 초기화되었으면 해당 자료형을 사용해서 새로 방구성
+        foreach (RoomInfo info in roomDic.Values)
+        {
+            RoomEntry entry = Instantiate(roomEntry, roomContent.transform);
+            entry.SetRoomInfo(info);
+        }
+    }
+    public void JoinRoom()
+    {
+        PhotonNetwork.LeaveLobby();
+        PhotonNetwork.JoinRoom(PhotonNetwork.CurrentRoom.Name);
+    }
 
     void Start()
     {
@@ -87,16 +145,17 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
         //RoomOptions options = new RoomOptions { MaxPlayers = (byte)maxPlayer };
 
         RoomOptions roomOptions = new RoomOptions() { IsVisible = true, IsOpen = true, MaxPlayers = maxPlayer };
-        Hashtable RoomCustomProps = new Hashtable()
+        PhotonHashtable RoomCustomProps = new PhotonHashtable()
         {
+            {"IsPlayingNow" , false},
             {"gameTime", gameTime},
             {"maxKill", maxKill },
             {"canIrrupt", canIrrupt}
         };
 
-        //Hashtable PlayerCustomProps = new Hashtable() { { "Nickname", nick} };
+        //PhotonHashtable PlayerCustomProps = new PhotonHashtable() { { "Nickname", nick} };
 
-        Player player = null;
+        //Player player = null;
         //player.CustomProperties = PlayerCustomProps;
 
 
@@ -104,15 +163,15 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
        
         //방만들기 시도
         PhotonNetwork.CreateRoom(roomName, roomOptions);
-        //bool dfaf = PhotonNetwork.CurrentRoom.GetRoomInfo_canIrrupt();
-        //Debug.Log(dfaf);
+        
         //Debug.Log(PhotonNetwork.CurrentRoom.CustomProperties["gameTime"].ToString());
     }
 
-    public override void OnRoomListUpdate(List<RoomInfo> roomList)
+    public override void OnRoomListUpdate(List<Photon.Realtime.RoomInfo> roomList)
     {
-        base.OnRoomListUpdate(roomList);
+        UpdateRoomList(roomList);
     }
+
     public override void OnConnectedToMaster()
     {
         PhotonNetwork.JoinLobby();
@@ -160,7 +219,7 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
 
             string query2 = $"UPDATE user_info SET U_Nickname='{nick}' WHERE U_ID = '{id}'";
             MySqlCommand cmd2 = new MySqlCommand(query2, con);
-            PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable { { "Nick", nick } });
+            PhotonNetwork.LocalPlayer.SetCustomProperties(new PhotonHashtable { { "Nick", nick } });
 
             cmd2.ExecuteNonQuery();
             GameManager.Chat.Connect(PhotonNetwork.LocalPlayer.NickName);
@@ -188,7 +247,7 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
             {
                 if (!reader.IsClosed)
                     reader.Close();
-                PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable { { "Nick", readNick } });
+                PhotonNetwork.LocalPlayer.SetCustomProperties(new PhotonHashtable { { "Nick", readNick } });
                 return false;
             }
         }
@@ -205,9 +264,9 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
+        roomMenu.SetActive(false);
         lobbyUI.SetActive(false);
         roomUI.SetActive(true);
-        roomMenu.SetActive(false);
 
         string Nick = PhotonNetwork.LocalPlayer.GetNick();
         PhotonNetwork.LocalPlayer.SetReady(false);
@@ -225,9 +284,8 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
         b = PhotonNetwork.CurrentRoom.GetRoomInfo_canIrrupt();
         c = PhotonNetwork.CurrentRoom.GetRoomInfo_maxKill();
     }
-    public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
+    public override void OnRoomPropertiesUpdate(PhotonHashtable propertiesThatChanged)
     {
-
         UpdateRoomSetting();
     }
 
@@ -244,14 +302,8 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
         {
             return;
         }
-
         //roominfo 가 바뀐값 참고해서 룸 프로퍼티 변경
         roomSetting.SetActive(false);
-    }
-
-    public void ExitRoom()
-    {
-        PhotonNetwork.LeaveRoom();
     }
 
     //방만들기 실패했을때 ?
@@ -260,5 +312,13 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
         // 어떤 이유로 실패했는지 로그 찍어줌
         Debug.Log($"create room failed with error({returnCode}) : {message}");
         //statePanel.AddMessage($"create room failed with error({returnCode}) : {message}");
+    }
+    public void ExitRoom()
+    {
+        PhotonNetwork.LeaveRoom();
+        PhotonNetwork.JoinLobby();
+        roomUI.SetActive(false);
+        lobbyUI.SetActive(true);
+        //챗 클라이언트 chatclient.Subscribe["noticechannel"];
     }
 }
