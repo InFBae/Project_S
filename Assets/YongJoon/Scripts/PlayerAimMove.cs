@@ -79,7 +79,7 @@ public class PlayerAimMove : MonoBehaviour
         //shootRoot.transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
 
         v = shootRoot.forward.normalized * Mathf.Cos(-xRotation/80);
-
+        //v.z = Mathf.Clamp(v.z - 0.2f, 0, 1);
         fireRoot.transform.position = v + shootRoot.position;/*transform.position+ upTrans + new Vector3(0, -xRotation/80, 0);*/
 
     }

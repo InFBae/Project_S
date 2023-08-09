@@ -3,28 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Yong
+
+public class RE_PlayerAttacker : RE_Player
 {
-    public class RE_PlayerAttacker : RE_Player
+    void Fire()
     {
-        void Fire()
-        {
-            if (anim.GetCurrentAnimatorStateInfo(1).IsName("reloading"))
-                return;
+        if (anim.GetCurrentAnimatorStateInfo(1).IsName("reloading"))
+            return;
 
-            gun.Fire();
-            anim.SetTrigger("Fire");
-        }
+        gun.Fire();
+        anim.SetTrigger("Fire");
+    }
 
-        void OnFire(InputValue value)
-        {
-            Fire();
-        }
+    void OnFire(InputValue value)
+    {
+        Fire();
+    }
 
-        void Reload(InputValue value)
-        {
-            gun.Reload();
-            anim.SetTrigger("Reload");
-        }
+    void Reload(InputValue value)
+    {
+        gun.Reload();
+        anim.SetTrigger("Reload");
     }
 }
