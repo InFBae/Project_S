@@ -36,7 +36,12 @@ namespace JBB
 
         public void UpdateFriendList()
         {
-            // TODO 리스트 안에 객체들이 있을 때 비우고 재생성해야 함
+            FriendSlotUI[] friendSlotUIs = GetComponentsInChildren<FriendSlotUI>();
+            foreach (FriendSlotUI friendSlotUI in friendSlotUIs)
+            {
+                GameManager.Pool.ReleaseUI(friendSlotUI);
+            }
+
             string sqlCommand = $"SELECT * FROM friend_info WHERE Owner = '{PhotonNetwork.LocalPlayer.NickName}'";
             MySqlDataReader reader = null ;
             reader = GameManager.DB.Execute(sqlCommand);
@@ -47,7 +52,6 @@ namespace JBB
                 for (int i = 0; i < 10; i++)
                 {
                     string nickname = reader[$"friend{i+1}"].ToString();
-                    // TODO : 프렌드슬롯 추가
                     if (nickname != "")
                     {
                         FriendSlotUI friendSlot = GameManager.Pool.GetUI(GameManager.Resource.Load<FriendSlotUI>("UI/FriendSlot"));
