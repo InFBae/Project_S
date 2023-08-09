@@ -128,7 +128,7 @@ public class ChatManager : MonoBehaviour, IChatClientListener
     {
         Debug.Log($"OnPrivateMessage : {message}");
     }
-    public void OnStatusUpdate(string user, int status, bool gotMessage, object message)
+    void IChatClientListener.OnStatusUpdate(string user, int status, bool gotMessage, object message)
     {
         Debug.Log($"status : {user} is {status}, Msg : {message}");
         OnFriendStatusChanged?.Invoke(user, status);

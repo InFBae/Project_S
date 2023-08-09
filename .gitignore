@@ -76,3 +76,13 @@ crashlytics-build.properties
 /Assets/Scripts/ADB/Animator
 /Assets/Scripts/ADB/Weapon Effects
 /Assets/Scripts/ADB/BloodDecalsAndEffects
+/Assets/ADB/Animator/Death.fbx
+/Assets/ADB/Animator/Death.fbx.meta
+/Assets/ADB/Animator/Fire.fbx
+/Assets/ADB/Animator/Fire.fbx.meta
+/Assets/ADB/Animator/Medium Hit To Head.fbx
+/Assets/ADB/Animator/Medium Hit To Head.fbx.meta
+/Assets/ADB/Animator/Reload.fbx
+/Assets/ADB/Animator/Reload.fbx.meta
+/Assets/ADB/Animator/TakeDamage.fbx
+/Assets/ADB/Animator/TakeDamage.fbx.meta
