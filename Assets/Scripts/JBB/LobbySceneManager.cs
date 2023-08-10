@@ -61,25 +61,37 @@ namespace JBB
             }
             return null;
         }
-
-        /*
-        public void LogOut()
+                
+        public override void OnRoomListUpdate(List<RoomInfo> roomList)
         {
-            GameManager.Scene.LoadScene("GameStartScene_");
+            lobbyUI.UpdateRoomList(roomList);
+        }       
+
+        public override void OnJoinedRoom()
+        {
             PhotonNetwork.LeaveLobby();
+            GameManager.Chat.LeaveLobbyChannel();
+
+            Debug.Log($"{GameManager.Chat.Nickname} Joined Room");
+            PhotonNetwork.LocalPlayer.SetReady(false);
+            PhotonNetwork.LocalPlayer.SetLoad(false);
+            GameManager.Scene.LoadScene("RoomScene");
+        }
+        public override void OnJoinRoomFailed(short returnCode, string message)
+        {
+            // 어떤 이유로 실패했는지 로그 찍어줌
+            Debug.Log($"Join Room Failed With Error({returnCode}) : {message}");
         }
 
-        //방만들기 실패했을때 ?
+        public override void OnCreatedRoom()
+        {
+            Debug.Log("Create Room Success");
+        }
         public override void OnCreateRoomFailed(short returnCode, string message)
         {
-            // 방만들기가 실패할경우 menu화면 돌아가야함
-
-
             // 어떤 이유로 실패했는지 로그 찍어줌
             Debug.Log($"create room failed with error({returnCode}) : {message}");
-            //statePanel.AddMessage($"create room failed with error({returnCode}) : {message}");
         }
-        */
     }
 }
 
