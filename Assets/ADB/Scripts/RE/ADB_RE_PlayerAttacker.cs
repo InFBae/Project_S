@@ -3,20 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class ADB_RE_PlayerAttacker : RE_Player
+public class ADB_RE_PlayerAttacker : ADB_RE_Player
 {
     Coroutine fireRoutine;
     Coroutine fireStackRoutine;
 
-
     private bool isFire = false;
-
-
 
     private void Start()
     {
         fireStackRoutine = StartCoroutine(FireStackRoutine());
     }
+
     IEnumerator FireRoutine()
     {
         while (true)

@@ -9,17 +9,28 @@ public class ADB_RE_Player : MonoBehaviour
 
     protected Animator anim;
     [SerializeField] protected GameObject diePlayer;
-    [SerializeField] protected float hp;
-    [SerializeField] protected RE_GunName gun;
+    [SerializeField] protected ADB_RE_GunName gun;
+    [SerializeField] int hp;
+    [SerializeField] public int Hp { get { return hp; } private set { if (hp <= 0) hp = 0; else hp = value; } }
+    [SerializeField] protected int killCount;
 
     private void Awake()
     {
         anim = GetComponentInChildren<Animator>();
-        gun = GetComponentInChildren<RE_GunName>();
+        gun = GetComponentInChildren<ADB_RE_GunName>();
     }
 
     private void Start()
     {
-        hp = 200f;
+        hp = 200;
+        anim.Play("rifle aiming idle");
+    }
+
+    protected int DecreaseHp(int damage)
+    {
+        hp -= damage;
+        if (hp <= 0)
+            hp = 0;
+        return hp;
     }
 }
