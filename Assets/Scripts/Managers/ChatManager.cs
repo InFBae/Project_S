@@ -64,6 +64,11 @@ public class ChatManager : MonoBehaviour, IChatClientListener
         chatClient.Connect(PhotonNetwork.PhotonServerSettings.AppSettings.AppIdChat, "1.0", new AuthenticationValues(nickname));
     }
 
+    public void DisConnect()
+    {
+        chatClient.Disconnect();
+    }
+
     public void Update()
     {
         chatClient.Service();
@@ -128,7 +133,7 @@ public class ChatManager : MonoBehaviour, IChatClientListener
     {
         Debug.Log($"OnPrivateMessage : {message}");
     }
-    public void OnStatusUpdate(string user, int status, bool gotMessage, object message)
+    void IChatClientListener.OnStatusUpdate(string user, int status, bool gotMessage, object message)
     {
         Debug.Log($"status : {user} is {status}, Msg : {message}");
         OnFriendStatusChanged?.Invoke(user, status);
