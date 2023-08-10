@@ -27,7 +27,7 @@ namespace ahndabi
             trailEffect = GameManager.Resource.Load<TrailRenderer>("BulletTrail");
         }
 
-        private void Start()
+        private void OnEnable()
         {
             remainBullet = 1000;
             availableBullet = 60;
@@ -35,11 +35,12 @@ namespace ahndabi
             curAvailavleBullet = availableBullet;
             statusUI.DecreaseCurrentBulletUI(curAvailavleBullet);
             statusUI.DecreaseRemainBulletUI(remainBullet);
+
         }
 
         private void Update()
         {
-            Debug.DrawRay(muzzlePos.transform.position, Camera.main.transform.forward * maxDistance, Color.green);
+            //Debug.DrawRay(muzzlePos.transform.position, Camera.main.transform.forward * maxDistance, Color.green);
             ContinueousFire();      // 연발
         }
 
@@ -51,7 +52,7 @@ namespace ahndabi
         void ContinueousFire()      // 연발
         {
             timer += Time.deltaTime;
-
+            // 0 
             if (Input.GetMouseButtonDown(0))
             {
                 isMousePress = true;
@@ -73,8 +74,6 @@ namespace ahndabi
 
         public override void Fire()
         {
-            RaycastHit hit;
-
             if (curAvailavleBullet == 0)   // 총알 없으면 쏘지 못하도록
                 return;
 
@@ -113,7 +112,6 @@ namespace ahndabi
                 StartCoroutine(TrailRoutine(muzzlePos.position, hit.point));
                 ReleaseRoutine(trailEffect.gameObject);
 
-                Rebound();
             }
             else
             {
@@ -121,7 +119,6 @@ namespace ahndabi
                 StartCoroutine(TrailRoutine(muzzlePos.position, hit.point));
                 ReleaseRoutine(trailEffect.gameObject);
 
-                Rebound();
             }
             Debug.Log("Fire");
         }
