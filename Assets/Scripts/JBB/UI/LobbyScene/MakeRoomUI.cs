@@ -104,12 +104,14 @@ namespace JBB
             PhotonHashtable RoomCustomProps = new PhotonHashtable()
             {
                 {"IsPlaying" , false},
+                { "GameType", GameType},                
                 {"GameTime", GameTime},
                 {"MaxKill", MaxKill },
                 {"Intrusion", Intrusion}
             };
 
             roomOptions.CustomRoomProperties = RoomCustomProps;
+            roomOptions.CustomRoomPropertiesForLobby = new string[] { "IsPlaying", "GameType" };
 
             //방만들기 시도
             if (PhotonNetwork.CreateRoom(RoomName, roomOptions))
