@@ -29,13 +29,12 @@ namespace ahndabi
 
         private void OnEnable()
         {
-            remainBullet = 1000;
-            availableBullet = 60;
+            remainBullet = 220;
+            availableBullet = 100;
             fireDamage = 12;
             curAvailavleBullet = availableBullet;
             statusUI.DecreaseCurrentBulletUI(curAvailavleBullet);
             statusUI.DecreaseRemainBulletUI(remainBullet);
-
         }
 
         private void Update()

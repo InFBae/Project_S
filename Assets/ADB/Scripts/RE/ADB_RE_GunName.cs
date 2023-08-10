@@ -1,3 +1,4 @@
+using ahndabi;
 using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
 
-public class ADB_RE_GunName : RE_Gun
+public class ADB_RE_GunName : ADB_RE_Gun
 {
     [SerializeField] GameObject hitParticle;
     [SerializeField] ParticleSystem bloodParticle;
@@ -35,14 +36,14 @@ public class ADB_RE_GunName : RE_Gun
         trailEffect = GameManager.Resource.Load<TrailRenderer>("BulletTrail");
     }
 
-    private void Start()
+    private void OnEnable()
     {
-        allBullet = 1000;
+        remainBullet = 220;
         availableBullet = 100;
         fireDamage = 20;
         curAvailavleBullet = availableBullet;
-
-
+        statusUI.DecreaseCurrentBulletUI(curAvailavleBullet);
+        statusUI.DecreaseRemainBulletUI(remainBullet);
     }
 
     private void Update()
@@ -91,7 +92,11 @@ public class ADB_RE_GunName : RE_Gun
             return;
 
         --curAvailavleBullet;
+
         if (curAvailavleBullet < 0) curAvailavleBullet = 0;
+
+        statusUI.DecreaseCurrentBulletUI(curAvailavleBullet);
+
         Vector3 camFwd = cam.transform.forward;
 
         Vector2 dir = new Vector2(Random.Range(-boundValue, boundValue), Random.Range(-boundValue, boundValue));
@@ -109,19 +114,19 @@ public class ADB_RE_GunName : RE_Gun
 
             if (hit.transform.gameObject.layer == 7)  // 바디 레이어를 맞췄다면?
             {
-                hit.transform.gameObject.GetComponentInParent<ahndabi.PlayerTakeDamage>().TakeDamage(fireDamage);
+                hit.transform.gameObject.GetComponentInParent<ADB_RE_PlayerTakeDamage>().TakeDamage(fireDamage);
                 ParticleSystem hitEffect = GameManager.Pool.Get(bloodParticle, hit.point, Quaternion.LookRotation(hit.normal), hit.transform);
                 Debug.Log("바디");
             }
             else if (hit.transform.gameObject.layer == 9)  // 팔다리 레이어를 맞췄다면?
             {
-                hit.transform.gameObject.GetComponentInParent<ahndabi.PlayerTakeDamage>().TakeDamage(fireDamage);
+                hit.transform.gameObject.GetComponentInParent<ADB_RE_PlayerTakeDamage>().TakeDamage(fireDamage);
                 ParticleSystem hitEffect = GameManager.Pool.Get(bloodParticle, hit.point, Quaternion.LookRotation(hit.normal), hit.transform);
                 Debug.Log("팔다리");
             }
             else if (hit.transform.gameObject.layer == 8)  // 헤드 레이어를 맞췄다면?
             {
-                hit.transform.gameObject.GetComponentInParent<ahndabi.PlayerTakeDamage>().TakeDamage(fireDamage * 2);
+                hit.transform.gameObject.GetComponentInParent<ADB_RE_PlayerTakeDamage>().TakeDamage(fireDamage * 2);
                 ParticleSystem hitEffect = GameManager.Pool.Get(bloodParticle, hit.point, Quaternion.LookRotation(hit.normal), hit.transform);
                 Debug.Log("헤드");
             }
@@ -150,7 +155,24 @@ public class ADB_RE_GunName : RE_Gun
 
     public override void Reload()    // 재장전
     {
-        if(isReload)
+        if (remainBullet == 0)
+            return;
+
+        if ((remainBullet + curAvailavleBullet) <= availableBullet)
+        {
+            remainBullet = 0;
+            curAvailavleBullet = remainBullet + curAvailavleBullet;
+        }
+        else
+        {
+            remainBullet = remainBullet - (availableBullet - curAvailavleBullet);
+            curAvailavleBullet = availableBullet;
+        }
+
+        statusUI.DecreaseCurrentBulletUI(curAvailavleBullet);
+        statusUI.DecreaseRemainBulletUI(remainBullet);
+
+        if (isReload)
         {
             return;
         }
@@ -174,7 +196,7 @@ public class ADB_RE_GunName : RE_Gun
             }
             else
             {
-                allBullet = allBullet - (availableBullet - curAvailavleBullet);
+                remainBullet = remainBullet - (availableBullet - curAvailavleBullet);
                 curAvailavleBullet = availableBullet;
                 tempIsReload = false;
                 yield return new WaitForSeconds(3.08f);
