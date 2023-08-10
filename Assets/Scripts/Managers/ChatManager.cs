@@ -1,16 +1,11 @@
 using ExitGames.Client.Photon;
 using Photon.Chat;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using Photon.Pun;
 using AuthenticationValues = Photon.Chat.AuthenticationValues;
 using UnityEngine.Events;
 using MySql.Data.MySqlClient;
-using JBB;
-using static UnityEditor.ShaderData;
 
 public class ChatManager : MonoBehaviour, IChatClientListener
 {
@@ -20,6 +15,8 @@ public class ChatManager : MonoBehaviour, IChatClientListener
     private string noticeChannel;
 
     public static UnityEvent<string> OnGetLobbyMessage = new UnityEvent<string>();
+    public static UnityEvent<string, int> OnFriendStatusChanged = new UnityEvent<string, int>();
+    public static UnityEvent OnFriendListChanged = new UnityEvent();
 
     protected internal ChatAppSettings chatAppSettings;
 
@@ -67,6 +64,11 @@ public class ChatManager : MonoBehaviour, IChatClientListener
         chatClient.Connect(PhotonNetwork.PhotonServerSettings.AppSettings.AppIdChat, "1.0", new AuthenticationValues(nickname));
     }
 
+    public void DisConnect()
+    {
+        chatClient.Disconnect();
+    }
+
     public void Update()
     {
         chatClient.Service();
@@ -106,6 +108,8 @@ public class ChatManager : MonoBehaviour, IChatClientListener
         Debug.Log("connected server");
 
         chatClient.Subscribe(new string[] { noticeChannel, lobbyChannel }, 10);
+
+        AddDBFriends();
     }
 
     public void OnDisconnected()
@@ -129,12 +133,11 @@ public class ChatManager : MonoBehaviour, IChatClientListener
     {
         Debug.Log($"OnPrivateMessage : {message}");
     }
-
-    public void OnStatusUpdate(string user, int status, bool gotMessage, object message)
+    void IChatClientListener.OnStatusUpdate(string user, int status, bool gotMessage, object message)
     {
         Debug.Log($"status : {user} is {status}, Msg : {message}");
+        OnFriendStatusChanged?.Invoke(user, status);
     }
-
     public void OnSubscribed(string[] channels, bool[] results)
     {
 
@@ -147,12 +150,12 @@ public class ChatManager : MonoBehaviour, IChatClientListener
 
     public void OnUserSubscribed(string channel, string user)
     {
-        throw new System.NotImplementedException();
+
     }
 
     public void OnUserUnsubscribed(string channel, string user)
     {
-        throw new System.NotImplementedException();
+
     }
 
 
@@ -163,11 +166,56 @@ public class ChatManager : MonoBehaviour, IChatClientListener
         {
             return;
         }
-        this.chatClient.PublishMessage(lobbyChannel, inputLine);
+        chatClient.PublishMessage(lobbyChannel, inputLine);
     }
 
     public void UnSubscribe(string[] channel)
     {
-        this.chatClient.Unsubscribe(channel);
+        chatClient.Unsubscribe(channel);
     }
+
+    public bool AddFriend(string nickname)
+    {
+        string[] nicknames = new string[] { nickname };
+        if (chatClient.AddFriends(nicknames))
+        {
+            Debug.Log($"Succeed AddFriend {nickname}");
+            return true;
+        }
+        Debug.Log($"Failed AddFriend {nickname}");
+        return false;
+    }
+
+    public bool RemoveFriend(string nickname)
+    {
+        string[] nicknames = new string[] { nickname };
+        if (chatClient.RemoveFriends(nicknames))
+        {
+            Debug.Log($"Succeed RemoveFriend {nickname}");
+            return true;
+        }
+        Debug.Log($"Failed RemoveFriend {nickname}");
+        return false;
+    }
+
+    public void AddDBFriends()
+    {
+        string sqlCommand = $"SELECT * FROM friend_info WHERE Owner = '{PhotonNetwork.LocalPlayer.NickName}'";
+        MySqlDataReader reader = null;
+        reader = GameManager.DB.Execute(sqlCommand);
+
+        if (reader.HasRows)
+        {
+            reader.Read();
+            for (int i = 0; i < 10; i++)
+            {
+                string nickname = reader[$"friend{i + 1}"].ToString();
+                if (nickname != "")
+                {
+                    AddFriend(nickname);
+                }
+            }
+        }
+    }
+
 }
