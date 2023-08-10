@@ -1,13 +1,12 @@
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering.Universal;
 
 
-public abstract class RE_Gun : MonoBehaviour
+public abstract class ADB_RE_Gun : MonoBehaviour
 {
     [SerializeField] protected Transform muzzlePos;
     [SerializeField] protected int fireDamage;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class RE_PlayerAttacker : RE_Player
+public class ADB_RE_PlayerAttacker : RE_Player
 {
     Coroutine fireRoutine;
     Coroutine fireStackRoutine;

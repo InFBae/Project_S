@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
 
-public class RE_GunName : RE_Gun
+public class ADB_RE_GunName : RE_Gun
 {
     [SerializeField] GameObject hitParticle;
     [SerializeField] ParticleSystem bloodParticle;

@@ -1,3 +1,4 @@
+using ahndabi;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -7,7 +8,8 @@ public class DiePlayer : MonoBehaviour
 {
     // Player의 transform와 계속 똑같아야 함
 
-    [SerializeField] Transform Player;
+    [SerializeField] Transform player;
+    [SerializeField] SpawnPlayer spawnPlayer;
 
     private void Awake()
     {
@@ -16,18 +18,26 @@ public class DiePlayer : MonoBehaviour
 
     private void OnEnable()
     {
+       StartCoroutine(SpawnRoutine());
        StartCoroutine(ActiveFalseRoutine());
     }
 
     private void LateUpdate()
     {
-        gameObject.transform.position = Player.transform.position;
-        gameObject.transform.rotation = Player.transform.rotation;
+        gameObject.transform.position = player.transform.position;
+        gameObject.transform.rotation = player.transform.rotation;
     }
 
     IEnumerator ActiveFalseRoutine()
     {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(3f);
         gameObject.SetActive(false);
+    }
+
+    IEnumerator SpawnRoutine()
+    {
+        yield return new WaitForSeconds(3f);
+        spawnPlayer.Spawn();
+        player.parent.gameObject.SetActive(true);
     }
 }
