@@ -40,7 +40,7 @@ namespace ahndabi
 
         private void Update()
         {
-            Debug.DrawRay(muzzlePos.transform.position, Camera.main.transform.forward * maxDistance, Color.green);
+            //Debug.DrawRay(muzzlePos.transform.position, Camera.main.transform.forward * maxDistance, Color.green);
             ContinueousFire();      // 연발
         }
 
@@ -74,8 +74,6 @@ namespace ahndabi
 
         public override void Fire()
         {
-            RaycastHit hit;
-
             if (curAvailavleBullet == 0)   // 총알 없으면 쏘지 못하도록
                 return;
 
@@ -114,7 +112,6 @@ namespace ahndabi
                 StartCoroutine(TrailRoutine(muzzlePos.position, hit.point));
                 ReleaseRoutine(trailEffect.gameObject);
 
-                Rebound();
             }
             else
             {
@@ -122,7 +119,6 @@ namespace ahndabi
                 StartCoroutine(TrailRoutine(muzzlePos.position, hit.point));
                 ReleaseRoutine(trailEffect.gameObject);
 
-                Rebound();
             }
             Debug.Log("Fire");
         }

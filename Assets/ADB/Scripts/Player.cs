@@ -14,6 +14,7 @@ namespace ahndabi
         [SerializeField] protected Gun gun;
         [SerializeField] int hp;
         [SerializeField] public int Hp { get { return hp; } private set { if (hp <= 0) hp = 0; else hp = value; } }
+        [SerializeField] protected int killCount;
 
         private void Awake()
         {
