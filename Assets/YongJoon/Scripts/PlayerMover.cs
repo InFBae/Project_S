@@ -44,13 +44,13 @@ public class PlayerMover : MonoBehaviour
         // 떠있을때 벽에 매달리기 방지
         if (!IsGrounded() && !IsClimbable())
         {
-            Debug.Log("is Float");
+            //Debug.Log("is Float");
             return;
         }
         // 각도 계산해 특정 각도는 올라갈 수 있게
         if (IsClimbable())
         {
-            Debug.Log("isClimbable");
+            //Debug.Log("isClimbable");
             rb.MovePosition(transform.position + Vector3.up * 0.3f);
         }
         if (moveDir.magnitude == 0)

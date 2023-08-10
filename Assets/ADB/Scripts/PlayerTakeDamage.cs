@@ -18,6 +18,7 @@ namespace ahndabi
 
         public void TakeDamage(int damage)    // 데미지 받기
         {
+            Debug.Log("TakeDamage");
             DecreaseHp(damage);
             statusUI.DecreaseHPUI(damage);
             anim.SetTrigger("TakeDamage");
