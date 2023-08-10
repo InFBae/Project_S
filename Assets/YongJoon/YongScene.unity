@@ -41160,6 +41160,35 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 822380416}
   m_Mesh: {fileID: 4300000, guid: 05849f5e02b594f45806f79fe7fdfdc7, type: 3}
+--- !u!1 &824898816 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4399175209531934745, guid: 025a821ceaebbe84c85833919756989a,
+    type: 3}
+  m_PrefabInstance: {fileID: 3046277445681533991}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &824898818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 824898816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 1537165951}
+  sceneViewId: 1
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &825158129
 GameObject:
   m_ObjectHideFlags: 0
@@ -77362,6 +77391,18 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &1537165951 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6130295687308763314, guid: 025a821ceaebbe84c85833919756989a,
+    type: 3}
+  m_PrefabInstance: {fileID: 3046277445681533991}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1539175815
 GameObject:
   m_ObjectHideFlags: 0
@@ -109153,7 +109194,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1b82fe2ef56c3e43b480cc8271c892e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 7365901491630395952}
+  Player: {fileID: 0}
 --- !u!1 &4016129420348119873
 GameObject:
   m_ObjectHideFlags: 0
@@ -112588,7 +112629,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1b82fe2ef56c3e43b480cc8271c892e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 8400493005895706285}
+  Player: {fileID: 0}
 --- !u!1 &5244443018547511042
 GameObject:
   m_ObjectHideFlags: 0
