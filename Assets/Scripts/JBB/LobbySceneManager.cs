@@ -1,12 +1,10 @@
 using MySql.Data.MySqlClient;
-using Photon.Chat;
 using Photon.Pun;
 using Photon.Realtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using PhotonHashtable = ExitGames.Client.Photon.Hashtable;
 
 namespace JBB
 {
@@ -77,6 +75,7 @@ namespace JBB
             Debug.Log($"{GameManager.Chat.Nickname} Joined Room");
             PhotonNetwork.LocalPlayer.SetReady(false);
             PhotonNetwork.LocalPlayer.SetLoad(false);
+            GameManager.Scene.LoadScene("RoomScene");
         }
         public override void OnJoinRoomFailed(short returnCode, string message)
         {
