@@ -10,6 +10,7 @@ public class PlayerMover : MonoBehaviour
     [SerializeField] private float walkSpeed;
     [SerializeField] private float jumpSpeed;
     [SerializeField] private Camera cam;
+    [SerializeField] RE_GunName gun;
     
     private LayerMask layerMask = 64;
 
@@ -92,7 +93,7 @@ public class PlayerMover : MonoBehaviour
             yield return null;
         }
     }
-    private bool IsGrounded()
+    public bool IsGrounded()
     {
         RaycastHit hit;
         return Physics.SphereCast(transform.position + Vector3.up * 1f,
@@ -169,11 +170,22 @@ public class PlayerMover : MonoBehaviour
     {
         if (value.isPressed)
         {
-            anim.SetBool("Crouch", true);
+            if (IsGrounded())
+            {
+                anim.SetBool("Crouch", true);
+            }
         }
         else
         {
             anim.SetBool("Crouch", false);
         }
+    }
+    private void OnReload(InputValue value)
+    {
+        if (gun.isReload)
+        {
+            return;
+        }
+        anim.SetTrigger("Reload");
     }
 }

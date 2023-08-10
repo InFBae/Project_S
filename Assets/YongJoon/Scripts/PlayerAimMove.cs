@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
@@ -18,9 +19,12 @@ public class PlayerAimMove : MonoBehaviour
     private Vector2 lookDelta;
     private float xRotation;
     private float yRotation;
+    private bool isSit = false;
     Vector3 upTrans;
     Vector3 point;
     Vector3 v;
+    private float sitValue = 0.7f;
+    PlayerMover mover;
 
 
     private void OnEnable()
@@ -36,6 +40,7 @@ public class PlayerAimMove : MonoBehaviour
     private void Awake()
     {
         upTrans = new Vector3(0, 1.7f, 0);
+        mover = GetComponent<PlayerMover>();
     }
 
     private void Update()
@@ -74,11 +79,13 @@ public class PlayerAimMove : MonoBehaviour
         xRotation = Mathf.Clamp(xRotation, -80f, 80f);
         // 카메라 루트를 회전하는식으로
         cameraRoot.transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
+        upTrans.y = isSit ? 1f : 1.7f;
         cameraRoot.transform.position = transform.position + upTrans;
 
         //shootRoot.transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
 
         v = shootRoot.forward.normalized * Mathf.Cos(-xRotation/80);
+        if(isSit) v.y -= sitValue;
         //v.z = Mathf.Clamp(v.z - 0.2f, 0, 1);
         fireRoot.transform.position = v + shootRoot.position;/*transform.position+ upTrans + new Vector3(0, -xRotation/80, 0);*/
 
@@ -87,5 +94,16 @@ public class PlayerAimMove : MonoBehaviour
     private void OnAim(InputValue value)
     {
         lookDelta = value.Get<Vector2>();
+    }
+    private void OnSit(InputValue value)
+    {
+        if (value.isPressed && mover.IsGrounded())
+        {
+            isSit = true;
+        }
+        else
+        {
+            isSit = false;
+        }
     }
 }

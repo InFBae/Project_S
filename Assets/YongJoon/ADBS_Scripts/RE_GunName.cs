@@ -17,6 +17,7 @@ public class RE_GunName : RE_Gun
     [SerializeField] float bulletSpeed;
     [SerializeField] float fireCoolTime;        // 연발 나가는 쿨타임
     public float FireCoolTime { get { return fireCoolTime; } }
+    public int GetCurBullet { get { return curAvailavleBullet; } }
 
     //float lastFireTime = 0f;
     float timer = 0f;

@@ -10,7 +10,7 @@ public class RE_PlayerAttacker : RE_Player
     Coroutine fireStackRoutine;
 
 
-    bool isFire = false;
+    private bool isFire = false;
 
 
 
