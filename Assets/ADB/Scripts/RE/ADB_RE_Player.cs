@@ -12,7 +12,9 @@ public class ADB_RE_Player : MonoBehaviour
     [SerializeField] protected ADB_RE_GunName gun;
     [SerializeField] int hp;
     [SerializeField] public int Hp { get { return hp; } private set { if (hp <= 0) hp = 0; else hp = value; } }
-    [SerializeField] protected int killCount;
+    [SerializeField] protected KillDeathUI killDeathUI;
+    public int killCount;
+    public int deathCount;
 
     private void Awake()
     {

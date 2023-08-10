@@ -22,6 +22,7 @@ public class ADB_RE_PlayerAttacker : ADB_RE_Player
             if (isFire)
             {
                 gun.Fire();
+
                 yield return new WaitForSeconds(gun.FireCoolTime);
             }
             else
@@ -67,5 +68,10 @@ public class ADB_RE_PlayerAttacker : ADB_RE_Player
     {
         gun.Reload();
         //anim.SetTrigger("Reload");
+    }
+
+    public void ChangeKillCount()
+    {
+        killDeathUI.ChagneKillDeathTextUI(killCount, deathCount);
     }
 }
