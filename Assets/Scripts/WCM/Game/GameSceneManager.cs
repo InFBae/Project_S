@@ -64,6 +64,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         //Transform position = new Vector3(spawnPointArray[Random.Range(0, 7)]);
 
         Vector3 spawnPosition = spawnPointArray[Random.Range(0, 7)].position;
+        spawnPosition = Vector3.zero;
 
         PhotonNetwork.Instantiate("Player", spawnPosition, Quaternion.identity, 0);
 
