@@ -1,3 +1,4 @@
+using ahndabi;
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,9 +11,11 @@ public abstract class ADB_RE_Gun : MonoBehaviour
 {
     [SerializeField] protected Transform muzzlePos;
     [SerializeField] protected int fireDamage;
-    [SerializeField] protected int allBullet;             // 총탄 개수
+    [SerializeField] protected int remainBullet;             // 총탄 개수
     [SerializeField] protected int availableBullet;       // 재장전 하기 전 사용 가능한 총탄 개수 
     [SerializeField] protected int curAvailavleBullet;    // 계속 사용 중인 현재 총알 개수   
+    [SerializeField] protected StatusUI statusUI;
+    public RaycastHit hit;
 
     public void ForwardDirection()
     {
