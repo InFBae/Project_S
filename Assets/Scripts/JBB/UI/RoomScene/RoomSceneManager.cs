@@ -1,6 +1,7 @@
 using Photon.Chat;
 using Photon.Pun;
 using Photon.Realtime;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,50 +11,76 @@ namespace JBB
 {
     public class RoomSceneManager : MonoBehaviourPunCallbacks
     {
-        public Player[] playerList;
+        [SerializeField] RoomUI roomUI;
 
-        private void Awake()
+        public override void OnEnable()
         {
-            playerList = GetComponentsInChildren<Player>();
+            base.OnEnable();
+            GameManager.Instance.SceneLoadInit();
         }
-        /*
-        //방 유저목록 초기화
-        public void UpdatePlayerList()
+
+        public override void OnDisable()
         {
-            for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
+            base.OnDisable();
+
+        }
+        private void Start()
+        {
+            // DebugMode
+            if (!PhotonNetwork.IsConnected)
             {
-                if (PhotonNetwork.IsMasterClient)
-                {
-                    // 호스트만 방장표시
-                    playerSlots.GetChild(i).GetChild(1).gameObject.SetActive(true);
-                }
-
-                // 사람인수만큼 오브젝트 활성화
-                playerSlots.GetChild(i).gameObject.SetActive(true);
-
-                // nickname 변경
-                playerSlots.GetChild(i).GetChild(0);
-
+                PhotonNetwork.LocalPlayer.NickName = "111";                
+                PhotonNetwork.ConnectUsingSettings();
+                PhotonNetwork.JoinLobby();
+                GameManager.Chat.Connect(PhotonNetwork.LocalPlayer.NickName);               
+            }
+            else
+            {
+                roomUI.UpdateRoomInfo();
+                roomUI.UpdateFriendList();
+                roomUI.UpdatePlayerList();
             }
         }
-        */
-        //게임시작
-        public void StartGame()
+
+        public override void OnConnectedToMaster()
         {
-            PhotonNetwork.LoadLevel("GameScene");
+            RoomOptions roomOptions = new RoomOptions() { IsVisible = false, IsOpen = true, MaxPlayers = 8 };
+
+            PhotonNetwork.JoinOrCreateRoom("Debug", roomOptions, TypedLobby.Default);
+        }
+        public override void OnJoinedRoom()
+        {
+            Debug.Log("Joined DebugRoom");
+            PhotonNetwork.LeaveLobby();
+
+            PhotonNetwork.LocalPlayer.SetNickname(GameManager.Chat.Nickname);
+            PhotonNetwork.LocalPlayer.SetReady(false);
+            PhotonNetwork.LocalPlayer.SetLoad(false);
+
+            roomUI.UpdateRoomInfo();
+            roomUI.UpdateFriendList();
+            roomUI.UpdatePlayerList();
         }
 
-        /*//방나가는 함수
-        public void ExitRoom()
+        public override void OnLeftRoom()
         {
-            PhotonNetwork.LeaveRoom();
             PhotonNetwork.JoinLobby();
-            //챗 클라이언트 chatclient.Subscribe["noticechannel"];
-        }*/
-        [PunRPC]
-        public void AddMessage(string text)
+            GameManager.Scene.LoadScene("LobbyScene");
+        }
+
+        public override void OnPlayerEnteredRoom(Player newPlayer)
         {
-            Debug.Log(text);
+            roomUI.UpdatePlayerList();
+        }
+
+        public override void OnPlayerLeftRoom(Player otherPlayer)
+        {
+            roomUI.UpdatePlayerList();
+        }
+
+        public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
+        {
+            roomUI.UpdatePlayerSlot(targetPlayer);
         }
     }
 }

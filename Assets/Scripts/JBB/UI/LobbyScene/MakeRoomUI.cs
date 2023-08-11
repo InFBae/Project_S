@@ -44,7 +44,13 @@ namespace JBB
         }
         public string GameType { get
             {
-                return gameTypeDropdown.options[gameTypeDropdown.value].ToString();
+                switch (gameTypeDropdown.value)
+                {
+                    case 0:
+                        return "SOLO";
+                    default:
+                        return "SOLO";
+                }
             } }
         public float GameTime { get
             {

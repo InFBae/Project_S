@@ -1,18 +1,27 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RoomInfoUI : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
+namespace JBB
+{
+    public class RoomInfoUI : BaseUI
     {
-        
+        protected override void Awake()
+        {
+            base.Awake();
+        }
+
+        public void UpdateRoomInfo()
+        {
+            texts["RoomNameText"].text = PhotonNetwork.CurrentRoom.Name;
+            texts["CurrentPlayerText"].text = $"{PhotonNetwork.CurrentRoom.PlayerCount}/{PhotonNetwork.CurrentRoom.MaxPlayers}";
+            texts["GameTypeText"].text = $"{PhotonNetwork.CurrentRoom.GetGameType()}";
+            texts["GameTimeText"].text = $"{PhotonNetwork.CurrentRoom.GetGameTime()} min";
+            texts["MaxKillText"].text = $"{PhotonNetwork.CurrentRoom.GetMaxKill()}";
+            texts["IntrusionText"].text = PhotonNetwork.CurrentRoom.GetIntrusion() ? "ON" : "OFF";
+        }
     }
 }
+

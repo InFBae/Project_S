@@ -10,6 +10,22 @@ namespace JBB
 {
     public static class CustomProperty
     {
+        public static string GetNickname(this Player player)
+        {
+            PhotonHashtable property = player.CustomProperties;
+            if (property.ContainsKey("Nickname"))
+                return (string)property["Nickname"];
+            else
+                return "";
+        }
+
+        public static void SetNickname(this Player player, string nickname)
+        {
+            PhotonHashtable property = new PhotonHashtable();
+            property["Nickname"] = nickname;
+            player.SetCustomProperties(property);
+        }
+
         public static bool GetReady(this Player player)
         {
             PhotonHashtable property = player.CustomProperties;
@@ -72,14 +88,29 @@ namespace JBB
             property["MaxKill"] = maxKill;
             room.SetCustomProperties(property);
         }
+        public static string GetGameType(this Room room)
+        {
+            PhotonHashtable property = room.CustomProperties;
+            if (property.ContainsKey("GameType"))
+                return (string)property["GameType"];
+            else
+                return "";
+        }
 
-        public static string GetGameTime(this Room room)
+        public static void SetGameType(this Room room, string gameType)
+        {
+            PhotonHashtable property = new PhotonHashtable();
+            property["GameType"] = gameType;
+            room.SetCustomProperties(property);
+        }
+
+        public static float GetGameTime(this Room room)
         {
             PhotonHashtable property = room.CustomProperties;
             if (property.ContainsKey("GameTime"))
-                return (string)property["GameTime"];
+                return (float)property["GameTime"];
             else
-                return "";
+                return 20;
         }
 
         public static void SetGameTime(this Room room, float gameTime)
