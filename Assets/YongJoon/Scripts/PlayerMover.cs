@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Photon.Pun;
 
 public class PlayerMover : MonoBehaviour
 {
@@ -22,6 +23,7 @@ public class PlayerMover : MonoBehaviour
     private float curSpeed;
     private float zSpeed = 0; // 위, 아래
     private bool isWalk = false;
+    PhotonView PV;
 
     private void Awake()
     {
@@ -29,10 +31,25 @@ public class PlayerMover : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         // 부딪혔을 떄 회전 방지
         rb.freezeRotation = true;
+        PV = GetComponentInParent<PhotonView>();
     }
     private void Start()
     {
-        playerBody.SetActive(false);
+        //playerBody.SetActive(false);
+        if (PV.IsMine)
+        {
+            playerBody.gameObject.layer = 4;
+            ChangeLayerRecursively(playerBody, 4);
+        }
+    }
+    private void ChangeLayerRecursively(GameObject obj, int layer)
+    {
+        obj.layer = layer;
+
+        foreach (Transform child in obj.transform)
+        {
+            ChangeLayerRecursively(child.gameObject, layer);
+        }
     }
     private void Update()
     {
