@@ -31,6 +31,7 @@ namespace JBB
             {
                 // 닉네임 생성
                 lobbyUI.EnableNicknameUI();
+                nick = NickNameChecking();
             }
             GameManager.Chat.Connect(nick);
             PhotonNetwork.ConnectUsingSettings();
@@ -73,6 +74,7 @@ namespace JBB
             GameManager.Chat.LeaveLobbyChannel();
 
             Debug.Log($"{GameManager.Chat.Nickname} Joined Room");
+            PhotonNetwork.LocalPlayer.SetNickname(GameManager.Chat.Nickname);
             PhotonNetwork.LocalPlayer.SetReady(false);
             PhotonNetwork.LocalPlayer.SetLoad(false);
             GameManager.Scene.LoadScene("RoomScene");
