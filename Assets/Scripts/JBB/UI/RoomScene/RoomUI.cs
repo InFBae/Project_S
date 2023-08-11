@@ -37,7 +37,7 @@ namespace JBB
         }
         private void OnGameStartButtonClicked()
         {
-
+            PhotonNetwork.LoadLevel("GameScene");
         }
         private void OnInviteFriendButtonClicked()
         {
