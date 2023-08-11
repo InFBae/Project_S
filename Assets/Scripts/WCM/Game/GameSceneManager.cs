@@ -7,6 +7,8 @@ using Photon.Pun.UtilityScripts;
 using System.Collections;
 using ExitGames.Client.Photon.Encryption;
 using JetBrains.Annotations;
+using UnityEngine.UIElements;
+using JBB;
 
 public class GameSceneManager : MonoBehaviourPunCallbacks
 {
@@ -110,16 +112,37 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         }
         return loadCount;
     }
-    
-    //일단 지금은 필요없음
-   /* public override void OnRoomPropertiesUpdate(PhotonHashtable propertiesThatChanged)
-    {
 
+
+    //start game
+    public override void OnRoomPropertiesUpdate(PhotonHashtable propertiesThatChanged)
+    {
+        if (propertiesThatChanged.ContainsKey(CustomProperty.LOADTIME))
+        {
+            StartCoroutine(GameStartTimer());
+        }
     }
 
-    //
+    public override void OnPlayerPropertiesUpdate(Player targetPlayer, PhotonHashtable changedProps)
+    {
+        if (changedProps.ContainsKey(CustomProperty.LOAD))
+        {
+            if (PlayerLoadCount() == PhotonNetwork.PlayerList.Length)
+            {
+                if (PhotonNetwork.IsMasterClient)
+                    PhotonNetwork.CurrentRoom.SetLoadTime((int)PhotonNetwork.Time);
+            }
+            else
+            {
+                Debug.Log($"Wait players {PlayerLoadCount()} / {PhotonNetwork.PlayerList.Length}");
+                infoText.text = $"Wait players {PlayerLoadCount()} / {PhotonNetwork.PlayerList.Length}";
+            }
+        }
+    }
+
     IEnumerator GameStartTimer()
     {
+        //스타트 위치 바꾸기 ? 먼저생성
         double loadTime = PhotonNetwork.CurrentRoom.GetLoadTime();
         while (countdownTime > PhotonNetwork.Time - loadTime)
         {
@@ -133,7 +156,18 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
 
         yield return new WaitForSeconds(1f);
         infoText.text = "";
-    }*/
+    }
 
+    private void GameStart()
+    {
+        Vector3 position = Vector3.zero;
 
+        PhotonNetwork.Instantiate("Player", position, Quaternion.identity);
+
+        //masterclient작업
+        if (PhotonNetwork.IsMasterClient)
+        {
+            
+        }
+    }
 }
