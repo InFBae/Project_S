@@ -10,3 +10,10 @@ public class RankingBoardUI : SceneUI
 
     }
 }
+
+public struct PlayerRankingInfo
+{
+    public int rank;
+    public string nickName;
+    public int killCount;
+}
