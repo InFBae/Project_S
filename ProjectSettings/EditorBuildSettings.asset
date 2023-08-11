@@ -6,15 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scripts/WCM/GameStartScene_.unity
-    guid: 178c6eaeae4006a4cab79c339314dfb0
-  - enabled: 1
-    path: Assets/Scripts/WCM/LobbyScene_.unity
-    guid: 75ce7aedb6c3e1745a29169cec7e1146
-  - enabled: 1
     path: Assets/Scenes/GameStartScene.unity
     guid: fda28edaf4f7ca440b7b4be7926ec478
   - enabled: 1
     path: Assets/Scenes/LobbyScene.unity
     guid: c33aa33749a009444add5f892bce05ac
+  - enabled: 1
+    path: Assets/Scenes/RoomScene.unity
+    guid: b79fe620cfc1fce40aa688e1d86efc3e
   m_configObjects: {}
