@@ -28,6 +28,10 @@ namespace JBB
         {
             if (PhotonNetwork.IsConnected)
             {
+                if (!PhotonNetwork.InLobby)
+                {
+                    PhotonNetwork.JoinLobby();
+                }
                 return;
             }
             string nick = NickNameChecking();

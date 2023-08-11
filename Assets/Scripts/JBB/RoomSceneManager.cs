@@ -68,7 +68,6 @@ namespace JBB
 
         public override void OnLeftRoom()
         {
-            PhotonNetwork.JoinLobby();
             GameManager.Scene.LoadScene("LobbyScene");
         }
 
