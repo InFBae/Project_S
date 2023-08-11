@@ -110,18 +110,9 @@ namespace JBB
                     {
                         GameManager.UI.CreatePopUpMessage("same name exist");
                         Debug.Log("same name exist");
-                        if (!reader.IsClosed)
-                        {
-                            reader.Close();
-                        }
-
                     }
                     else
                     {
-                        if (!reader.IsClosed)
-                        {
-                            reader.Close();
-                        }
                         string sqlCommand2 = $"INSERT INTO user_info(U_ID, U_Password) VALUES({id}, {password})";                        
                         GameManager.DB.ExecuteNonQuery(sqlCommand2);
                         Debug.Log("Complete sign up");

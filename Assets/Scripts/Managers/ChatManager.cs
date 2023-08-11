@@ -14,6 +14,8 @@ public class ChatManager : MonoBehaviour, IChatClientListener
     private string lobbyChannel;
     private string noticeChannel;
 
+    public string Nickname { get { return chatClient.UserId; } }
+
     public static UnityEvent<string> OnGetLobbyMessage = new UnityEvent<string>();
     public static UnityEvent<string, int> OnFriendStatusChanged = new UnityEvent<string, int>();
     public static UnityEvent OnFriendListChanged = new UnityEvent();
@@ -172,6 +174,16 @@ public class ChatManager : MonoBehaviour, IChatClientListener
     public void UnSubscribe(string[] channel)
     {
         chatClient.Unsubscribe(channel);
+    }
+
+    public void LeaveLobbyChannel()
+    {
+        chatClient.Unsubscribe(new string[] { lobbyChannel });
+    }
+
+    public void JoinLobbyChannel()
+    {
+        chatClient.Subscribe(new string[] { lobbyChannel });
     }
 
     public bool AddFriend(string nickname)
