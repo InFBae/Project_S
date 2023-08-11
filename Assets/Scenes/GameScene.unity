@@ -48265,6 +48265,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1357735393}
+  - component: {fileID: 1357735394}
   m_Layer: 0
   m_Name: GameSceneManager
   m_TagString: Untagged
@@ -48287,6 +48288,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1357735394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1357735392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72a6dce36bb23974f881567ce90c99f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inGameUI: {fileID: 0}
 --- !u!1 &1379234201
 GameObject:
   m_ObjectHideFlags: 0
@@ -91177,15 +91191,15 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4243693414037496503, guid: 10055c0b95c998a428df1a385818b3ae,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.000015258789
+      objectReference: {fileID: 0}
     - target: {fileID: 4243693415394502417, guid: 10055c0b95c998a428df1a385818b3ae,
         type: 3}
       propertyPath: m_Name
       value: InGameUI
-      objectReference: {fileID: 0}
-    - target: {fileID: 4243693415394502417, guid: 10055c0b95c998a428df1a385818b3ae,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4243693415394502508, guid: 10055c0b95c998a428df1a385818b3ae,
         type: 3}
@@ -91302,10 +91316,35 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4243693415757861357, guid: 10055c0b95c998a428df1a385818b3ae,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5721519844314944575, guid: 10055c0b95c998a428df1a385818b3ae,
         type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5721519844447395440, guid: 10055c0b95c998a428df1a385818b3ae,
+        type: 3}
+      propertyPath: m_Name
+      value: Rank4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5721519844931518600, guid: 10055c0b95c998a428df1a385818b3ae,
+        type: 3}
+      propertyPath: m_Name
+      value: PlayerKill5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5721519845116037163, guid: 10055c0b95c998a428df1a385818b3ae,
+        type: 3}
+      propertyPath: m_Name
+      value: PlayerKill4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5721519845303701848, guid: 10055c0b95c998a428df1a385818b3ae,
+        type: 3}
+      propertyPath: m_Name
+      value: Rank1
       objectReference: {fileID: 0}
     - target: {fileID: 5721519845390704249, guid: 10055c0b95c998a428df1a385818b3ae,
         type: 3}
@@ -91316,6 +91355,61 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5721519845404470902, guid: 10055c0b95c998a428df1a385818b3ae,
+        type: 3}
+      propertyPath: m_Name
+      value: PlayerName4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5721519845459369597, guid: 10055c0b95c998a428df1a385818b3ae,
+        type: 3}
+      propertyPath: m_Name
+      value: Rank2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5721519845631985106, guid: 10055c0b95c998a428df1a385818b3ae,
+        type: 3}
+      propertyPath: m_Name
+      value: Rank3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5721519845689413949, guid: 10055c0b95c998a428df1a385818b3ae,
+        type: 3}
+      propertyPath: m_Name
+      value: PlayerName3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5721519845911695936, guid: 10055c0b95c998a428df1a385818b3ae,
+        type: 3}
+      propertyPath: m_Name
+      value: PlayerKill2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5721519846027478720, guid: 10055c0b95c998a428df1a385818b3ae,
+        type: 3}
+      propertyPath: m_Name
+      value: PlayerName5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5721519846056231135, guid: 10055c0b95c998a428df1a385818b3ae,
+        type: 3}
+      propertyPath: m_Name
+      value: Rank5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5721519846165990627, guid: 10055c0b95c998a428df1a385818b3ae,
+        type: 3}
+      propertyPath: m_Name
+      value: PlayerKill3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5721519846216991917, guid: 10055c0b95c998a428df1a385818b3ae,
+        type: 3}
+      propertyPath: m_Name
+      value: PlayerName2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6362856389997041553, guid: 10055c0b95c998a428df1a385818b3ae,
+        type: 3}
+      propertyPath: m_Name
+      value: PlayerName1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6362856390592096496, guid: 10055c0b95c998a428df1a385818b3ae,
+        type: 3}
+      propertyPath: m_Name
+      value: PlayerKill1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 10055c0b95c998a428df1a385818b3ae, type: 3}
@@ -110184,7 +110278,13 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_WarningMessage: 
+  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
+    are already bound by a Humanoid avatar. These transforms can only be changed
+    by Humanoid clips.\n\tTransform 'mixamorig:Hips'\n\tTransform 'mixamorig:LeftFoot'\n\tTransform
+    'mixamorig:LeftHandThumb2'\n\tTransform 'mixamorig:LeftHandIndex1'\n\tTransform
+    'mixamorig:LeftHandPinky2'\n\tTransform 'mixamorig:Spine1'\n\tTransform 'mixamorig:LeftToeBase'\n\tTransform
+    'mixamorig:RightArm'\n\tTransform 'mixamorig:LeftLeg'\n\tTransform 'mixamorig:LeftHandMiddle3'\n\tand
+    more ...\n\tFrom animation clip 'TakeDamage'"
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
@@ -110439,7 +110539,13 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_WarningMessage: 
+  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
+    are already bound by a Humanoid avatar. These transforms can only be changed
+    by Humanoid clips.\n\tTransform 'mixamorig:Hips'\n\tTransform 'mixamorig:LeftFoot'\n\tTransform
+    'mixamorig:LeftHandThumb2'\n\tTransform 'mixamorig:LeftHandIndex1'\n\tTransform
+    'mixamorig:LeftHandPinky2'\n\tTransform 'mixamorig:Spine1'\n\tTransform 'mixamorig:LeftToeBase'\n\tTransform
+    'mixamorig:RightArm'\n\tTransform 'mixamorig:LeftLeg'\n\tTransform 'mixamorig:LeftHandMiddle3'\n\tand
+    more ...\n\tFrom animation clip 'TakeDamage'"
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
