@@ -1,4 +1,5 @@
 using Cinemachine;
+using Cinemachine.Utility;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -25,6 +26,7 @@ public class RE_GunName : RE_Gun
     public float boundValue = 0f;
     public int fireStack = 0;
     Coroutine reloadRoutine;
+    public bool isZoom = false;
 
 
 
@@ -58,6 +60,14 @@ public class RE_GunName : RE_Gun
             if (boundValue < 0) boundValue = 0f;
         }
         boundValue = Mathf.Clamp(0.02f * fireStack, 0f, 0.15f);
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            isZoom = true;
+        }else if (Input.GetMouseButtonUp(1))
+        {
+            isZoom = false;
+        }
     }
 
     private void OnDisable()
@@ -96,6 +106,11 @@ public class RE_GunName : RE_Gun
 
         Vector2 dir = new Vector2(Random.Range(-boundValue, boundValue), Random.Range(-boundValue, boundValue));
         Vector2 clampedDir = Vector2.ClampMagnitude(dir, boundValue);
+
+        if (isZoom)
+        {
+            clampedDir = Vector3.zero;
+        }
 
         Vector3 rayShootDir = camFwd + Vector3.right * clampedDir.x * 2.5f + Vector3.up * clampedDir.y * 0.8f;
         //float radius = Random.Range(0, boundValue);
@@ -211,5 +226,22 @@ public class RE_GunName : RE_Gun
         }
         GameManager.Pool.Release(trailrenderer.gameObject);
     }
-
+    //private void OnZoom(InputValue value)
+    //{
+    //    if (value.isPressed)
+    //    {
+    //        if (isZoom)
+    //        {
+    //            return;
+    //        }
+    //        else
+    //        {
+    //            isZoom = true;
+    //        }
+    //    }
+    //    else
+    //    {
+    //        isZoom = false;
+    //    }
+    //}
 }
