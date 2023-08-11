@@ -145,6 +145,8 @@ public class GameStartSceneManager : MonoBehaviourPunCallbacks
             }
             else
             {
+                if (!reader.IsClosed)
+                    reader.Close();
                 Debug.Log("There is no player id");
             }
         }
@@ -193,8 +195,8 @@ public class GameStartSceneManager : MonoBehaviourPunCallbacks
                         reader.Close();
                     }
                     string sqlCommand2 = $"INSERT INTO user_info(U_ID, U_Password) VALUES({id}, {password})";
-                    using MySqlCommand command = new MySqlCommand(sqlCommand2, con);
-                    command.ExecuteNonQuery();
+                    
+                    GameManager.DB.ExecuteNonQuery(sqlCommand2);
                     Debug.Log("Complete sign up");
                     CloseSignInUI();
                 }

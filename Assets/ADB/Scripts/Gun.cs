@@ -1,7 +1,5 @@
-using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering.Universal;
@@ -16,6 +14,8 @@ namespace ahndabi
         [SerializeField] protected int availableBullet;       // 재장전 하기 전 사용 가능한 총탄 개수 
         [SerializeField] protected int curAvailavleBullet;    // 계속 사용 중인 현재 총알 개수   
         [SerializeField] protected StatusUI statusUI;
+        public RaycastHit hit;
+
 
         public void ForwardDirection()
         {

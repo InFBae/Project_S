@@ -1,3 +1,4 @@
+using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,14 +9,18 @@ namespace JBB
     public class LobbyUI : BaseUI
     {
         NicknameUI nicknameUI;
-        FriendListUI friendListUI;
+        FindFriendUI findFriendUI;
         protected override void Awake()
         {
             base.Awake();
 
             nicknameUI = GetComponentInChildren<NicknameUI>();
             nicknameUI.gameObject.SetActive(false);
-            friendListUI = GetComponentInChildren<FriendListUI>();
+            findFriendUI = GetComponentInChildren<FindFriendUI>();
+            findFriendUI.gameObject.SetActive(false);
+
+            buttons["FindFriendButton"].onClick.AddListener(OnFindFriendButtonClicked);
+            buttons["LogOutButton"].onClick.AddListener(OnLogOutButtonClicked);
         }
 
         public void EnableNicknameUI()
@@ -23,6 +28,17 @@ namespace JBB
             nicknameUI.gameObject.SetActive(true);
         }
 
+        public void OnFindFriendButtonClicked()
+        {
+            findFriendUI.gameObject.SetActive(true);
+        }
+
+        public void OnLogOutButtonClicked()
+        {
+            GameManager.Chat.DisConnect();
+            PhotonNetwork.Disconnect();
+            GameManager.Scene.LoadScene("GameStartScene");           
+        }
     }
 }
 

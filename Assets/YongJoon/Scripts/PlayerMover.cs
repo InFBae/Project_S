@@ -5,10 +5,12 @@ using UnityEngine.InputSystem;
 
 public class PlayerMover : MonoBehaviour
 {
+    [SerializeField] GameObject playerBody;
     [SerializeField] private float nomalSpeed;
     [SerializeField] private float walkSpeed;
     [SerializeField] private float jumpSpeed;
     [SerializeField] private Camera cam;
+    [SerializeField] RE_GunName gun;
     
     private LayerMask layerMask = 64;
 
@@ -28,6 +30,10 @@ public class PlayerMover : MonoBehaviour
         // 부딪혔을 떄 회전 방지
         rb.freezeRotation = true;
     }
+    private void Start()
+    {
+        playerBody.SetActive(false);
+    }
     private void Update()
     {
         Move();
@@ -38,13 +44,13 @@ public class PlayerMover : MonoBehaviour
         // 떠있을때 벽에 매달리기 방지
         if (!IsGrounded() && !IsClimbable())
         {
-            Debug.Log("is Float");
+            //Debug.Log("is Float");
             return;
         }
         // 각도 계산해 특정 각도는 올라갈 수 있게
         if (IsClimbable())
         {
-            Debug.Log("isClimbable");
+            //Debug.Log("isClimbable");
             rb.MovePosition(transform.position + Vector3.up * 0.3f);
         }
         if (moveDir.magnitude == 0)
@@ -54,7 +60,7 @@ public class PlayerMover : MonoBehaviour
         }
         else
         {
-            dir = cam.transform.localRotation * moveDir;
+            dir = transform.localRotation * moveDir;
             dir = new Vector3(dir.x, 0f, dir.z);
 
             curSpeed = isWalk ? walkSpeed : nomalSpeed;
@@ -87,11 +93,11 @@ public class PlayerMover : MonoBehaviour
             yield return null;
         }
     }
-    private bool IsGrounded()
+    public bool IsGrounded()
     {
         RaycastHit hit;
         return Physics.SphereCast(transform.position + Vector3.up * 1f,
-            0.5f, Vector3.down, out hit, 0.6f);
+            0.5f, Vector3.down, out hit, 0.6f, layerMask);
     }
     //private bool IsFloating()
     //{
@@ -164,11 +170,22 @@ public class PlayerMover : MonoBehaviour
     {
         if (value.isPressed)
         {
-            anim.SetBool("Crouch", true);
+            if (IsGrounded())
+            {
+                anim.SetBool("Crouch", true);
+            }
         }
         else
         {
             anim.SetBool("Crouch", false);
         }
+    }
+    private void OnReload(InputValue value)
+    {
+        if (gun.isReload)
+        {
+            return;
+        }
+        anim.SetTrigger("Reload");
     }
 }

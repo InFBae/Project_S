@@ -46,7 +46,7 @@ namespace JBB
         }
         public string GetNickname()
         {
-            return texts["Nickname"].ToString();
+            return texts["Nickname"].text.ToString();
         }
     }
 }
