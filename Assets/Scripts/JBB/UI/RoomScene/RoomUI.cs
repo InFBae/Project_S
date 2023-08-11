@@ -12,6 +12,7 @@ namespace JBB
         RoomInfoUI roomInfoUI;
         PlayerListUI playerListUI;
         FriendListUI friendListUI;
+        RoomSettingUI roomSettingUI;
         protected override void Awake()
         {
             base.Awake();
@@ -25,6 +26,9 @@ namespace JBB
             roomInfoUI = GetComponentInChildren<RoomInfoUI>();
             playerListUI = GetComponentInChildren<PlayerListUI>();
             friendListUI = GetComponentInChildren<FriendListUI>();
+
+            roomSettingUI = GetComponentInChildren<RoomSettingUI>();
+            roomSettingUI.gameObject.SetActive(false);
         }
 
         private void OnGameReadyButtonClicked()
@@ -33,7 +37,7 @@ namespace JBB
         }
         private void OnGameStartButtonClicked()
         {
-
+            PhotonNetwork.LoadLevel("GameScene");
         }
         private void OnInviteFriendButtonClicked()
         {
@@ -41,7 +45,7 @@ namespace JBB
         }
         private void OnRoomSettingButtonClicked()
         {
-
+            roomSettingUI.gameObject.SetActive(true);
         }
         private void OnExitButtonClicked()
         {
