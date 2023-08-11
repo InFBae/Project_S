@@ -31,7 +31,7 @@ namespace JBB
             {
                 PhotonNetwork.LocalPlayer.NickName = "111";                
                 PhotonNetwork.ConnectUsingSettings();
-                PhotonNetwork.JoinLobby();
+                //PhotonNetwork.JoinLobby();
                 GameManager.Chat.Connect(PhotonNetwork.LocalPlayer.NickName);               
             }
             else
@@ -44,22 +44,26 @@ namespace JBB
 
         public override void OnConnectedToMaster()
         {
+            /*
             RoomOptions roomOptions = new RoomOptions() { IsVisible = false, IsOpen = true, MaxPlayers = 8 };
 
             PhotonNetwork.JoinOrCreateRoom("Debug", roomOptions, TypedLobby.Default);
+            */
         }
         public override void OnJoinedRoom()
-        {
+        {           
+            /*
             Debug.Log("Joined DebugRoom");
             PhotonNetwork.LeaveLobby();
 
             PhotonNetwork.LocalPlayer.SetNickname(GameManager.Chat.Nickname);
             PhotonNetwork.LocalPlayer.SetReady(false);
             PhotonNetwork.LocalPlayer.SetLoad(false);
-
+            
             roomUI.UpdateRoomInfo();
             roomUI.UpdateFriendList();
             roomUI.UpdatePlayerList();
+            */
         }
 
         public override void OnLeftRoom()
@@ -81,6 +85,11 @@ namespace JBB
         public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
         {
             roomUI.UpdatePlayerSlot(targetPlayer);
+        }
+
+        public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
+        {
+            roomUI.UpdateRoomInfo();
         }
     }
 }
