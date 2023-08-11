@@ -22,6 +22,7 @@ public class ADB_RE_PlayerAttacker : ADB_RE_Player
             if (isFire)
             {
                 gun.Fire();
+
                 yield return new WaitForSeconds(gun.FireCoolTime);
             }
             else
@@ -54,7 +55,7 @@ public class ADB_RE_PlayerAttacker : ADB_RE_Player
         if (isFire == false)
         {
             fireRoutine = StartCoroutine(FireRoutine());
-            Debug.Log(gun.boundValue);
+            //Debug.Log(gun.boundValue);
             isFire = true;
         }
         else if(!value.isPressed)
@@ -67,5 +68,13 @@ public class ADB_RE_PlayerAttacker : ADB_RE_Player
     {
         gun.Reload();
         //anim.SetTrigger("Reload");
+    }
+
+    public void ChangeKillCount()
+    {
+        killDeathUI.ChagneKillDeathTextUI(killCount, deathCount);
+        ADB_CustomProperty.SetKillCount(me, killCount);
+
+        Debug.Log(ADB_CustomProperty.GetKillCount(me));
     }
 }
