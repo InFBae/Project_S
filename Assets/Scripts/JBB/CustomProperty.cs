@@ -103,7 +103,7 @@ namespace JBB
                 return -1;
         }
 
-        public static void SetLoadTime(this Room room, int loadTime)
+        public static void SetLoadTime(this Room room, double loadTime)
         {
             PhotonHashtable property = new PhotonHashtable();
             property["LoadTime"] = loadTime;

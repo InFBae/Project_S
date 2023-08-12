@@ -14,7 +14,7 @@ namespace JBB
 
         public void UpdateKillDeathText()
         {
-            texts["KillDeath"].text = $"{PhotonNetwork.LocalPlayer.GetKillCount()} / {PhotonNetwork.LocalPlayer.GetDeathCount()}";
+            texts["KillDeathText"].text = $"{PhotonNetwork.LocalPlayer.GetKillCount()} / {PhotonNetwork.LocalPlayer.GetDeathCount()}";
         }
     }
 }

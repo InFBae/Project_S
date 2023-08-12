@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,6 @@ namespace JBB
 {
     public class InGameUI : BaseUI
     {
-        TimeUI timeUI;
         KillDeathUI killDeathUI;
         RankingBoardUI rankingBoardUI;
         StatusUI statusUI;
@@ -18,7 +18,6 @@ namespace JBB
         {
             base.Awake();
 
-            timeUI = GetComponentInChildren<TimeUI>();
             killDeathUI = GetComponentInChildren<KillDeathUI>();
             rankingBoardUI = GetComponentInChildren<RankingBoardUI>();
             statusUI = GetComponentInChildren<StatusUI>();
@@ -30,6 +29,12 @@ namespace JBB
         public void UpdateKillDeathUI()
         {
             killDeathUI.UpdateKillDeathText();
+        }
+
+        public void UpdateRankingBoard()
+        {
+            rankingBoardUI.UpdateRankerList();
+            rankingBoardUI.UpdateRankingBoard();
         }
     }
 }

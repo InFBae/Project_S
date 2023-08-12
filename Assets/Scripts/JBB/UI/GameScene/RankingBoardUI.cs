@@ -36,15 +36,17 @@ namespace JBB
         {
             for(int i = 0; i < rankers.Length; i++)
             {
-                if (rankers[i].GetNickname() != "")
+                if (rankers[i] != null)
                 {
-                    texts[$"Rank{i+1}"].text = $"{i + 1}. ";
-                    texts[$"PlayerName{i+1}"].text = rankers[i].GetNickname();
+                    texts[$"Rank{i + 1}"].text = $"{i + 1}. ";
+                    texts[$"PlayerName{i + 1}"].text = rankers[i].GetNickname();
                     texts[$"PlayerKill{i + 1}"].text = $"{rankers[i].GetKillCount()} Kill";
                 }
                 else
                 {
-                    texts["Rank"].text = "";
+                    texts[$"Rank{i + 1}"].text = "";
+                    texts[$"PlayerName{i + 1}"].text = "";
+                    texts[$"PlayerKill{i + 1}"].text = "";
                 }
             }
         }
