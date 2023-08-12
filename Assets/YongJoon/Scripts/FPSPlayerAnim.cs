@@ -7,16 +7,22 @@ using UnityEngine.InputSystem;
 public class FPSPlayerAnim : MonoBehaviour
 {
     [SerializeField] RE_GunName gun;
+    [SerializeField] Transform camTrans;
+    [SerializeField] Transform ZoomTrans;
+    
 
 
     private Animator anim;
+    private Vector3 defaltCamTrans;
     private bool isFire = false;
     private bool isReload = false;
+    private bool isZoom = false;
     Coroutine reloadRoutine;
 
     private void Awake()
     {
         anim = GetComponent<Animator>();
+        defaltCamTrans = camTrans.position;
     }
     private void Start()
     {
@@ -91,5 +97,27 @@ public class FPSPlayerAnim : MonoBehaviour
     private void StopReload()
     {
         StopCoroutine(reloadRoutine);
+    }
+    private void OnZoom(InputValue value)
+    {
+        if (value.isPressed)
+        {
+            if (isZoom)
+            {
+                return;
+            }
+            else
+            {
+                isZoom = true;
+                camTrans.position = ZoomTrans.position;
+                anim.SetBool("IsZoom", true);
+            }
+        }
+        else
+        {
+            isZoom = false;
+            camTrans.position = defaltCamTrans;
+            anim.SetBool("IsZoom", false);
+        }
     }
 }
