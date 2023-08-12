@@ -4,7 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 using ahndabi;
 
-public class PlayerController : MonoBehaviour
+public class Yong_PlayerController : MonoBehaviour
 {
     PhotonView PV;
     PlayerAttacker PAttack;
