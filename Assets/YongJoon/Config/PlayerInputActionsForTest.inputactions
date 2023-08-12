@@ -60,7 +60,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Joom",
+                    "name": "Zoom",
                     "type": "PassThrough",
                     "id": "9cffe52c-0e89-4f98-80b9-01b6b418eec6",
                     "expectedControlType": "Button",
@@ -196,7 +196,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Joom",
+                    "action": "Zoom",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
