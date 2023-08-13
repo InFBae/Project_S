@@ -21,11 +21,13 @@ public class Yong_PlayerController : MonoBehaviour
 
     private void Start()
     {
-        if (!PV.IsMine)
-        {
-            PAttack.enabled = false;
-            PMover.enabled = false;
-            PAimMove.enabled = false;
-        }
+        //if (!PV.IsMine)
+        //{
+        //    PAttack.enabled = false;
+        //    PMover.enabled = false;
+        //    PAimMove.enabled = false;
+        //}
+        int myNum = PhotonNetwork.LocalPlayer.ActorNumber;
+        Debug.Log($"my Act Number is {myNum}");
     }
 }

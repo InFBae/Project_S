@@ -65,11 +65,11 @@ public class PlayerMover : MonoBehaviour
             return;
         }
         // 각도 계산해 특정 각도는 올라갈 수 있게
-        if (IsClimbable())
-        {
-            //Debug.Log("isClimbable");
-            rb.MovePosition(transform.position + Vector3.up * 0.3f);
-        }
+        //if (IsClimbable())
+        //{
+        //    //Debug.Log("isClimbable");
+        //    rb.MovePosition(transform.position + Vector3.up * 0.3f);
+        //}
         if (moveDir.magnitude == 0)
         {
             rb.velocity = new Vector3(0, moveVec.y, 0);

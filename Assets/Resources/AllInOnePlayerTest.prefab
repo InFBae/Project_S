@@ -8887,6 +8887,7 @@ MonoBehaviour:
   diePlayer: {fileID: 7498499812823032062}
   gun: {fileID: 0}
   hp: 0
+  killCount: 0
   statusUI: {fileID: 0}
 --- !u!1 &6215652803261079805
 GameObject:
@@ -10790,7 +10791,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1b82fe2ef56c3e43b480cc8271c892e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 8586215996859795862}
+  player: {fileID: 0}
+  spawnPlayer: {fileID: 0}
 --- !u!1 &7574197551800453594
 GameObject:
   m_ObjectHideFlags: 0
