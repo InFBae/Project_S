@@ -10,16 +10,25 @@ using PhotonHashtable = ExitGames.Client.Photon.Hashtable;
 
 namespace JBB
 {
-    public class GameSceneManager : MonoBehaviourPunCallbacks
+    public class GameSceneManager : MonoBehaviourPunCallbacks, IPunObservable
     {
         [SerializeField] InGameUI inGameUI;
+        [SerializeField] GameObject spawnPointsPrefab;
+
+        Transform[] spawnPoints;
 
         public static UnityEvent<Player, Player, bool> OnKilled = new UnityEvent<Player, Player, bool>();
+
+        private void Awake()
+        {
+            spawnPoints = spawnPointsPrefab.GetComponentsInChildren<Transform>();
+        }
         private void Start()
         {          
             if (PhotonNetwork.InRoom)
             {
                 inGameUI.InitUI();
+                // 게임 준비사항 다 마치고 SetLoad 설정
             }
             else
             {
@@ -53,6 +62,14 @@ namespace JBB
             PhotonNetwork.LocalPlayer.SetLoad(true);
 
             inGameUI.InitUI();
+
+            // TODO : Player 한명만 소환으로 수정
+            for(int i = 0; i < 7; i++)
+            {
+                Transform spawnPoint = GetSpawnPoint();
+                GameManager.Resource.Instantiate(GameManager.Resource.Load<GameObject>("AllInOnePlayerTest"), spawnPoint.position, Quaternion.identity);
+            }
+            
             GameStart();
         }
 
@@ -132,6 +149,21 @@ namespace JBB
                     loadCount++;
             }
             return loadCount;
+        }
+
+        public Transform GetSpawnPoint()
+        {
+            Transform spawnPoint = spawnPoints[UnityEngine.Random.Range(0, 8)];
+            while (Physics.Raycast(spawnPoint.position, Vector3.up, 2))
+            {
+                spawnPoint = spawnPoints[UnityEngine.Random.Range(0, 8)];
+            }
+            return spawnPoint;
+        }
+
+        public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+        {
+            
         }
     }
 }
