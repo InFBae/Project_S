@@ -1,5 +1,6 @@
 using Photon.Pun;
 using Photon.Realtime;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -18,7 +19,7 @@ namespace JBB
         {          
             if (PhotonNetwork.InRoom)
             {
-                
+                inGameUI.InitUI();
             }
             else
             {
@@ -31,7 +32,16 @@ namespace JBB
         public override void OnConnectedToMaster()
         {
             RoomOptions roomOptions = new RoomOptions() { IsVisible = false, IsOpen = true, MaxPlayers = 8 };
+            PhotonHashtable RoomCustomProps = new PhotonHashtable()
+            {
+                {"IsPlaying" , false},
+                { "GameType", "SOLO"},
+                {"GameTime", 20 },
+                {"MaxKill", 20 },
+                {"Intrusion", false}
+            };
 
+            roomOptions.CustomRoomProperties = RoomCustomProps;
             PhotonNetwork.JoinOrCreateRoom("Debug", roomOptions, TypedLobby.Default);
         }
         public override void OnJoinedRoom()
@@ -42,7 +52,7 @@ namespace JBB
             PhotonNetwork.LocalPlayer.SetNickname("111");
             PhotonNetwork.LocalPlayer.SetLoad(true);
 
-            inGameUI.UpdateRankingBoard();
+            inGameUI.InitUI();
             GameStart();
         }
 
@@ -77,10 +87,6 @@ namespace JBB
                 }
             }
 
-            if (targetPlayer == PhotonNetwork.LocalPlayer)
-            {
-                inGameUI.UpdateKillDeathUI();
-            }
         }
         public override void OnRoomPropertiesUpdate(PhotonHashtable propertiesThatChanged)
         {

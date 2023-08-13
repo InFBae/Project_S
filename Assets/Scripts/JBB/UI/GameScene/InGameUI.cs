@@ -26,6 +26,14 @@ namespace JBB
 
         }
 
+        public void InitUI()
+        {
+            rankingBoardUI.UpdateRankerList();
+            rankingBoardUI.UpdateRankingBoard();
+            targetKillSliderUI.InitTargetKillSlider();
+            killDeathUI.UpdateKillDeathText();
+        }
+
         public void UpdateKillDeathUI()
         {
             killDeathUI.UpdateKillDeathText();
@@ -35,6 +43,11 @@ namespace JBB
         {
             rankingBoardUI.UpdateRankerList();
             rankingBoardUI.UpdateRankingBoard();
+        }
+
+        public void UpdateTargetKillSliderValue()
+        {
+            targetKillSliderUI.UpdateSliderValue();
         }
     }
 }

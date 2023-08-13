@@ -28,9 +28,7 @@ namespace JBB
                 {
                     rankers[i] = currentPlayers[i];
                 }                
-            }
-                       
-            
+            }                                   
         }
         public void UpdateRankingBoard()
         {
@@ -49,6 +47,16 @@ namespace JBB
                     texts[$"PlayerKill{i + 1}"].text = "";
                 }
             }
+        }
+
+        public Player GetFirstPlayer()
+        {
+            return rankers[0];
+        }
+
+        public Player GetSecondPlayer() 
+        { 
+            return rankers[1]; 
         }
     }
 }
