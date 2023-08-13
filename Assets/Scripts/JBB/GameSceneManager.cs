@@ -86,7 +86,7 @@ namespace JBB
                     Debug.Log($"Wait players {PlayerLoadCount()} / {PhotonNetwork.PlayerList.Length}");
                 }
             }
-
+            inGameUI.InitUI();
         }
         public override void OnRoomPropertiesUpdate(PhotonHashtable propertiesThatChanged)
         {
@@ -113,7 +113,7 @@ namespace JBB
 
         IEnumerator TimerRoutine()
         {
-            float gameEndTime = (float)PhotonNetwork.Time + PhotonNetwork.CurrentRoom.GetGameTime() * 60;
+            float gameEndTime = (float)(PhotonNetwork.Time + PhotonNetwork.CurrentRoom.GetGameTime() * 60);
             while (PhotonNetwork.Time < gameEndTime)
             {
                 int remainTime = (int)(gameEndTime - PhotonNetwork.Time);

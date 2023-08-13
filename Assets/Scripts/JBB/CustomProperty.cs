@@ -140,16 +140,16 @@ namespace JBB
             room.SetCustomProperties(property);
         }
 
-        public static float GetGameTime(this Room room)
+        public static int GetGameTime(this Room room)
         {
             PhotonHashtable property = room.CustomProperties;
             if (property.ContainsKey("GameTime"))
-                return (float)property["GameTime"];
+                return (int)property["GameTime"];
             else
                 return 20;
         }
 
-        public static void SetGameTime(this Room room, float gameTime)
+        public static void SetGameTime(this Room room, int gameTime)
         {
             PhotonHashtable property = new PhotonHashtable();
             property["GameTime"] = gameTime;

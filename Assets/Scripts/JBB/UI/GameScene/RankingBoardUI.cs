@@ -20,7 +20,7 @@ namespace JBB
         public void UpdateRankerList()
         {
             Player[] currentPlayers = PhotonNetwork.PlayerList;
-            Array.Sort(currentPlayers, ((Player a, Player b) => { return a.GetKillCount() > b.GetKillCount() ? 1 : 0;}));
+            Array.Sort(currentPlayers, ((Player a, Player b) => { return a.GetKillCount() > b.GetKillCount() ? -1 : 1;}));
 
             for (int i = 0; i < rankers.Length; i++)
             {
