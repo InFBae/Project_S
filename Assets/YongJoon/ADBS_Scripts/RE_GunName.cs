@@ -30,6 +30,7 @@ public class RE_GunName : RE_Gun
     public bool isZoom = false;
     PhotonView PV;
 
+    private AudioSource audioSource;
 
 
     private void Awake()
@@ -37,7 +38,8 @@ public class RE_GunName : RE_Gun
         bloodParticle = GameManager.Resource.Load<ParticleSystem>("BloodParticle");
         hitParticle = GameManager.Resource.Load<GameObject>("HitEffect");
         trailEffect = GameManager.Resource.Load<TrailRenderer>("BulletTrail");
-        PV.GetComponentInParent<PhotonView>();
+        PV = this.GetComponent<PhotonView>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -102,7 +104,6 @@ public class RE_GunName : RE_Gun
     [PunRPC]
     public override void Fire()
     {
-
         RaycastHit hit;
 
         if (curAvailavleBullet <= 0 || isReload/*anim.GetCurrentAnimatorStateInfo(0).IsName("reloading")*/)   // 총알 없으면 쏘지 못하도록
@@ -156,19 +157,25 @@ public class RE_GunName : RE_Gun
             }
 
             // 트레일 생성 -> 트레일 이상해서 잠시 뺐음..
-            StartCoroutine(TrailRoutine(muzzlePos.position, hit.point));
-            ReleaseRoutine(trailEffect.gameObject);
+
+            PV.RPC("TrailRenderFunc", RpcTarget.All, muzzlePos.position, hit.point);
 
         }
         else
         {
             // 트레일 생성
-            StartCoroutine(TrailRoutine(muzzlePos.position, hit.point));
-            ReleaseRoutine(trailEffect.gameObject);
-
+            PV.RPC("TrailRenderFunc", RpcTarget.All, muzzlePos.position, hit.point);
 
         }
         Debug.Log("Fire");
+
+    }
+
+    [PunRPC]
+    public void TrailRenderFunc(Vector3 muzzlePoint, Vector3 hitPoint)
+    {
+        StartCoroutine(TrailRoutine(muzzlePoint, hitPoint));
+        ReleaseRoutine(trailEffect.gameObject);
     }
 
     public override void Reload()    // 재장전

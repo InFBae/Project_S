@@ -6,16 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/GameStartScene.unity
-    guid: fda28edaf4f7ca440b7b4be7926ec478
-  - enabled: 1
-    path: Assets/Scenes/LobbyScene.unity
-    guid: c33aa33749a009444add5f892bce05ac
-  - enabled: 1
-    path: Assets/Scenes/RoomScene.unity
-    guid: b79fe620cfc1fce40aa688e1d86efc3e
-  - enabled: 1
-    path: Assets/Scenes/GameScene.unity
-    guid: 35003b75e746e5a40b13fa1f1af1b6d6
-
+    path: Assets/Scripts/WCM/Scenes/GameScene_soundTest.unity
+    guid: f1dd43b2a73b6e044a8bb02e3dadf689
   m_configObjects: {}

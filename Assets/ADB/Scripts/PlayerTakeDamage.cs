@@ -10,7 +10,7 @@ namespace ahndabi
 
         private void Start()
         {
-            statusUI.HpTextUI.text = Hp.ToString();
+            //statusUI.HpTextUI.text = Hp.ToString();
 
             // *** Debuging ¸ðµå ***
             // StartCoroutine(DieDebug());

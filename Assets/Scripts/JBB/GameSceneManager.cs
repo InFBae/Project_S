@@ -69,8 +69,8 @@ namespace JBB
             // TODO : Player 한명만 소환으로 수정
             //for (int i = 0; i < 7; i++)
             //{
-                Transform spawnPoint = GetSpawnPoint();
-                PhotonNetwork.Instantiate("AllInOnePlayerTest", spawnPoint.position, Quaternion.identity);
+            Transform spawnPoint = GetSpawnPoint();
+            PhotonNetwork.Instantiate("AllInOnePlayerTest", spawnPoint.position, Quaternion.identity);
             //}
             
             GameStart();
