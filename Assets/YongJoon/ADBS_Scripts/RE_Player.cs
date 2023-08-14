@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 
-public class RE_Player : MonoBehaviour
+public class RE_Player : MonoBehaviourPunCallbacks
 {
     // 플레이어가 가지고 있는 것들
 

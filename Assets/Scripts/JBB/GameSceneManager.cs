@@ -64,11 +64,11 @@ namespace JBB
             inGameUI.InitUI();
 
             // TODO : Player 한명만 소환으로 수정
-            for(int i = 0; i < 7; i++)
-            {
+            //for (int i = 0; i < 7; i++)
+            //{
                 Transform spawnPoint = GetSpawnPoint();
-                GameManager.Resource.Instantiate(GameManager.Resource.Load<GameObject>("AllInOnePlayerTest"), spawnPoint.position, Quaternion.identity);
-            }
+                PhotonNetwork.Instantiate("AllInOnePlayerTest", spawnPoint.position, Quaternion.identity);
+            //}
             
             GameStart();
         }
