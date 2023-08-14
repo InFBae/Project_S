@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18074048, g: 0.22625844, b: 0.30716327, a: 1}
+  m_IndirectSpecularColor: {r: 0.18074074, g: 0.22625889, b: 0.30716392, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -27193,52 +27193,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2260494031731321145, guid: 847dac9871c216d4db16dd4fb2cd6a58,
-        type: 3}
-      propertyPath: m_UseLocal
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2260494031731321145, guid: 847dac9871c216d4db16dd4fb2cd6a58,
-        type: 3}
-      propertyPath: m_SynchronizePosition
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2260494031731321145, guid: 847dac9871c216d4db16dd4fb2cd6a58,
-        type: 3}
-      propertyPath: m_SynchronizeRotation
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2865954482126749382, guid: 847dac9871c216d4db16dd4fb2cd6a58,
         type: 3}
       propertyPath: m_Name
       value: AllInOnePlayerTest
       objectReference: {fileID: 0}
-    - target: {fileID: 7476748481473246923, guid: 847dac9871c216d4db16dd4fb2cd6a58,
+    - target: {fileID: 2865954482126749382, guid: 847dac9871c216d4db16dd4fb2cd6a58,
         type: 3}
-      propertyPath: m_WarningMessage
-      value: "\nBinding warning: Some generic clip(s) animate transforms that are
-        already bound by a Humanoid avatar. These transforms can only be changed
-        by Humanoid clips.\n\tTransform 'mixamorig:Hips'\n\tTransform 'mixamorig:LeftFoot'\n\tTransform
-        'mixamorig:LeftHandThumb2'\n\tTransform 'mixamorig:LeftHandIndex1'\n\tTransform
-        'mixamorig:LeftHandPinky2'\n\tTransform 'mixamorig:Spine1'\n\tTransform 'mixamorig:LeftToeBase'\n\tTransform
-        'mixamorig:RightArm'\n\tTransform 'mixamorig:LeftLeg'\n\tTransform 'mixamorig:LeftHandMiddle3'\n\tand
-        more ...\n\tFrom animation clip 'TakeDamage'"
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8433370616035428119, guid: 847dac9871c216d4db16dd4fb2cd6a58,
         type: 3}
       propertyPath: sceneViewId
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8963163098989630250, guid: 847dac9871c216d4db16dd4fb2cd6a58,
-        type: 3}
-      propertyPath: m_WarningMessage
-      value: "\nBinding warning: Some generic clip(s) animate transforms that are
-        already bound by a Humanoid avatar. These transforms can only be changed
-        by Humanoid clips.\n\tTransform 'mixamorig:Hips'\n\tTransform 'mixamorig:LeftFoot'\n\tTransform
-        'mixamorig:LeftHandThumb2'\n\tTransform 'mixamorig:LeftHandIndex1'\n\tTransform
-        'mixamorig:LeftHandPinky2'\n\tTransform 'mixamorig:Spine1'\n\tTransform 'mixamorig:LeftToeBase'\n\tTransform
-        'mixamorig:RightArm'\n\tTransform 'mixamorig:LeftLeg'\n\tTransform 'mixamorig:LeftHandMiddle3'\n\tand
-        more ...\n\tFrom animation clip 'TakeDamage'"
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 847dac9871c216d4db16dd4fb2cd6a58, type: 3}
@@ -52682,20 +52650,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1564652681}
   m_Mesh: {fileID: 4300000, guid: 703c608db1b122a4a854ff9e24f213fe, type: 3}
---- !u!1 &1577975401 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1068789190085132768, guid: 847dac9871c216d4db16dd4fb2cd6a58,
-    type: 3}
-  m_PrefabInstance: {fileID: 733396172}
-  m_PrefabAsset: {fileID: 0}
---- !u!81 &1577975405
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1577975401}
-  m_Enabled: 1
 --- !u!1 &1578174982
 GameObject:
   m_ObjectHideFlags: 0

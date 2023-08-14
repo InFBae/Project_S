@@ -35,12 +35,12 @@ public class PlayerMover : MonoBehaviour
     }
     private void Start()
     {
-        //playerBody.SetActive(false);
-        if (PV.IsMine)
-        {
-            playerBody.gameObject.layer = 4;
-            ChangeLayerRecursively(playerBody, 4);
-        }
+        ////playerBody.SetActive(false);
+        //if (PV.IsMine)
+        //{
+        //    playerBody.gameObject.layer = 4;
+        //    ChangeLayerRecursively(playerBody, 4);
+        //}
     }
     private void ChangeLayerRecursively(GameObject obj, int layer)
     {
@@ -53,6 +53,11 @@ public class PlayerMover : MonoBehaviour
     }
     private void Update()
     {
+        if (!PV.IsMine)
+        {
+            return;
+        }
+
         Move();
     }
 
@@ -91,6 +96,10 @@ public class PlayerMover : MonoBehaviour
     }
     public void Jump()
     {
+        if (!PV.IsMine)
+        {
+            return;
+        }
         rb.AddForce(Vector3.up * jumpSpeed, ForceMode.Impulse);
         StartCoroutine(JumpRoutine());
     }

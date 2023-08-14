@@ -26,7 +26,7 @@ public class YongGameSceneManager : MonoBehaviourPunCallbacks
         }
         else
         {
-            infoText.text = "Debug Mode";
+            //infoText.text = "Debug Mode";
             PhotonNetwork.LocalPlayer.NickName = $"DebugPlayer {Random.Range(100, 1000)}";
             PhotonNetwork.ConnectUsingSettings();
         }
