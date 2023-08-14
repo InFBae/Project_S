@@ -94,11 +94,11 @@ namespace JBB
 
         //-------------------- Room Property ------------------------//
 
-        public static int GetLoadTime(this Room room)
+        public static double GetLoadTime(this Room room)
         {
             PhotonHashtable property = room.CustomProperties;
             if (property.ContainsKey("LoadTime"))
-                return (int)property["LoadTime"];
+                return (double)property["LoadTime"];
             else
                 return -1;
         }
@@ -110,7 +110,7 @@ namespace JBB
             room.SetCustomProperties(property);
         }
 
-        public static float GetMaxKill(this Room room)
+        public static int GetMaxKill(this Room room)
         {
             PhotonHashtable property = room.CustomProperties;
             if (property.ContainsKey("MaxKill"))
@@ -144,7 +144,7 @@ namespace JBB
         {
             PhotonHashtable property = room.CustomProperties;
             if (property.ContainsKey("GameTime"))
-                return (int)property["GameTime"];
+                return int.Parse(property["GameTime"].ToString());
             else
                 return 20;
         }
