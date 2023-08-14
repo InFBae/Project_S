@@ -3860,7 +3860,6 @@ MonoBehaviour:
   remainBullet: 220
   availableBullet: 100
   curAvailavleBullet: 100
-  statusUI: {fileID: 0}
   hitParticle: {fileID: 2878998193633755065, guid: 37e8f135196358041bb39d6945c6e185,
     type: 3}
   bloodParticle: {fileID: 1684594036494586434, guid: a6fbb0a52de44964f9f7ba6085afb872,
@@ -6269,7 +6268,6 @@ MonoBehaviour:
   remainBullet: 0
   availableBullet: 100
   curAvailavleBullet: 100
-  statusUI: {fileID: 0}
   hitParticle: {fileID: 1892351807075712, guid: 44be68b4fc4366142a9cd1ae1f761ea4,
     type: 3}
   bloodParticle: {fileID: 0}
@@ -9455,10 +9453,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   diePlayer: {fileID: 7413196833753876859}
-  gun: {fileID: 5622650327470430516}
   hp: 200
   rank: 0
-  killDeathUI: {fileID: 0}
   killCount: 0
   deathCount: 0
   nickName: 
@@ -9475,14 +9471,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   diePlayer: {fileID: 7413196833753876859}
-  gun: {fileID: 5622650327470430516}
   hp: 200
   rank: 0
-  killDeathUI: {fileID: 0}
   killCount: 0
   deathCount: 0
   nickName: 
-  statusUI: {fileID: 0}
 --- !u!114 &9100796606863069538
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11064,7 +11057,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7413196833753876856}
-  - component: {fileID: 2921565151617171283}
+  - component: {fileID: 2489390926536505876}
   m_Layer: 0
   m_Name: ADB_VisiblePlayer 1 - DiePlayer
   m_TagString: Untagged
@@ -11090,7 +11083,7 @@ Transform:
   m_Father: {fileID: 5323574745104258144}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2921565151617171283
+--- !u!114 &2489390926536505876
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -11099,11 +11092,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7413196833753876859}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1b82fe2ef56c3e43b480cc8271c892e, type: 3}
+  m_Script: {fileID: 11500000, guid: de61b23cfa8429d4f8cb0ef9099457d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 8779959967950037011}
-  spawnPlayer: {fileID: 0}
+  Player: {fileID: 8779959967950037011}
 --- !u!1 &7461137877013480855
 GameObject:
   m_ObjectHideFlags: 0
@@ -11298,6 +11290,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gun: {fileID: 0}
+  camTrans: {fileID: 0}
+  ZoomTrans: {fileID: 0}
 --- !u!114 &7580206639634079567
 MonoBehaviour:
   m_ObjectHideFlags: 0
