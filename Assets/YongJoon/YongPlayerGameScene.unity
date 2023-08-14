@@ -27208,6 +27208,76 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8963163098989630255, guid: 847dac9871c216d4db16dd4fb2cd6a58,
+        type: 3}
+      propertyPath: m_SynchronizeLayers.Array.data[0].SynchronizeType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8963163098989630255, guid: 847dac9871c216d4db16dd4fb2cd6a58,
+        type: 3}
+      propertyPath: m_SynchronizeLayers.Array.data[1].SynchronizeType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8963163098989630255, guid: 847dac9871c216d4db16dd4fb2cd6a58,
+        type: 3}
+      propertyPath: m_SynchronizeLayers.Array.data[2].SynchronizeType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8963163098989630255, guid: 847dac9871c216d4db16dd4fb2cd6a58,
+        type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[0].SynchronizeType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8963163098989630255, guid: 847dac9871c216d4db16dd4fb2cd6a58,
+        type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[1].SynchronizeType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8963163098989630255, guid: 847dac9871c216d4db16dd4fb2cd6a58,
+        type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[2].SynchronizeType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8963163098989630255, guid: 847dac9871c216d4db16dd4fb2cd6a58,
+        type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[3].SynchronizeType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8963163098989630255, guid: 847dac9871c216d4db16dd4fb2cd6a58,
+        type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[4].SynchronizeType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8963163098989630255, guid: 847dac9871c216d4db16dd4fb2cd6a58,
+        type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[5].SynchronizeType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8963163098989630255, guid: 847dac9871c216d4db16dd4fb2cd6a58,
+        type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[6].SynchronizeType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8963163098989630255, guid: 847dac9871c216d4db16dd4fb2cd6a58,
+        type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[7].SynchronizeType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8963163098989630255, guid: 847dac9871c216d4db16dd4fb2cd6a58,
+        type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[8].SynchronizeType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8963163098989630255, guid: 847dac9871c216d4db16dd4fb2cd6a58,
+        type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[9].SynchronizeType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8963163098989630255, guid: 847dac9871c216d4db16dd4fb2cd6a58,
+        type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[10].SynchronizeType
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 847dac9871c216d4db16dd4fb2cd6a58, type: 3}
 --- !u!1 &742030365
