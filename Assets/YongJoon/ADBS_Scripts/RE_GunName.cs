@@ -11,6 +11,7 @@ using UnityEngine.Tilemaps;
 public class RE_GunName : RE_Gun
 {
     [SerializeField] GameObject hitParticle;
+    //[SerializeField] GameObject prefabMaster;
     [SerializeField] ParticleSystem bloodParticle;
     [SerializeField] TrailRenderer trailEffect;
     [SerializeField] Camera cam;
@@ -31,13 +32,13 @@ public class RE_GunName : RE_Gun
     PhotonView PV;
 
 
-
     private void Awake()
     {
         bloodParticle = GameManager.Resource.Load<ParticleSystem>("BloodParticle");
         hitParticle = GameManager.Resource.Load<GameObject>("HitEffect");
         trailEffect = GameManager.Resource.Load<TrailRenderer>("BulletTrail");
-        PV.GetComponentInParent<PhotonView>();
+        PV = GetComponent<PhotonView>();
+        
     }
 
     private void Start()
