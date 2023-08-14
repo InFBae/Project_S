@@ -32,12 +32,12 @@ public class ADB_RE_Player : MonoBehaviourPunCallbacks
     private void OnEnable()
     {
         KillManager.OnKilled.AddListener(IncreaseKillCount);
+        ahndabi.StatusUI.OnHPChanged?.Invoke(Hp);
     }
 
     private void Start()
     {
         anim.Play("rifle aiming idle");
-        ahndabi.StatusUI.OnHPChanged?.Invoke(Hp);
         nickName = PhotonNetwork.LocalPlayer.NickName;      // 자신의 닉네임을 저장한다.
     }
 
@@ -52,6 +52,6 @@ public class ADB_RE_Player : MonoBehaviourPunCallbacks
     public void IncreaseKillCount(Photon.Realtime.Player Killed, Photon.Realtime.Player dead, bool headShot)      // 죽인사람, 죽은사람, 헤드샷판정
     {
         ++killCount;
-        player.SetKillCount(killCount);
+        Killed.SetKillCount(killCount);
     }
 }

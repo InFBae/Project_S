@@ -20,6 +20,8 @@ namespace ahndabi
 
         public void CreateKillLog(Photon.Realtime.Player killed, Photon.Realtime.Player dead, bool isHeadShot)
         {
+            // TODO : Instantiate 로 UI 생성해주기. 3초 정도 동안
+
             texts["HeadShot"].text = isHeadShot ? "[Head Shot]" : "";
             texts["Nickname"].text = killed.GetNickname();
         }
