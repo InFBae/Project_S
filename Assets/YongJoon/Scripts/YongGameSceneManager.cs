@@ -26,7 +26,7 @@ public class YongGameSceneManager : MonoBehaviourPunCallbacks
         }
         else
         {
-            infoText.text = "Debug Mode";
+            //infoText.text = "Debug Mode";
             PhotonNetwork.LocalPlayer.NickName = $"DebugPlayer {Random.Range(100, 1000)}";
             PhotonNetwork.ConnectUsingSettings();
         }
@@ -66,8 +66,7 @@ public class YongGameSceneManager : MonoBehaviourPunCallbacks
         Vector3 spawnPosition = spawnPointArray[Random.Range(0, 7)].position;
         spawnPosition = Vector3.zero;
 
-        PhotonNetwork.Instantiate("AllInOnePlayerTest", spawnPosition, Quaternion.identity, 0);
-
+        PhotonNetwork.Instantiate("AllInOnePlayerTest", spawnPosition, Quaternion.identity,0);
         // 마스터 클라이언트 동작
         if (PhotonNetwork.IsMasterClient)
         {
