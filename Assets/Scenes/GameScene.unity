@@ -27198,6 +27198,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: AllInOnePlayerTest
       objectReference: {fileID: 0}
+    - target: {fileID: 2865954482126749382, guid: 847dac9871c216d4db16dd4fb2cd6a58,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7476748481473246923, guid: 847dac9871c216d4db16dd4fb2cd6a58,
         type: 3}
       propertyPath: m_WarningMessage

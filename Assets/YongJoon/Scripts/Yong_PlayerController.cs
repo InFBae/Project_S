@@ -30,11 +30,14 @@ public class Yong_PlayerController : MonoBehaviour
         inputList = GetComponentsInChildren<PlayerInput>().ToList<PlayerInput>();
         cameraList = GetComponentsInChildren<Camera>().ToList<Camera>();
 
+        PV.RPC("TestRPC", RpcTarget.AllBufferedViaServer);
+
+
         if (!PV.IsMine)
         {
-            foreach(Camera cam in cameraList)
+            foreach (Camera cam in cameraList)
             {
-                if(cam.GetComponent<AudioListener>() != null)
+                if (cam.GetComponent<AudioListener>() != null)
                 {
                     cam.GetComponent<AudioListener>().enabled = false;
                 }
@@ -50,7 +53,7 @@ public class Yong_PlayerController : MonoBehaviour
             //visibleBody.SetActive(false);
             ChangeLayerRecursively(visibleBody, 4);
         }
-        //PV.RPC("TestRPC", RpcTarget.AllBuffered);
+
     }
     private void ChangeLayerRecursively(GameObject obj, int layer)
     {
@@ -71,10 +74,16 @@ public class Yong_PlayerController : MonoBehaviour
     [PunRPC]
     void TestRPC()
     {
-        foreach (PlayerInput value in inputList)
+        if (!PV.IsMine)
         {
-            value.enabled = true;
-
+            //visibleBody.SetActive(false);
+            ChangeLayerRecursively(visibleBody, 0);
+            FPSBody.SetActive(false);
+        }
+        else
+        {
+            ChangeLayerRecursively(visibleBody, 4);
+            FPSBody.SetActive(true);
         }
         //PAttack.enabled = false;
         //PMover.enabled = false;
