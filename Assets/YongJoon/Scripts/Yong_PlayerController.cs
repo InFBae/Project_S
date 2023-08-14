@@ -37,14 +37,22 @@ public class Yong_PlayerController : MonoBehaviour
         {
             foreach (Camera cam in cameraList)
             {
+                //if (cam.GetComponent<AudioListener>() != null)
+                //{
+                //    cam.GetComponent<AudioListener>().enabled = false;
+                //}
+                cam.enabled = false;
+            }
+            foreach (PlayerInput value in inputList)
+            {
+                value.enabled = false;
+            }
+            foreach (Camera cam in cameraList)
+            {
                 if (cam.GetComponent<AudioListener>() != null)
                 {
                     cam.GetComponent<AudioListener>().enabled = false;
                 }
-            }
-            foreach (PlayerInput value in inputList)
-            {
-                value.enabled = true;
             }
             FPSBody.SetActive(false);
         }
@@ -76,6 +84,7 @@ public class Yong_PlayerController : MonoBehaviour
     {
         if (!PV.IsMine)
         {
+
             //visibleBody.SetActive(false);
             ChangeLayerRecursively(visibleBody, 0);
             FPSBody.SetActive(false);
@@ -85,8 +94,8 @@ public class Yong_PlayerController : MonoBehaviour
             ChangeLayerRecursively(visibleBody, 4);
             FPSBody.SetActive(true);
         }
-        //PAttack.enabled = false;
-        //PMover.enabled = false;
-        //PAimMove.enabled = false;
+        PAttack.enabled = false;
+        PMover.enabled = false;
+        PAimMove.enabled = false;
     }
 }
