@@ -12,7 +12,7 @@ namespace JBB
 {
     public class GameSceneManager : MonoBehaviourPunCallbacks, IPunObservable
     {
-        [SerializeField] InGameUI inGameUI;
+        [SerializeField] JBB.InGameUI inGameUI;
         [SerializeField] GameObject spawnPointsPrefab;
 
         Transform[] spawnPoints;
@@ -28,7 +28,10 @@ namespace JBB
             if (PhotonNetwork.InRoom)
             {
                 inGameUI.InitUI();
+                Transform spawnPoint = GetSpawnPoint();
+                GameManager.Resource.Instantiate(GameManager.Resource.Load<GameObject>("AllInOnePlayerTest"), spawnPoint.position, Quaternion.identity);
                 // 게임 준비사항 다 마치고 SetLoad 설정
+                PhotonNetwork.LocalPlayer.SetLoad(true);
             }
             else
             {
@@ -130,7 +133,7 @@ namespace JBB
 
         IEnumerator TimerRoutine()
         {
-            float gameEndTime = (float)(PhotonNetwork.Time + PhotonNetwork.CurrentRoom.GetGameTime() * 60);
+            double gameEndTime = (PhotonNetwork.Time + PhotonNetwork.CurrentRoom.GetGameTime() * 60);
             while (PhotonNetwork.Time < gameEndTime)
             {
                 int remainTime = (int)(gameEndTime - PhotonNetwork.Time);
