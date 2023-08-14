@@ -8,7 +8,7 @@ public class RE_PlayerAttacker : RE_Player
 {
     Coroutine fireRoutine;
     Coroutine fireStackRoutine;
-    PhotonView pv;
+    //PhotonView pv;
 
 
     private bool isFire = false;
@@ -16,7 +16,7 @@ public class RE_PlayerAttacker : RE_Player
 
     private void Awake()
     {
-        pv = GetComponentInParent<PhotonView>();
+        //pv = GetComponentInParent<PhotonView>();
     }
 
     private void Start()
