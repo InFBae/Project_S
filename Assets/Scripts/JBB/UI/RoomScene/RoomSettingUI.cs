@@ -153,29 +153,28 @@ namespace JBB
             {
                 gameTypeDropdown.value = 0;
             }
-
-            if (PhotonNetwork.CurrentRoom.GetGameTime() == 5)
+            int roomGameTime = PhotonNetwork.CurrentRoom.GetGameTime();
+            switch (roomGameTime)
             {
-                gameTimeDropdown.value = 0;
-            }
-            else if(PhotonNetwork.CurrentRoom.GetGameTime() == 10)
-            {
-                gameTimeDropdown.value = 1;
-            }
-            else if (PhotonNetwork.CurrentRoom.GetGameTime() == 15)
-            {
-                gameTimeDropdown.value = 2;
-            }
-            else if (PhotonNetwork.CurrentRoom.GetGameTime() == 20)
-            {
-                gameTimeDropdown.value = 3;
-            }
-            else
-            {
-                gameTypeDropdown.value = 2;
+                case 0:
+                    gameTimeDropdown.value = 0;
+                    break;
+                case 10:
+                    gameTimeDropdown.value = 1;
+                    break;
+                case 15:
+                    gameTimeDropdown.value = 2;
+                    break;
+                case 20:
+                    gameTimeDropdown.value = 3;
+                    break;
+                default:
+                    gameTimeDropdown.value = 2;
+                    break;
             }
 
-            switch (PhotonNetwork.CurrentRoom.GetMaxKill())
+            int roomMaxKill = PhotonNetwork.CurrentRoom.GetMaxKill();
+            switch (roomMaxKill)
             {
                 case 10:
                     maxKillDropdown.value = 0; 
