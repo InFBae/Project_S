@@ -58,12 +58,12 @@ namespace JBB
                             PhotonNetwork.LocalPlayer.NickName = readId;
 
                             PhotonNetwork.ConnectUsingSettings();
-                            GameManager.UI.CreatePopUpMessage("Connecting Server");
+                            GameManager.UI.CreatePopUpMessage("Connecting Server", 5f);
                             //GameManager.Scene.LoadScene("LobbyScene");
                         }
                         else
                         {
-                            GameManager.UI.CreatePopUpMessage("Wrong password");
+                            GameManager.UI.CreatePopUpMessage("Wrong password", 1f);
                             Debug.Log("Wrong password");
                             if (!reader.IsClosed)
                                 reader.Close();
@@ -73,7 +73,7 @@ namespace JBB
                 }
                 else
                 {
-                    GameManager.UI.CreatePopUpMessage("There is no player id");
+                    GameManager.UI.CreatePopUpMessage("There is no player id", 1f);
                     Debug.Log("There is no player id");
                     if (!reader.IsClosed)
                         reader.Close();
@@ -91,7 +91,7 @@ namespace JBB
             {
                 if (password != passwordCheck)
                 {
-                    GameManager.UI.CreatePopUpMessage("password don't match");
+                    GameManager.UI.CreatePopUpMessage("password don't match", 1f);
                     Debug.Log("password don't match");
                     return;
                 }
@@ -104,7 +104,7 @@ namespace JBB
 
                     if (reader.HasRows)
                     {
-                        GameManager.UI.CreatePopUpMessage("same name exist");
+                        GameManager.UI.CreatePopUpMessage("same name exist", 1f);
                         Debug.Log("same name exist");
                     }
                     else
