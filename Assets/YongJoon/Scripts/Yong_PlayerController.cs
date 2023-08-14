@@ -6,7 +6,7 @@ using ahndabi;
 using UnityEngine.InputSystem;
 using System.Linq;
 
-public class Yong_PlayerController : MonoBehaviour
+public class Yong_PlayerController : MonoBehaviourPunCallbacks
 {
     [SerializeField] GameObject visibleBody;
     [SerializeField] GameObject FPSBody;
