@@ -26,15 +26,9 @@ namespace JBB
 
         public override void OnConnectedToMaster()
         {
-            PhotonNetwork.JoinLobby();
+            GameManager.Scene.LoadScene("LobbyScene");
         }
 
-        public override void OnJoinedLobby()
-        {
-            Debug.Log("Joined Lobby");
-        }
-
-        //로그인 함수 -> 버튼연동
         public void Login(string id, string pass)
         {
             try
@@ -63,7 +57,9 @@ namespace JBB
                             //이름이 있을 경우 해당 플레이어의 이름을 inputField내의 값으로 지정 (이름 중복되지 않게)
                             PhotonNetwork.LocalPlayer.NickName = readId;
 
-                            GameManager.Scene.LoadScene("LobbyScene");
+                            PhotonNetwork.ConnectUsingSettings();
+                            GameManager.UI.CreatePopUpMessage("Connecting Server");
+                            //GameManager.Scene.LoadScene("LobbyScene");
                         }
                         else
                         {
@@ -118,18 +114,6 @@ namespace JBB
                         Debug.Log("Complete sign up");
                         gameStartUI.CloseSignInUI();
                     }
-                    /*else
-                    {
-                        string sqlCommand2 = string.Format("INSERT INTO user_info (U_ID, U_Password) VALUES ('{0}','{1}')", id, password);
-                        using (MySqlCommand command = new MySqlCommand(sqlCommand2, con))
-                        {
-                            command.Parameters.AddWithValue("U_ID", id);
-                            command.Parameters.AddWithValue("U_Password",password);
-                        }
-                            new MySqlCommand(sqlCommand2, con);
-                    }
-                    if (!reader.IsClosed)
-                        reader.Close();*/
                 }
             }
 
@@ -139,85 +123,4 @@ namespace JBB
             }
         }
     }
-
-
-    //지속적으로 디버깅해야하므로 랜덤하게 들어가도록 설정.
-    /*private void OnEnable()
-    {
-        idInputField.text = string.Format("Player {0}", Random.Range(1000, 10000));
-    }*/
-
-    /*
-        public override void OnCreateRoomFailed(short returnCode, string message)
-        {
-            SetActivePanel(Panel.Menu);
-            Debug.Log($"Create room failed with error({returnCode}) : {message}");
-            statePanel.AddMessage($"Create room failed with error({returnCode}) : {message}");
-        }
-
-        public override void OnJoinRoomFailed(short returnCode, string message)
-        {
-            SetActivePanel(Panel.Menu);
-            Debug.Log($"Join room failed with error({returnCode}) : {message}");
-            statePanel.AddMessage($"Join room failed with error({returnCode}) : {message}");
-        }
-
-        public override void OnJoinRandomFailed(short returnCode, string message)
-        {
-            SetActivePanel(Panel.Menu);
-            Debug.Log($"Join random room failed with error({returnCode}) : {message}");
-            statePanel.AddMessage($"Join random room failed with error({returnCode}) : {message}");
-        }
-
-        public override void OnJoinedRoom()
-        {
-            SetActivePanel(Panel.Room);
-        }
-
-        public override void OnLeftRoom()
-        {
-            SetActivePanel(Panel.Menu);
-        }
-
-        public override void OnPlayerEnteredRoom(Player newPlayer)
-        {
-            roomPanel.PlayerEnterRoom(newPlayer);
-        }
-
-        public override void OnPlayerLeftRoom(Player otherPlayer)
-        {
-            roomPanel.PlayerLeftRoom(otherPlayer);
-        }
-
-        public override void OnPlayerPropertiesUpdate(Player targetPlayer, PhotonHashtable changedProps)
-        {
-            roomPanel.PlayerPropertiesUpdate(targetPlayer, changedProps);
-        }
-
-        public override void OnMasterClientSwitched(Player newMasterClient)
-        {
-            roomPanel.MasterClientSwitched(newMasterClient);
-        }
-
-        public override void OnRoomListUpdate(List<RoomInfo> roomList)
-        {
-            lobbyPanel.UpdateRoomList(roomList);
-        }*/
-
-    /*public void Start()
-    {
-        PhotonNetwork.ConnectUsingSettings();
-        Debug.Log("connecting");
-    }
-
-    public override void OnConnectedToMaster()
-    {
-        Debug.Log("connected");
-        PhotonNetwork.JoinLobby();
-    }
-
-    public override void OnJoinedLobby()
-    {
-        Debug.Log("joined lobby");
-    }*/
 }

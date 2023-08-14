@@ -10,14 +10,13 @@ using MySql.Data.MySqlClient;
 public class ChatManager : MonoBehaviour, IChatClientListener
 {
     [SerializeField] private ChatClient chatClient;
-    [SerializeField] private string nickname;
     private string lobbyChannel;
     private string noticeChannel;
 
     public string Nickname { get { return chatClient.UserId; } }
 
     public static UnityEvent<string> OnGetLobbyMessage = new UnityEvent<string>();
-    public static UnityEvent<string, int> OnFriendStatusChanged = new UnityEvent<string, int>();
+    public static UnityEvent<string, int> OnFriendStateChanged = new UnityEvent<string, int>();
     public static UnityEvent OnFriendListChanged = new UnityEvent();
 
     protected internal ChatAppSettings chatAppSettings;
@@ -50,8 +49,8 @@ public class ChatManager : MonoBehaviour, IChatClientListener
             {
                 reader.Read();
                 string readNick = reader["U_Nickname"].ToString();
-                nickname = readNick;
                 Debug.Log($"ID : {userId}, Nickname : {readNick}");
+                chatClient.Connect(PhotonNetwork.PhotonServerSettings.AppSettings.AppIdChat, "1.0", new AuthenticationValues(readNick));
             }
             else
             {
@@ -62,8 +61,7 @@ public class ChatManager : MonoBehaviour, IChatClientListener
         {
             Debug.Log(e.Message);
         }
-
-        chatClient.Connect(PhotonNetwork.PhotonServerSettings.AppSettings.AppIdChat, "1.0", new AuthenticationValues(nickname));
+       
     }
 
     public void DisConnect()
@@ -108,10 +106,11 @@ public class ChatManager : MonoBehaviour, IChatClientListener
     public void OnConnected()
     {
         Debug.Log("connected server");
-
+        
         chatClient.Subscribe(new string[] { noticeChannel, lobbyChannel }, 10);
 
         AddDBFriends();
+        chatClient.SetOnlineStatus(ChatUserStatus.Online);
     }
 
     public void OnDisconnected()
@@ -135,10 +134,10 @@ public class ChatManager : MonoBehaviour, IChatClientListener
     {
         Debug.Log($"OnPrivateMessage : {message}");
     }
-    void IChatClientListener.OnStatusUpdate(string user, int status, bool gotMessage, object message)
+    public void OnStatusUpdate(string user, int status, bool gotMessage, object message)
     {
         Debug.Log($"status : {user} is {status}, Msg : {message}");
-        OnFriendStatusChanged?.Invoke(user, status);
+        OnFriendStateChanged?.Invoke(user, status);
     }
     public void OnSubscribed(string[] channels, bool[] results)
     {
@@ -191,7 +190,7 @@ public class ChatManager : MonoBehaviour, IChatClientListener
         string[] nicknames = new string[] { nickname };
         if (chatClient.AddFriends(nicknames))
         {
-            Debug.Log($"Succeed AddFriend {nickname}");
+            Debug.Log($"Succeed AddFriend {nickname}");            
             return true;
         }
         Debug.Log($"Failed AddFriend {nickname}");

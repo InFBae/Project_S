@@ -61,7 +61,9 @@ namespace JBB
                         string updateFriendInfoCommand = $"UPDATE friend_info SET Friend{i} = '{nickname}' WHERE Owner = '{PhotonNetwork.LocalPlayer.NickName}'";
                         GameManager.DB.ExecuteNonQuery(updateFriendInfoCommand);
                         GameManager.UI.CreatePopUpMessage("Add Friend Success");
+                        GameManager.Chat.AddFriend(nickname);
                         ChatManager.OnFriendListChanged?.Invoke();
+                        this.gameObject.SetActive(false);
                         return;
                     }
                     GameManager.UI.CreatePopUpMessage("Add Friend Failed(Full FriendList)");
@@ -73,7 +75,9 @@ namespace JBB
                     string addFriendInfoCommand = $"INSERT INTO friend_info (Owner, Friend1) values ('{PhotonNetwork.LocalPlayer.NickName}', '{nickname}')";
                     GameManager.DB.ExecuteNonQuery(addFriendInfoCommand);
                     GameManager.UI.CreatePopUpMessage("Add Friend Success");
+                    GameManager.Chat.AddFriend(nickname);
                     ChatManager.OnFriendListChanged?.Invoke();
+                    this.gameObject.SetActive(false);
                     return;
                 }
             }
