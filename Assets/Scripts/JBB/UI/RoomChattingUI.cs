@@ -8,39 +8,18 @@ namespace JBB
 {
     public class RoomChattingUI : BaseUI
     {
-        [SerializeField] TMP_InputField chatInput;
-        [SerializeField] GameObject content;
-
-        PhotonView pv;
         protected override void Awake()
         {
             base.Awake();
-            pv = GetComponent<PhotonView>();
+            
+        }
+        private void Start()
+        {
+            GameObject go = PhotonNetwork.Instantiate("UI/RoomChattingPrefab", transform.position, transform.rotation);
+            go.transform.SetParent(transform, false);
+            go.transform.SetPositionAndRotation(transform.position, transform.rotation);
         }
 
-        private void OnEnable()
-        {
-            chatInput.onEndEdit.AddListener(SendMessageRPC);
-        }
-        private void OnDisable()
-        {
-            chatInput.onEndEdit.RemoveListener(SendMessageRPC);
-        }
-
-        [PunRPC]
-        public void CreateMessage(string text)
-        {
-            ChatTextUI chat = GameManager.Pool.GetUI(GameManager.Resource.Load<ChatTextUI>("UI/ChatText"));
-            chat.SetText(text);
-            chat.transform.SetParent(content.transform, false);
-        }
-       
-        public void SendMessageRPC(string text)
-        {
-            string chatText = $"{GameManager.Chat.Nickname} : {text}";
-            pv.RPC("CreateMessage", RpcTarget.All, chatText);
-            chatInput.text = "";
-        }
     }
 }
 
