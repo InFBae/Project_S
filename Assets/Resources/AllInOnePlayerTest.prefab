@@ -8749,6 +8749,7 @@ MonoBehaviour:
   playerAimTarget: {fileID: 8116300753076410033}
   shootRoot: {fileID: 3498845919336681827}
   fireRoot: {fileID: 3498845919217791250}
+  zoomRoot: {fileID: 644580950182686174}
   cameraSensitivity: 10
   lookDistance: 20
 --- !u!54 &1574128460360103854

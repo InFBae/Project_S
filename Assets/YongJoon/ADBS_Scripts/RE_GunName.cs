@@ -186,13 +186,13 @@ public class RE_GunName : RE_Gun
         StartCoroutine(TrailRoutine(start, end));
     }
 
-    [PunRPC]
-    public void FireTrailRPC(Vector3 hitPoint)
-    {
-        // 트레일 생성 -> 트레일 이상해서 잠시 뺐음..
-        StartCoroutine(TrailRoutine(realFireRoot, hitPoint));
-        ReleaseRoutine(trailEffect.gameObject);
-    }
+    //[PunRPC]
+    //public void FireTrailRPC(Vector3 hitPoint)
+    //{
+    //    // 트레일 생성 -> 트레일 이상해서 잠시 뺐음..
+    //    StartCoroutine(TrailRoutine(realFireRoot, hitPoint));
+    //    ReleaseRoutine(trailEffect.gameObject);
+    //}
 
     public void ReloadRequest()
     {
