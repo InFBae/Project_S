@@ -10,6 +10,7 @@ public class PlayerMover : MonoBehaviour
     [SerializeField] private float nomalSpeed;
     [SerializeField] private float walkSpeed;
     [SerializeField] private float jumpSpeed;
+    [SerializeField] private float crouchSpeed;
     [SerializeField] private Camera cam;
     [SerializeField] RE_GunName gun;
     
@@ -23,6 +24,7 @@ public class PlayerMover : MonoBehaviour
     private float curSpeed;
     private float zSpeed = 0; // À§, ¾Æ·¡
     private bool isWalk = false;
+    private bool isSit = false;
     PhotonView PV;
 
     private void Awake()
@@ -85,7 +87,20 @@ public class PlayerMover : MonoBehaviour
             dir = transform.localRotation * moveDir;
             dir = new Vector3(dir.x, 0f, dir.z);
 
-            curSpeed = isWalk ? walkSpeed : nomalSpeed;
+            if (isWalk)
+            {
+                curSpeed = walkSpeed;
+            }
+            else if (isSit)
+            {
+                curSpeed = crouchSpeed;
+            }
+            else
+            {
+                curSpeed = nomalSpeed;
+            }
+
+            //curSpeed = isWalk ? walkSpeed : nomalSpeed;
 
             moveVec = dir * curSpeed;
             rb.velocity = moveVec + Vector3.up * rb.velocity.y;
@@ -198,11 +213,13 @@ public class PlayerMover : MonoBehaviour
         {
             if (IsGrounded())
             {
+                isSit = true;
                 anim.SetBool("Crouch", true);
             }
         }
         else
         {
+            isSit = false;
             anim.SetBool("Crouch", false);
         }
     }
