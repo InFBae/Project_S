@@ -23,6 +23,7 @@ namespace JBB
         {
             spawnPoints = spawnPointsPrefab.GetComponentsInChildren<Transform>();
         }
+
         private void Start()
         {          
             if (PhotonNetwork.InRoom)
@@ -105,8 +106,16 @@ namespace JBB
                 {
                     Debug.Log($"Wait players {PlayerLoadCount()} / {PhotonNetwork.PlayerList.Length}");
                 }
+                inGameUI.InitUI();
+            }  
+            if (changedProps.ContainsKey("KillCount"))
+            {
+                if (targetPlayer == PhotonNetwork.LocalPlayer)
+                {
+                    inGameUI.UpdateKillDeathUI();
+                }
+                inGameUI.UpdateRankingBoard();
             }
-            inGameUI.InitUI();
         }
         public override void OnRoomPropertiesUpdate(PhotonHashtable propertiesThatChanged)
         {
@@ -133,7 +142,7 @@ namespace JBB
 
         IEnumerator TimerRoutine()
         {
-            double gameEndTime = (PhotonNetwork.Time + PhotonNetwork.CurrentRoom.GetGameTime() * 60);
+            double gameEndTime = (PhotonNetwork.CurrentRoom.GetLoadTime() + PhotonNetwork.CurrentRoom.GetGameTime() * 60);
             while (PhotonNetwork.Time < gameEndTime)
             {
                 int remainTime = (int)(gameEndTime - PhotonNetwork.Time);

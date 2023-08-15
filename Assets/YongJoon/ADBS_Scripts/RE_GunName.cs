@@ -43,8 +43,8 @@ public class RE_GunName : RE_Gun
 
     private void Start()
     {
-        allBullet = 1000;
-        availableBullet = 100;
+        remainBullet = 120;
+        availableBullet = 30;
         fireDamage = 20;
         curAvailavleBullet = availableBullet;
     }
@@ -72,8 +72,9 @@ public class RE_GunName : RE_Gun
         }
     }
 
-    private void OnDisable()
+    public override void OnDisable()
     {
+        base.OnDisable();
         StopAllCoroutines();
     }
 
@@ -95,11 +96,11 @@ public class RE_GunName : RE_Gun
 
     public void FireRequest()
     {
-        PV.RPC("Fire", RpcTarget.MasterClient);
+        PV.RPC("Fire", RpcTarget.MasterClient, PhotonNetwork.LocalPlayer);
     }
 
     [PunRPC]
-    public override void Fire()
+    public override void Fire(Photon.Realtime.Player shooter)
     {
         RaycastHit hit;
 
@@ -108,6 +109,9 @@ public class RE_GunName : RE_Gun
 
         --curAvailavleBullet;
         if (curAvailavleBullet < 0) curAvailavleBullet = 0;
+
+        JBB.StatusUI.OnBulletCountChanged?.Invoke(curAvailavleBullet, remainBullet);
+
         Vector3 camFwd = cam.transform.forward;
 
         Vector2 dir = new Vector2(Random.Range(-boundValue, boundValue), Random.Range(-boundValue, boundValue));
@@ -123,7 +127,7 @@ public class RE_GunName : RE_Gun
             realFireRoot = muzzlePos.transform.position;
         }
 
-        Vector3 rayShootDir = camFwd + Vector3.right * clampedDir.x * 2.5f + Vector3.up * clampedDir.y * 0.8f;
+        Vector3 rayShootDir = camFwd + Vector3.right * clampedDir.x * 1.5f + Vector3.up * clampedDir.y * 0.8f;
         //float radius = Random.Range(0, boundValue);
         //float angle = Random.Range(0, 10* Mathf.PI);
         //float maxValue = Mathf.(Mathf.Cos(angle));
@@ -136,19 +140,19 @@ public class RE_GunName : RE_Gun
             
             if (hit.transform.gameObject.layer == 7)  // 바디 레이어를 맞췄다면?
             {
-                hit.transform.gameObject.GetComponentInParent<ADB_RE_PlayerTakeDamage>().TakeDamage(fireDamage, PhotonNetwork.LocalPlayer);
+                hit.transform.gameObject.GetComponentInParent<ADB_RE_PlayerTakeDamage>().TakeDamage(fireDamage, shooter);
                 ParticleSystem hitEffect = GameManager.Pool.Get(bloodParticle, hit.point, Quaternion.LookRotation(hit.normal), hit.transform);
                 Debug.Log("바디");
             }
             else if (hit.transform.gameObject.layer == 9)  // 팔다리 레이어를 맞췄다면?
             {
-                hit.transform.gameObject.GetComponentInParent<ADB_RE_PlayerTakeDamage>().TakeDamage(fireDamage, PhotonNetwork.LocalPlayer);
+                hit.transform.gameObject.GetComponentInParent<ADB_RE_PlayerTakeDamage>().TakeDamage(fireDamage, shooter);
                 ParticleSystem hitEffect = GameManager.Pool.Get(bloodParticle, hit.point, Quaternion.LookRotation(hit.normal), hit.transform);
                 Debug.Log("팔다리");
             }
             else if (hit.transform.gameObject.layer == 8)  // 헤드 레이어를 맞췄다면?
             {
-                hit.transform.gameObject.GetComponentInParent<ADB_RE_PlayerTakeDamage>().TakeDamage(fireDamage, PhotonNetwork.LocalPlayer);
+                hit.transform.gameObject.GetComponentInParent<ADB_RE_PlayerTakeDamage>().TakeDamage(fireDamage, shooter, true);
                 ParticleSystem hitEffect = GameManager.Pool.Get(bloodParticle, hit.point, Quaternion.LookRotation(hit.normal), hit.transform);
                 Debug.Log("헤드");
             }
@@ -166,7 +170,7 @@ public class RE_GunName : RE_Gun
             targetTransform = muzzlePos.forward * 200;
         }
 
-        PV.RPC("MakeTrail", RpcTarget.All, muzzlePos.position, targetTransform);
+        PV.RPC("MakeTrail", RpcTarget.All, realFireRoot, targetTransform);
         
         Debug.Log("Fire");
     }
@@ -187,7 +191,23 @@ public class RE_GunName : RE_Gun
 
     public override void Reload()    // 재장전
     {
-        if(isReload)
+        if (remainBullet == 0)
+            return;
+
+        if ((remainBullet + curAvailavleBullet) <= availableBullet)
+        {
+            remainBullet = 0;
+            curAvailavleBullet = remainBullet + curAvailavleBullet;
+        }
+        else
+        {
+            remainBullet = remainBullet - (availableBullet - curAvailavleBullet);
+            curAvailavleBullet = availableBullet;
+        }
+
+        JBB.StatusUI.OnBulletCountChanged?.Invoke(curAvailavleBullet, remainBullet);
+
+        if (isReload)
         {
             return;
         }
@@ -211,7 +231,7 @@ public class RE_GunName : RE_Gun
             }
             else
             {
-                allBullet = allBullet - (availableBullet - curAvailavleBullet);
+                remainBullet = remainBullet - (availableBullet - curAvailavleBullet);
                 curAvailavleBullet = availableBullet;
                 tempIsReload = false;
                 yield return new WaitForSeconds(3.08f);

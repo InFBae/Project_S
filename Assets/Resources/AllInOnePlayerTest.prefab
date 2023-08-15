@@ -4730,10 +4730,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   muzzlePos: {fileID: 3498845919217791250}
-  fireDamage: 10
-  allBullet: 220
-  availableBullet: 100
-  curAvailavleBullet: 100
+  fireDamage: 20
+  remainBullet: 120
+  availableBullet: 30
+  curAvailavleBullet: 30
   zoomRoot: {fileID: 644580950182686174}
   hitParticle: {fileID: 2878998193633755065, guid: 37e8f135196358041bb39d6945c6e185,
     type: 3}
@@ -8673,7 +8673,7 @@ GameObject:
   - component: {fileID: 2561831491243527824}
   - component: {fileID: 6288792610074558352}
   - component: {fileID: 1004721759967516263}
-  - component: {fileID: 7672113968347221924}
+  - component: {fileID: 5532482846916584153}
   m_Layer: 3
   m_Name: ADB_VisiblePlayer 1
   m_TagString: Untagged
@@ -8813,7 +8813,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   diePlayer: {fileID: 7498499812823032062}
   hp: 200
-  gun: {fileID: 3498845919217791251}
+  rank: 0
+  killCount: 0
+  deathCount: 0
+  nickName: 
 --- !u!114 &2561831491243527824
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8871,7 +8874,7 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &7672113968347221924
+--- !u!114 &5532482846916584153
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8880,7 +8883,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6215652802492630565}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b77f0834edbf1164f8a35b57f6f72e78, type: 3}
+  m_Script: {fileID: 11500000, guid: 9cbd41ff1c1b2e04fb88d625964911aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   diePlayer: {fileID: 7498499812823032062}

@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Events;
 
 namespace JBB
 {
     public class StatusUI : BaseUI
     {
+
+        public static UnityEvent<float> OnHPChanged = new UnityEvent<float>();
+        public static UnityEvent<int, int> OnBulletCountChanged = new UnityEvent<int, int>();
+
         protected override void Awake()
         {
             base.Awake();
@@ -14,12 +18,14 @@ namespace JBB
 
         private void OnEnable()
         {
-            
+            OnHPChanged.AddListener(SetHP);
+            OnBulletCountChanged.AddListener(SetBullets);
         }
 
         private void OnDisable()
         {
-            
+            OnHPChanged.RemoveListener(SetHP);
+            OnBulletCountChanged.RemoveListener(SetBullets);
         }
         public void SetWeaponName(string weaponName)
         {

@@ -1,3 +1,4 @@
+using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ namespace JBB
 
         public void CreateKillLog(Player killed, Player dead, bool isHeadShot)
         {
+            Debug.Log($"Create KillLog {killed.GetNickname()} killed {dead.GetNickname()}");
             texts["HeadShot"].text = isHeadShot ? "[Head Shot]" : "";
             texts["Nickname"].text = killed.GetNickname();
         }
