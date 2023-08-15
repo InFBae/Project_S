@@ -73,7 +73,7 @@ public class RE_PlayerAttacker : RE_Player
     }
     void OnReload(InputValue value)
     {
-        gun.Reload();
+        gun.ReloadRequest();
         //anim.SetTrigger("Reload");
     }
 }

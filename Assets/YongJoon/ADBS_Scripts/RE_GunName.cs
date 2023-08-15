@@ -133,7 +133,7 @@ public class RE_GunName : RE_Gun
         
         Vector3 targetTransform;
         // 레이캐스트를 솼는데 부딪힌 물체가 있다면
-        if (Physics.Raycast(realFireRoot, rayShootDir /*cam.transform.forward + Vector3.right * 3f *Random.Range(-boundValue,boundValue)  + Vector3.up * Random.Range(-boundValue,boundValue)*/, out hit, maxDistance))
+        if (Physics.Raycast(realFireRoot, rayShootDir /*cam.transform.forward + Vector3.right * 3f *Random.Range(-boundValue,boundValue)  + Vector3.up * Random.Range(-boundValue,boundValue)*/, out hit, maxDistance, 999/*768*/))
         {
             
             if (hit.transform.gameObject.layer == 7)  // 바디 레이어를 맞췄다면?
@@ -168,8 +168,8 @@ public class RE_GunName : RE_Gun
             targetTransform = muzzlePos.forward * 200;
         }
 
-        PV.RPC("MakeTrail", RpcTarget.All, muzzlePos.position, targetTransform);
-        PV.RPC("FireSound", RpcTarget.All, muzzlePos.position);
+        PV.RPC("MakeTrail", RpcTarget.All, realFireRoot, targetTransform);
+        PV.RPC("FireSound", RpcTarget.All, realFireRoot);
         
         Debug.Log("Fire");
     }
@@ -194,6 +194,12 @@ public class RE_GunName : RE_Gun
         ReleaseRoutine(trailEffect.gameObject);
     }
 
+    public void ReloadRequest()
+    {
+        PV.RPC("Reload", RpcTarget.All);
+    }
+
+    [PunRPC]
     public override void Reload()    // 재장전
     {
         if(isReload)
