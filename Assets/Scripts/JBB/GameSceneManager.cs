@@ -36,7 +36,7 @@ namespace JBB
             else
             {
                 // DebugMode
-                PhotonNetwork.LocalPlayer.NickName = "111";
+                PhotonNetwork.LocalPlayer.NickName = $"Debug {UnityEngine.Random.Range(100, 200)}";
                 PhotonNetwork.ConnectUsingSettings();
             }
         }
@@ -61,7 +61,7 @@ namespace JBB
             Debug.Log("Joined DebugRoom");
             PhotonNetwork.LeaveLobby();
 
-            PhotonNetwork.LocalPlayer.SetNickname("111");
+            PhotonNetwork.LocalPlayer.SetNickname($"Debug {UnityEngine.Random.Range(100, 200)}");
             PhotonNetwork.LocalPlayer.SetLoad(true);
 
             inGameUI.InitUI();
