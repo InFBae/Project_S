@@ -142,19 +142,19 @@ public class RE_GunName : RE_Gun
             
             if (hit.transform.gameObject.layer == 7)  // 바디 레이어를 맞췄다면?
             {
-                hit.transform.gameObject.GetComponentInParent<ADB_RE_PlayerTakeDamage>().TakeDamage(fireDamage, shooter);
+                hit.transform.gameObject.GetComponentInParent<RE_PlayerTakeDamage>().TakeDamage(fireDamage, shooter);
                 ParticleSystem hitEffect = GameManager.Pool.Get(bloodParticle, hit.point, Quaternion.LookRotation(hit.normal), hit.transform);
                 Debug.Log("바디");
             }
             else if (hit.transform.gameObject.layer == 9)  // 팔다리 레이어를 맞췄다면?
             {
-                hit.transform.gameObject.GetComponentInParent<ADB_RE_PlayerTakeDamage>().TakeDamage(fireDamage, shooter);
+                hit.transform.gameObject.GetComponentInParent<RE_PlayerTakeDamage>().TakeDamage(fireDamage, shooter);
                 ParticleSystem hitEffect = GameManager.Pool.Get(bloodParticle, hit.point, Quaternion.LookRotation(hit.normal), hit.transform);
                 Debug.Log("팔다리");
             }
             else if (hit.transform.gameObject.layer == 8)  // 헤드 레이어를 맞췄다면?
             {
-                hit.transform.gameObject.GetComponentInParent<ADB_RE_PlayerTakeDamage>().TakeDamage(fireDamage, shooter, true);
+                hit.transform.gameObject.GetComponentInParent<RE_PlayerTakeDamage>().TakeDamage(fireDamage, shooter, true);
                 ParticleSystem hitEffect = GameManager.Pool.Get(bloodParticle, hit.point, Quaternion.LookRotation(hit.normal), hit.transform);
                 Debug.Log("헤드");
             }
