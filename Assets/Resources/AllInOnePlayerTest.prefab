@@ -4057,8 +4057,6 @@ GameObject:
   - component: {fileID: 2997263571562198779}
   - component: {fileID: 3006961742248432331}
   - component: {fileID: 2957567163765912269}
-  - component: {fileID: 1121962870028847298}
-  - component: {fileID: 1121962870028847299}
   m_Layer: 9
   m_Name: SM_Wep_Rifle_Assault_01
   m_TagString: Untagged
@@ -4153,65 +4151,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 43423280058218976, guid: 27d4bc80aff09d74c9e3e67b94c45e36, type: 2}
---- !u!114 &1121962870028847298
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3020283233263824925}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 16bb54d111f94fa439daaac5e63483ba,
-    type: 3}
-  m_NotificationBehavior: 0
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents: []
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Player
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
---- !u!114 &1121962870028847299
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3020283233263824925}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 570cd0104cea4174e9a493e7d33d6185, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  muzzlePos: {fileID: 1121962869434796387}
-  fireDamage: 0
-  remainBullet: 0
-  availableBullet: 0
-  curAvailavleBullet: 0
-  statusUI: {fileID: 0}
-  hitParticle: {fileID: 2878998193633755065, guid: 37e8f135196358041bb39d6945c6e185,
-    type: 3}
-  bloodParticle: {fileID: 1684594036494586434, guid: a6fbb0a52de44964f9f7ba6085afb872,
-    type: 3}
-  trailEffect: {fileID: 3832729519127425566, guid: 30536f26f4c87fb4e9f2dc386e09a8d7,
-    type: 3}
-  camera: {fileID: 0}
-  maxDistance: 60
-  bulletSpeed: 50
-  fireCoolTime: 0.1
 --- !u!1 &3020465620399913373
 GameObject:
   m_ObjectHideFlags: 0
@@ -8730,9 +8669,9 @@ GameObject:
   - component: {fileID: 1574128460360103855}
   - component: {fileID: 6215652802492630567}
   - component: {fileID: 2561831491243527824}
-  - component: {fileID: 561300090}
   - component: {fileID: 6288792610074558352}
   - component: {fileID: 1004721759967516263}
+  - component: {fileID: 7672113968347221924}
   m_Layer: 3
   m_Name: ADB_VisiblePlayer 1
   m_TagString: Untagged
@@ -8888,23 +8827,6 @@ MonoBehaviour:
   m_SynchronizeAngularVelocity: 1
   m_TeleportEnabled: 0
   m_TeleportIfDistanceGreaterThan: 3
---- !u!114 &561300090
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6215652802492630565}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a770fd08213d0b1478988c68f8b77c26, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  anim: {fileID: 8963163098989630250}
-  diePlayer: {fileID: 7498499812823032062}
-  gun: {fileID: 0}
-  hp: 0
-  killCount: 0
 --- !u!114 &6288792610074558352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8946,6 +8868,24 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &7672113968347221924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6215652802492630565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b77f0834edbf1164f8a35b57f6f72e78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  diePlayer: {fileID: 7498499812823032062}
+  hp: 200
+  rank: 0
+  killCount: 0
+  deathCount: 0
+  nickName: 
 --- !u!1 &6215652803261079805
 GameObject:
   m_ObjectHideFlags: 0
@@ -10827,7 +10767,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7498499812823032061}
-  - component: {fileID: 2772967093469451990}
+  - component: {fileID: 1171162090956354363}
   m_Layer: 0
   m_Name: ADB_VisiblePlayer 1 - DiePlayer
   m_TagString: Untagged
@@ -10853,7 +10793,7 @@ Transform:
   m_Father: {fileID: 5121105019881078245}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2772967093469451990
+--- !u!114 &1171162090956354363
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10862,11 +10802,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7498499812823032062}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1b82fe2ef56c3e43b480cc8271c892e, type: 3}
+  m_Script: {fileID: 11500000, guid: de61b23cfa8429d4f8cb0ef9099457d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  spawnPlayer: {fileID: 0}
+  Player: {fileID: 6215652802492630566}
 --- !u!1 &7574197551800453594
 GameObject:
   m_ObjectHideFlags: 0
