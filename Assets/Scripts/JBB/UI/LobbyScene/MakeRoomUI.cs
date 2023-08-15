@@ -123,11 +123,11 @@ namespace JBB
             if (PhotonNetwork.CreateRoom(RoomName, roomOptions))
             {
                 this.gameObject.SetActive(false);
-                GameManager.UI.CreatePopUpMessage("Make Room Success");
+                GameManager.UI.CreatePopUpMessage("Make Room Success", 1f);
             }
             else
             {
-                GameManager.UI.CreatePopUpMessage("Make Room Failed");
+                GameManager.UI.CreatePopUpMessage("Make Room Failed", 1f);
             }
 
         }

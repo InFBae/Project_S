@@ -64,7 +64,7 @@ namespace JBB
 
         public override void OnLeftRoom()
         {
-            GameManager.Scene.LoadScene("LobbyScene");
+            PhotonNetwork.LoadLevel("LobbyScene");
         }
 
         public override void OnPlayerEnteredRoom(Player newPlayer)

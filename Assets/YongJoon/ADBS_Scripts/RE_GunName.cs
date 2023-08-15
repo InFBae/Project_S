@@ -1,5 +1,6 @@
 using Cinemachine;
 using Cinemachine.Utility;
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -10,6 +11,7 @@ using UnityEngine.Tilemaps;
 public class RE_GunName : RE_Gun
 {
     [SerializeField] GameObject hitParticle;
+    //[SerializeField] GameObject prefabMaster;
     [SerializeField] ParticleSystem bloodParticle;
     [SerializeField] TrailRenderer trailEffect;
     [SerializeField] Camera cam;
@@ -27,7 +29,7 @@ public class RE_GunName : RE_Gun
     public int fireStack = 0;
     Coroutine reloadRoutine;
     public bool isZoom = false;
-
+    PhotonView PV;
 
 
     private void Awake()
@@ -35,6 +37,8 @@ public class RE_GunName : RE_Gun
         bloodParticle = GameManager.Resource.Load<ParticleSystem>("BloodParticle");
         hitParticle = GameManager.Resource.Load<GameObject>("HitEffect");
         trailEffect = GameManager.Resource.Load<TrailRenderer>("BulletTrail");
+        PV = GetComponent<PhotonView>();
+        
     }
 
     private void Start()
@@ -91,10 +95,15 @@ public class RE_GunName : RE_Gun
     //    }
     //}
 
+    public void FireRequest()
+    {
+        PV.RPC("Fire", RpcTarget.MasterClient);
+    }
 
-
+    [PunRPC]
     public override void Fire()
     {
+
         RaycastHit hit;
 
         if (curAvailavleBullet <= 0 || isReload/*anim.GetCurrentAnimatorStateInfo(0).IsName("reloading")*/)   // 총알 없으면 쏘지 못하도록

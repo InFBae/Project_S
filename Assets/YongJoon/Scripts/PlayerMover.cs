@@ -35,12 +35,12 @@ public class PlayerMover : MonoBehaviour
     }
     private void Start()
     {
-        //playerBody.SetActive(false);
-        if (PV.IsMine)
-        {
-            playerBody.gameObject.layer = 4;
-            ChangeLayerRecursively(playerBody, 4);
-        }
+        ////playerBody.SetActive(false);
+        //if (PV.IsMine)
+        //{
+        //    playerBody.gameObject.layer = 4;
+        //    ChangeLayerRecursively(playerBody, 4);
+        //}
     }
     private void ChangeLayerRecursively(GameObject obj, int layer)
     {
@@ -53,6 +53,11 @@ public class PlayerMover : MonoBehaviour
     }
     private void Update()
     {
+        if (!PV.IsMine)
+        {
+            return;
+        }
+
         Move();
     }
 
@@ -65,11 +70,11 @@ public class PlayerMover : MonoBehaviour
             return;
         }
         // 각도 계산해 특정 각도는 올라갈 수 있게
-        if (IsClimbable())
-        {
-            //Debug.Log("isClimbable");
-            rb.MovePosition(transform.position + Vector3.up * 0.3f);
-        }
+        //if (IsClimbable())
+        //{
+        //    //Debug.Log("isClimbable");
+        //    rb.MovePosition(transform.position + Vector3.up * 0.3f);
+        //}
         if (moveDir.magnitude == 0)
         {
             rb.velocity = new Vector3(0, moveVec.y, 0);
@@ -91,6 +96,10 @@ public class PlayerMover : MonoBehaviour
     }
     public void Jump()
     {
+        if (!PV.IsMine)
+        {
+            return;
+        }
         rb.AddForce(Vector3.up * jumpSpeed, ForceMode.Impulse);
         StartCoroutine(JumpRoutine());
     }

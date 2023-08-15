@@ -37,7 +37,7 @@ namespace JBB
                 reader.Read();
                 if (reader["U_ID"].ToString() == PhotonNetwork.LocalPlayer.NickName)
                 {
-                    GameManager.UI.CreatePopUpMessage("Add Friend Failed(Can't Add Self)");
+                    GameManager.UI.CreatePopUpMessage("Add Friend Failed(Can't Add Self)", 1f);
                     return;
                 }
 
@@ -53,18 +53,20 @@ namespace JBB
                         {
                             if (friend == nickname)
                             {
-                                GameManager.UI.CreatePopUpMessage("Add Friend Failed(Already Friend)");
+                                GameManager.UI.CreatePopUpMessage("Add Friend Failed(Already Friend)", 1f);
                                 return;
                             }
                             continue;
                         }
                         string updateFriendInfoCommand = $"UPDATE friend_info SET Friend{i} = '{nickname}' WHERE Owner = '{PhotonNetwork.LocalPlayer.NickName}'";
                         GameManager.DB.ExecuteNonQuery(updateFriendInfoCommand);
-                        GameManager.UI.CreatePopUpMessage("Add Friend Success");
+                        GameManager.UI.CreatePopUpMessage("Add Friend Success", 1f);
+                        GameManager.Chat.AddFriend(nickname);
                         ChatManager.OnFriendListChanged?.Invoke();
+                        this.gameObject.SetActive(false);
                         return;
                     }
-                    GameManager.UI.CreatePopUpMessage("Add Friend Failed(Full FriendList)");
+                    GameManager.UI.CreatePopUpMessage("Add Friend Failed(Full FriendList)", 1f);
                     return;
                 }
                 else
@@ -72,14 +74,16 @@ namespace JBB
                     // DB에 이 유저의 friend_info 정보가 없으므로 생성
                     string addFriendInfoCommand = $"INSERT INTO friend_info (Owner, Friend1) values ('{PhotonNetwork.LocalPlayer.NickName}', '{nickname}')";
                     GameManager.DB.ExecuteNonQuery(addFriendInfoCommand);
-                    GameManager.UI.CreatePopUpMessage("Add Friend Success");
+                    GameManager.UI.CreatePopUpMessage("Add Friend Success", 1f);
+                    GameManager.Chat.AddFriend(nickname);
                     ChatManager.OnFriendListChanged?.Invoke();
+                    this.gameObject.SetActive(false);
                     return;
                 }
             }
             else
             {
-                GameManager.UI.CreatePopUpMessage("Nickname Not In Database");
+                GameManager.UI.CreatePopUpMessage("Nickname Not In Database", 1f);
                 return;
             }
         }

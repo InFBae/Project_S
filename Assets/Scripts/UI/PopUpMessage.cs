@@ -10,19 +10,19 @@ namespace JBB
         {
             base.Awake();
         }
-
-        public void OnEnable()
+        public void SetTime(float time)
         {
-            StartCoroutine(CloseUIRoutine());
+            Time.timeScale = 1;
+            StartCoroutine(CloseUIRoutine(time));
         }
         public void SetText(string text)
         {
             texts["Message"].text = text;
         }
 
-        IEnumerator CloseUIRoutine()
+        IEnumerator CloseUIRoutine(float time)
         {
-            yield return new WaitForSecondsRealtime(1f);
+            yield return new WaitForSecondsRealtime(time);
             CloseUI();
         }
    

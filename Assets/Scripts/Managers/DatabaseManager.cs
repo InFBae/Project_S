@@ -17,7 +17,7 @@ public class DatabaseManager : MonoBehaviour
     {
         try
         {
-            string serverInfo = "Server=43.200.178.18; Database=userdb; Uid=root; Pwd=1234; Port=3306; CharSet=utf8;";
+            string serverInfo = "Server=43.200.178.18; Database=userdb; Uid=user; Pwd=@VR6; Port=3306; CharSet=utf8;";
             con = new MySqlConnection(serverInfo);
             con.Open();
 

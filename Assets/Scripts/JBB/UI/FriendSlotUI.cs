@@ -14,7 +14,8 @@ namespace JBB
 
         public void SetState(string nickname, int state)
         {
-            texts["Nickname"].text = nickname;
+            texts["Nickname"].color = Color.white;
+            texts["State"].color = Color.white;
 
             string _state;
             switch (state)
@@ -23,7 +24,7 @@ namespace JBB
                     _state = "Invisible";
                     break;
                 case 2:
-                    _state = "Online";
+                    _state = "<b>Online</b>";
                     break;
                 case 3:
                     _state = "Away";
@@ -39,8 +40,11 @@ namespace JBB
                     break;
                 default:
                     _state = "Offline";
+                    texts["Nickname"].color = Color.gray;
+                    texts["State"].color = Color.gray;
                     break;
             }
+            texts["Nickname"].text = nickname;
             texts["State"].text = _state.ToString();
             
         }
