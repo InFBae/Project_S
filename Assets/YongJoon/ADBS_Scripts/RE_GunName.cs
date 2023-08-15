@@ -168,8 +168,8 @@ public class RE_GunName : RE_Gun
             targetTransform = muzzlePos.forward * 200;
         }
 
-        PV.RPC("MakeTrail", RpcTarget.All, muzzlePos.position, targetTransform);
-        PV.RPC("FireSound", RpcTarget.All, muzzlePos.position);
+        PV.RPC("MakeTrail", RpcTarget.All, realFireRoot, targetTransform);
+        PV.RPC("FireSound", RpcTarget.All, realFireRoot);
         
         Debug.Log("Fire");
     }
