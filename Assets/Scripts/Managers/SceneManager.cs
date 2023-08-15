@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -37,12 +38,13 @@ public class SceneManager : MonoBehaviour
         loadingUI.SetProgress(0f);
         loadingUI.FadeOut();
         yield return new WaitForSecondsRealtime(0.5f);
-        Time.timeScale = 0f;
 
-        AsyncOperation oper = UnitySceneManager.LoadSceneAsync(sceneName);
-        while (!oper.isDone)
+        //AsyncOperation oper = UnitySceneManager.LoadSceneAsync(sceneName);
+
+        PhotonNetwork.LoadLevel(sceneName);
+        while (PhotonNetwork.LevelLoadingProgress >= 0.9)
         {
-            loadingUI.SetProgress(Mathf.Lerp(0f, 1f, oper.progress));
+            loadingUI.SetProgress(Mathf.Lerp(0f, 1f, PhotonNetwork.LevelLoadingProgress));
             yield return null;
         }
 

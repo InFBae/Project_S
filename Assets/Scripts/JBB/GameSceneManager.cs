@@ -29,14 +29,14 @@ namespace JBB
             {
                 inGameUI.InitUI();
                 Transform spawnPoint = GetSpawnPoint();
-                GameManager.Resource.Instantiate(GameManager.Resource.Load<GameObject>("AllInOnePlayerTest"), spawnPoint.position, Quaternion.identity);
+                PhotonNetwork.Instantiate("AllInOnePlayerTest", spawnPoint.position, Quaternion.identity);
                 // 게임 준비사항 다 마치고 SetLoad 설정
                 PhotonNetwork.LocalPlayer.SetLoad(true);
             }
             else
             {
                 // DebugMode
-                PhotonNetwork.LocalPlayer.NickName = "111";
+                PhotonNetwork.LocalPlayer.NickName = $"Debug {UnityEngine.Random.Range(100, 200)}";
                 PhotonNetwork.ConnectUsingSettings();
             }
         }
@@ -61,7 +61,7 @@ namespace JBB
             Debug.Log("Joined DebugRoom");
             PhotonNetwork.LeaveLobby();
 
-            PhotonNetwork.LocalPlayer.SetNickname("111");
+            PhotonNetwork.LocalPlayer.SetNickname($"Debug {UnityEngine.Random.Range(100, 200)}");
             PhotonNetwork.LocalPlayer.SetLoad(true);
 
             inGameUI.InitUI();
