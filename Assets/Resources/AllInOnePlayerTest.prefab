@@ -4730,10 +4730,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   muzzlePos: {fileID: 3498845919217791250}
-  fireDamage: 10
-  allBullet: 220
-  availableBullet: 100
-  curAvailavleBullet: 100
+  fireDamage: 20
+  allBullet: 0
+  availableBullet: 30
+  curAvailavleBullet: 30
   zoomRoot: {fileID: 644580950182686174}
   hitParticle: {fileID: 2878998193633755065, guid: 37e8f135196358041bb39d6945c6e185,
     type: 3}
@@ -4745,6 +4745,7 @@ MonoBehaviour:
   maxDistance: 60
   bulletSpeed: 50
   fireCoolTime: 0.1
+  clip: {fileID: 8300000, guid: 1d84c52d82239cf4898be13e6b8809a3, type: 3}
   isReload: 0
   boundValue: 0
   fireStack: 0
@@ -8748,6 +8749,7 @@ MonoBehaviour:
   playerAimTarget: {fileID: 8116300753076410033}
   shootRoot: {fileID: 3498845919336681827}
   fireRoot: {fileID: 3498845919217791250}
+  zoomRoot: {fileID: 644580950182686174}
   cameraSensitivity: 10
   lookDistance: 20
 --- !u!54 &1574128460360103854
@@ -8799,6 +8801,7 @@ MonoBehaviour:
   crouchSpeed: 3
   cam: {fileID: 1068789190085132769}
   gun: {fileID: 3498845919217791251}
+  clip: {fileID: 8300000, guid: 6dae764c68aa1244a88409def1d94119, type: 3}
 --- !u!114 &6215652802492630567
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10839,7 +10842,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de61b23cfa8429d4f8cb0ef9099457d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 6215652802492630566}
+  Player: {fileID: 0}
 --- !u!1 &7574197551800453594
 GameObject:
   m_ObjectHideFlags: 0
