@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,11 +8,16 @@ public class RE_PlayerAttacker : RE_Player
 {
     Coroutine fireRoutine;
     Coroutine fireStackRoutine;
+    //PhotonView pv;
 
 
     private bool isFire = false;
 
 
+    private void Awake()
+    {
+        //pv = GetComponentInParent<PhotonView>();
+    }
 
     private void Start()
     {
@@ -23,7 +29,7 @@ public class RE_PlayerAttacker : RE_Player
         {
             if (isFire)
             {
-                gun.Fire();
+                gun.FireRequest();  
                 yield return new WaitForSeconds(gun.FireCoolTime);
             }
             else

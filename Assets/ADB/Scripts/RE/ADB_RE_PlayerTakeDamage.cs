@@ -1,31 +1,62 @@
-using ahndabi;
+using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using ahndabi;
 
 
 public class ADB_RE_PlayerTakeDamage : ADB_RE_Player
 {
-    [SerializeField] StatusUI statusUI;
-
     private void Start()
     {
-        statusUI.HpTextUI.text = Hp.ToString();
         // *** Debuging 모드 ***
         // StartCoroutine(DieDebug());
     }
 
-    public void TakeDamage(int damage, GameObject enemyPlayer)    // 데미지 받기
+    public void TakeDamage(int damage, Photon.Realtime.Player enemyPlayer)    // 데미지 받기
     {
         Debug.Log("TakeDamage");
         DecreaseHp(damage);
-        statusUI.DecreaseHPUI(damage);
+        StatusUI.OnHPChanged?.Invoke(Hp);
         anim.SetTrigger("TakeDamage");
 
         if (Hp <= 0)    // hp가 0이 되면 죽는다.
         {
-            enemyPlayer.GetComponentInParent<ADB_RE_PlayerAttacker>().killCount++;    // 상대의 킬 카운트 +1
-            enemyPlayer.GetComponentInParent<ADB_RE_PlayerAttacker>().ChangeKillCount();
+            //enemyPlayer.GetComponentInParent<ADB_RE_PlayerAttacker>().killCount++;    // 상대의 킬 카운트 +1
+            //enemyPlayer.GetComponentInParent<ADB_RE_PlayerAttacker>().ChangeKillCount();
+            // 위 두 개는 밑 이벤트로 대체
+
+            KillManager.OnKilled?.Invoke(enemyPlayer, this.player, false);      // 죽인사람, 죽은사람, 헤드샷 판정
+
+            
+            //StatusUI.OnBulletCountChanged?.Invoke(curAvailavleBullet, remainBullet);
+            //KillDeathUI.OnKilled(gameObject, Player)
+            deathCount++;   // 자신의 death 카운트 +1
+            ChangeDeathCount();
+            Die();
+        }
+    }
+
+    public void TakeDamage(int damage, Photon.Realtime.Player enemyPlayer, bool headShot)    // 헤드샷 받은 데미지
+    {
+        Debug.Log("TakeDamage");
+        DecreaseHp(damage);
+        StatusUI.OnHPChanged?.Invoke(Hp);
+        anim.SetTrigger("TakeDamage");
+
+        if (Hp <= 0)    // hp가 0이 되면 죽는다.
+        {
+            //enemyPlayer.GetComponentInParent<ADB_RE_PlayerAttacker>().killCount++;    // 상대의 킬 카운트 +1
+            //enemyPlayer.GetComponentInParent<ADB_RE_PlayerAttacker>().ChangeKillCount();
+            // 위 두 개는 밑 이벤트로 대체
+
+            KillManager.OnKilled?.Invoke(enemyPlayer, this.player, true);      // 죽인사람, 죽은사람, 헤드샷 판정
+
+            // 헤드샷은 TakeDamage를 호출한 곳이 헤드를 맞춘 곳이라면 true
+
+            //StatusUI.OnBulletCountChanged?.Invoke(curAvailavleBullet, remainBullet);
+            //KillDeathUI.OnKilled(gameObject, Player)
             deathCount++;   // 자신의 death 카운트 +1
             ChangeDeathCount();
             Die();
@@ -46,6 +77,6 @@ public class ADB_RE_PlayerTakeDamage : ADB_RE_Player
 
     public void ChangeDeathCount()
     {
-        killDeathUI.ChagneKillDeathTextUI(killCount, deathCount);
+        //killDeathUI.ChagneKillDeathTextUI(killCount, deathCount);
     }
 }

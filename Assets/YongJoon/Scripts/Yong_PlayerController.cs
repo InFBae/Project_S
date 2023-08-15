@@ -6,16 +6,16 @@ using ahndabi;
 using UnityEngine.InputSystem;
 using System.Linq;
 
-public class Yong_PlayerController : MonoBehaviour
+public class Yong_PlayerController : MonoBehaviourPunCallbacks
 {
     [SerializeField] GameObject visibleBody;
     [SerializeField] GameObject FPSBody;
 
 
     PhotonView PV;
-    PlayerAttacker PAttack;
-    PlayerMover PMover;
-    PlayerAimMove PAimMove;
+    //PlayerAttacker PAttack;
+    //PlayerMover PMover;
+    //PlayerAimMove PAimMove;
     List<PlayerInput> inputList;
     List<Camera> cameraList;
 
@@ -24,13 +24,13 @@ public class Yong_PlayerController : MonoBehaviour
     private void Awake()
     {
         PV = GetComponent<PhotonView>();
-        PAttack = GetComponentInChildren<PlayerAttacker>();
-        PMover = GetComponentInChildren<PlayerMover>();
-        PAimMove = GetComponentInChildren<PlayerAimMove>();
+        //PAttack = GetComponentInChildren<PlayerAttacker>();
+        //PMover = GetComponentInChildren<PlayerMover>();
+        //PAimMove = GetComponentInChildren<PlayerAimMove>();
         inputList = GetComponentsInChildren<PlayerInput>().ToList<PlayerInput>();
         cameraList = GetComponentsInChildren<Camera>().ToList<Camera>();
 
-        PV.RPC("TestRPC", RpcTarget.AllBufferedViaServer);
+        //PV.RPC("TestRPC", RpcTarget.AllBufferedViaServer);
 
 
         if (!PV.IsMine)
@@ -79,23 +79,23 @@ public class Yong_PlayerController : MonoBehaviour
         //int myNum = PhotonNetwork.LocalPlayer.ActorNumber;
         //Debug.Log($"my Act Number is {myNum}");
     }
-    [PunRPC]
-    void TestRPC()
-    {
-        if (!PV.IsMine)
-        {
+    //[PunRPC]
+    //void TestRPC()
+    //{
+    //    if (!PV.IsMine)
+    //    {
 
-            //visibleBody.SetActive(false);
-            ChangeLayerRecursively(visibleBody, 0);
-            FPSBody.SetActive(false);
-        }
-        else
-        {
-            ChangeLayerRecursively(visibleBody, 4);
-            FPSBody.SetActive(true);
-        }
-        PAttack.enabled = false;
-        PMover.enabled = false;
-        PAimMove.enabled = false;
-    }
+    //        //visibleBody.SetActive(false);
+    //        ChangeLayerRecursively(visibleBody, 0);
+    //        FPSBody.SetActive(false);
+    //    }
+    //    else
+    //    {
+    //        ChangeLayerRecursively(visibleBody, 4);
+    //        FPSBody.SetActive(true);
+    //    }
+    //    //PAttack.enabled = false;
+    //    //PMover.enabled = false;
+    //    //PAimMove.enabled = false;
+    //}
 }

@@ -2,37 +2,43 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class StatusUI : SceneUI
+namespace ahndabi
 {
-    public TMP_Text HpTextUI;
-    public TMP_Text CurrentBulletUI;
-    public TMP_Text RemainBulletUI;
-    protected override void Awake()
+    public class StatusUI : SceneUI
     {
-        base.Awake();
-        HpTextUI = texts["HPValue"];
-        CurrentBulletUI = texts["CurrentBullet"];
-        RemainBulletUI = texts["RemainBullet"];
-    }
+        // 여기에 유니티이벤트 세개 만듦
+        // 1. Hp 이벤트   2. Kill 이벤트   3. 탄약 이벤트
+        public static UnityEvent<float> OnHPChanged = new UnityEvent<float>();
+        public static UnityEvent<int, int> OnBulletCountChanged = new UnityEvent<int, int>();     // curAvailavleBullet / remainBullet
 
-    public void DecreaseHPUI(int damage)
-    {
-        // damage만큼 text 변동 
-        HpTextUI.text = (int.Parse(HpTextUI.text) - damage).ToString();
-        if (int.Parse(HpTextUI.text) <= 0)
-            HpTextUI.text = "0";
-    }
+        protected override void Awake()
+        {
+            base.Awake();
+        }
 
-    public void DecreaseCurrentBulletUI(int curAvailavleBullet)
-    {
-        // 탄창 수 변동
-        CurrentBulletUI.text = curAvailavleBullet.ToString();
-    }
+        private void OnEnable()
+        {
+            OnHPChanged.AddListener(SetHP);
+            OnBulletCountChanged.AddListener(SetBullets);
+        }
 
-    public void DecreaseRemainBulletUI(int remainBullet)
-    {
-        // 남은 총 총알 개수
-        RemainBulletUI.text = remainBullet.ToString();
+        public void SetWeaponName(string weaponName)
+        {
+            texts["WeaponNameText"].text = weaponName;
+        }
+
+        public void SetHP(float hp)
+        {
+            texts["HPValue"].text = hp.ToString();
+        }
+
+        public void SetBullets(int currentBullet, int remainBullet)
+        {
+            texts["CurrentBullet"].text = currentBullet.ToString();
+            texts["RemainBullet"].text = remainBullet.ToString();
+        }
+
     }
 }

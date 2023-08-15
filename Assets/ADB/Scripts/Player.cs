@@ -11,7 +11,7 @@ namespace ahndabi
         // 플레이어가 가지고 있는 것들
         [SerializeField] protected Animator anim;
         [SerializeField] protected GameObject diePlayer;
-        [SerializeField] protected Gun gun;
+        [SerializeField] protected ADB_RE_Gun gun;
         [SerializeField] int hp;
         [SerializeField] public int Hp { get { return hp; } private set { if (hp <= 0) hp = 0; else hp = value; } }
         [SerializeField] protected int killCount;
@@ -19,7 +19,7 @@ namespace ahndabi
         private void Awake()
         {
             anim = GetComponentInChildren<Animator>();
-            gun = GetComponentInChildren<Gun>();
+            gun = GetComponentInChildren<ADB_RE_Gun>();
         }
 
         private void OnEnable()

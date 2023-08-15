@@ -5,9 +5,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering.Universal;
+using Photon.Pun;
 
 
-public abstract class RE_Gun : MonoBehaviour
+public abstract class RE_Gun : MonoBehaviourPunCallbacks
 {
     [SerializeField] protected Transform muzzlePos;
     [SerializeField] protected int fireDamage;
