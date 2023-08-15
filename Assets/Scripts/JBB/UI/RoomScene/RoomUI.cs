@@ -89,7 +89,8 @@ namespace JBB
 
         public void ActivateGameStartButton()
         {
-            buttons["GameStartButton"].gameObject.SetActive(true);
+            if (PhotonNetwork.IsMasterClient) 
+                buttons["GameStartButton"].gameObject.SetActive(true);
         }
 
         public void DeActivateGameStartButton()
