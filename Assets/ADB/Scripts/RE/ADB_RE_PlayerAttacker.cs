@@ -4,75 +4,78 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class ADB_RE_PlayerAttacker : ADB_RE_Player
+namespace ahndabi
 {
-    Coroutine fireRoutine;
-    Coroutine fireStackRoutine;
-
-    private bool isFire = false;
-
-    private void Start()
+    public class ADB_RE_PlayerAttacker : ADB_RE_Player
     {
-        fireStackRoutine = StartCoroutine(FireStackRoutine());
-    }
+        Coroutine fireRoutine;
+        Coroutine fireStackRoutine;
 
-    IEnumerator FireRoutine()
-    {
-        while (true)
+        private bool isFire = false;
+
+        private void Start()
         {
-            if (isFire)
-            {
-                gun.Fire();
+            fireStackRoutine = StartCoroutine(FireStackRoutine());
+        }
 
-                yield return new WaitForSeconds(gun.FireCoolTime);
-            }
-            else
+        IEnumerator FireRoutine()
+        {
+            while (true)
             {
+                if (isFire)
+                {
+                    gun.Fire();
+
+                    yield return new WaitForSeconds(gun.FireCoolTime);
+                }
+                else
+                {
+                    yield return null;
+                }
+            }
+        }
+        IEnumerator FireStackRoutine()
+        {
+            while (true)
+            {
+                if (isFire)
+                {
+                    gun.fireStack++;
+                    yield return new WaitForSeconds(0.1f);
+
+                }
+                else if (gun.fireStack > 0)
+                {
+                    gun.fireStack--;
+                    yield return new WaitForSeconds(0.05f);
+
+                }
                 yield return null;
             }
         }
-    }
-    IEnumerator FireStackRoutine()
-    {
-        while (true)
+        private void OnFire(InputValue value)
         {
-            if (isFire)
+            if (isFire == false)
             {
-                gun.fireStack++;
-                yield return new WaitForSeconds(0.1f);
-
+                fireRoutine = StartCoroutine(FireRoutine());
+                //Debug.Log(gun.boundValue);
+                isFire = true;
             }
-            else if (gun.fireStack > 0)
+            else if (!value.isPressed)
             {
-                gun.fireStack--;
-                yield return new WaitForSeconds(0.05f);
-
+                StopCoroutine(fireRoutine);
+                isFire = false;
             }
-            yield return null;
         }
-    }
-    private void OnFire(InputValue value)
-    {
-        if (isFire == false)
+        void OnReload(InputValue value)
         {
-            fireRoutine = StartCoroutine(FireRoutine());
-            //Debug.Log(gun.boundValue);
-            isFire = true;
+            gun.Reload();
+            //anim.SetTrigger("Reload");
         }
-        else if(!value.isPressed)
-        {
-            StopCoroutine(fireRoutine);
-            isFire = false;
-        }
-    }
-    void OnReload(InputValue value)
-    {
-        gun.Reload();
-        //anim.SetTrigger("Reload");
-    }
 
-    public void ChangeKillCount()
-    {
-        //killDeathUI.ChagneKillDeathTextUI(killCount, deathCount);
+        public void ChangeKillCount()
+        {
+            //killDeathUI.ChagneKillDeathTextUI(killCount, deathCount);
+        }
     }
 }

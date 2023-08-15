@@ -30,6 +30,9 @@ namespace ahndabi
         {
             //UnityEngine.Cursor.lockState = CursorLockMode.Locked;
             UnityEngine.Cursor.lockState = CursorLockMode.Confined;
+
+            // ADB 추가
+            SettingPopUpUI.OnMouseSensiticityControl.AddListener(CameraSensitivityControl);
         }
 
         private void OnDisable()
@@ -105,6 +108,15 @@ namespace ahndabi
             {
                 isSit = false;
             }
+        }
+
+
+        // ADB 추가
+        
+        public void CameraSensitivityControl(float mouseSensitivitySliderValue)
+        {
+            // UI의 slider value값이 여기에 있는 카메라감도 값으로 바뀌어야함
+            cameraSensitivity = mouseSensitivitySliderValue;
         }
     }
 }
