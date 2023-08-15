@@ -26,7 +26,7 @@ namespace JBB
 
         public override void OnConnectedToMaster()
         {
-            GameManager.Scene.LoadScene("LobbyScene");
+            PhotonNetwork.LoadLevel("LobbyScene");
         }
 
         public void Login(string id, string pass)
