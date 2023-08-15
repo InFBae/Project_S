@@ -22,14 +22,14 @@ namespace JBB
         }
 
         private void Start()
-        {/*
+        {
             if (!pv.IsMine)
             {
                 input.enabled = false;
-            }*/
+            }
 
-            chatInput = FindObjectOfType<RoomChattingUI>().GetComponent<RoomChattingUI>().chatInput;
-            content = FindObjectOfType<RoomChattingUI>().GetComponent<RoomChattingUI>().content;                       
+            //chatInput = FindObjectOfType<RoomChattingUI>().GetComponent<RoomChattingUI>().chatInput;
+            //content = FindObjectOfType<RoomChattingUI>().GetComponent<RoomChattingUI>().content;                       
         }
 
         [PunRPC]
