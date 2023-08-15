@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 8958578437400762224}
   - component: {fileID: 4316414250121037874}
   m_Layer: 5
-  m_Name: Sensitivity
+  m_Name: MouseSensitivity
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -108,10 +108,10 @@ RectTransform:
   - {fileID: 9100525066998624055}
   m_Father: {fileID: 258787050061768949}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 63}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 45}
+  m_SizeDelta: {x: 0, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8958578437400762224
 CanvasRenderer:
@@ -141,7 +141,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Sensitivity
+  m_text: Mouse Sensitivity
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -974,7 +974,7 @@ GameObject:
   - component: {fileID: 258787050061768949}
   - component: {fileID: 392051804898862186}
   - component: {fileID: 3208928490921317009}
-  - component: {fileID: -766559633680490167}
+  - component: {fileID: 5231013334550735583}
   m_Layer: 5
   m_Name: SettingPopUpUI
   m_TagString: Untagged
@@ -1043,7 +1043,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &-766559633680490167
+--- !u!114 &5231013334550735583
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1052,7 +1052,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7129499005191184606}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 355840dd31bad9742aafe61aafeff637, type: 3}
+  m_Script: {fileID: 11500000, guid: 8f60abc028c78b141801453d1c646208, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &7761148293772824358
