@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Photon.Pun;
+using System;
 
 public class PlayerMover : MonoBehaviour
 {
@@ -13,7 +14,8 @@ public class PlayerMover : MonoBehaviour
     [SerializeField] private float crouchSpeed;
     [SerializeField] private Camera cam;
     [SerializeField] RE_GunName gun;
-    
+    [SerializeField] AudioClip clip;
+
     private LayerMask layerMask = 64;
 
     private Rigidbody rb;
@@ -25,6 +27,9 @@ public class PlayerMover : MonoBehaviour
     private float zSpeed = 0; // 위, 아래
     private bool isWalk = false;
     private bool isSit = false;
+    private bool isMove = false;
+    
+
     PhotonView PV;
 
     private void Awake()
@@ -34,6 +39,8 @@ public class PlayerMover : MonoBehaviour
         // 부딪혔을 떄 회전 방지
         rb.freezeRotation = true;
         PV = GetComponentInParent<PhotonView>();
+
+        StartCoroutine(MoveSoundRoutine());
     }
     private void Start()
     {
@@ -59,9 +66,30 @@ public class PlayerMover : MonoBehaviour
         {
             return;
         }
-
         Move();
     }
+
+    IEnumerator MoveSoundRoutine()
+    {
+        while (true)
+        {
+            if (isMove)
+            {
+                PV.RPC("MoveSound", RpcTarget.AllViaServer);
+                yield return new WaitForSeconds(0.3f);
+            }
+            else
+                yield return null;
+        }
+    }
+
+    [PunRPC]
+    public void MoveSound()
+    {
+        AudioSource.PlayClipAtPoint(clip, this.transform.position);
+    }
+
+
 
     private void Move()
     {
@@ -81,9 +109,11 @@ public class PlayerMover : MonoBehaviour
         {
             rb.velocity = new Vector3(0, moveVec.y, 0);
             curSpeed = 0;
+            isMove = false;
         }
         else
         {
+            isMove = true;
             dir = transform.localRotation * moveDir;
             dir = new Vector3(dir.x, 0f, dir.z);
 
@@ -104,6 +134,7 @@ public class PlayerMover : MonoBehaviour
 
             moveVec = dir * curSpeed;
             rb.velocity = moveVec + Vector3.up * rb.velocity.y;
+
         }
         anim.SetFloat("XSpeed", moveDir.x, 0.1f, Time.deltaTime);
         anim.SetFloat("YSpeed", moveDir.z, 0.1f, Time.deltaTime);
