@@ -88,7 +88,7 @@ namespace JBB
             PhotonNetwork.LocalPlayer.SetNickname(GameManager.Chat.Nickname);
             PhotonNetwork.LocalPlayer.SetReady(false);
             PhotonNetwork.LocalPlayer.SetLoad(false);
-            PhotonNetwork.LoadLevel("RoomScene");
+            GameManager.Scene.LoadScene("RoomScene");
             //GameManager.Scene.LoadScene("RoomScene");
         }
         public override void OnJoinRoomFailed(short returnCode, string message)
