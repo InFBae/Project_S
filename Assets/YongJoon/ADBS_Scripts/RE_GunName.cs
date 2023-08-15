@@ -19,6 +19,8 @@ public class RE_GunName : RE_Gun
     [SerializeField] float maxDistance;     // 최대 사거리. 60
     [SerializeField] float bulletSpeed;
     [SerializeField] float fireCoolTime;        // 연발 나가는 쿨타임
+    [SerializeField] AudioClip clip;
+
     public float FireCoolTime { get { return fireCoolTime; } }
     public int GetCurBullet { get { return curAvailavleBullet; } }
 
@@ -166,9 +168,16 @@ public class RE_GunName : RE_Gun
             targetTransform = muzzlePos.forward * 200;
         }
 
-        PV.RPC("MakeTrail", RpcTarget.All, realFireRoot, targetTransform);
+        PV.RPC("MakeTrail", RpcTarget.All, muzzlePos.position, targetTransform);
+        PV.RPC("FireSound", RpcTarget.All, muzzlePos.position);
         
         Debug.Log("Fire");
+    }
+
+    [PunRPC]
+    public void FireSound(Vector3 muzzlPoint)
+    {
+        AudioSource.PlayClipAtPoint(clip, muzzlPoint);
     }
 
     [PunRPC]

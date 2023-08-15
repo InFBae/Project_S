@@ -144,7 +144,7 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
         // 방설정 해주고 
         //RoomOptions options = new RoomOptions { MaxPlayers = (byte)maxPlayer };
 
-        RoomOptions roomOptions = new RoomOptions() { IsVisible = true, IsOpen = true, MaxPlayers = maxPlayer };
+        RoomOptions roomOptions = new RoomOptions() { IsVisible = true, IsOpen = true, MaxPlayers = (byte)maxPlayer };
         PhotonHashtable RoomCustomProps = new PhotonHashtable()
         {
             {"IsPlayingNow" , false},
