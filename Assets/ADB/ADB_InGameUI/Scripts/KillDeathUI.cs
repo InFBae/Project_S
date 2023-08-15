@@ -1,25 +1,34 @@
+using Photon.Realtime;
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class KillDeathUI : SceneUI
+namespace ahndabi
 {
-    public TMP_Text KillDeathTextUI;
-
-    protected override void Awake()
+    public class KillDeathUI : SceneUI
     {
-        base.Awake();
-        KillDeathTextUI = texts["KillDeathText"];
-    }
 
-    private void Start()
-    {
-        KillDeathTextUI.text = "0 / 0";
-    }
+        protected override void Awake()
+        {
+            base.Awake();
+        }
 
-    public void ChagneKillDeathTextUI(int killCount, int DeathCount)
-    {
-        KillDeathTextUI.text = $"{killCount} / {DeathCount}";
+        private void Start()
+        {
+            texts["KillDeathText"].text = "0 / 0";
+        }
+
+        private void OnEnable()
+        {
+
+        }
+
+        public void ChagneKillDeathTextUI(int killCount, int DeathCount)
+        {
+            texts["KillDeathText"].text = $"{killCount} / {DeathCount}";
+        }
     }
 }

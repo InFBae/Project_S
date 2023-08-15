@@ -26,14 +26,6 @@ namespace JBB
 
         public void Start()
         {
-            if (PhotonNetwork.IsConnected)
-            {
-                if (!PhotonNetwork.InLobby)
-                {
-                    PhotonNetwork.JoinLobby();
-                }
-                return;
-            }
             string nick = NickNameChecking();
             if (nick == null || nick == "")
             {
@@ -42,7 +34,18 @@ namespace JBB
                 nick = NickNameChecking();
             }
             GameManager.Chat.Connect(nick);
-            PhotonNetwork.ConnectUsingSettings();
+
+            if (PhotonNetwork.IsConnected)
+            {
+                if (!PhotonNetwork.InLobby)
+                {
+                    PhotonNetwork.JoinLobby();
+                }
+            }
+            else
+            {
+                // Debug Mode
+            }           
         }
 
         public override void OnConnectedToMaster()
@@ -85,7 +88,8 @@ namespace JBB
             PhotonNetwork.LocalPlayer.SetNickname(GameManager.Chat.Nickname);
             PhotonNetwork.LocalPlayer.SetReady(false);
             PhotonNetwork.LocalPlayer.SetLoad(false);
-            GameManager.Scene.LoadScene("RoomScene");
+            PhotonNetwork.LoadLevel("RoomScene");
+            //GameManager.Scene.LoadScene("RoomScene");
         }
         public override void OnJoinRoomFailed(short returnCode, string message)
         {

@@ -27,7 +27,7 @@ namespace JBB
         private void Start()
         {
             // DebugMode
-            if (!PhotonNetwork.IsConnected)
+            if (!PhotonNetwork.InRoom)
             {
                 PhotonNetwork.LocalPlayer.NickName = "111";                
                 PhotonNetwork.ConnectUsingSettings();
@@ -36,6 +36,7 @@ namespace JBB
             }
             else
             {
+                PhotonNetwork.AutomaticallySyncScene = true;
                 roomUI.UpdateRoomInfo();
                 roomUI.UpdateFriendList();
                 roomUI.UpdatePlayerList();
@@ -80,11 +81,30 @@ namespace JBB
         public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
         {
             roomUI.UpdatePlayerSlot(targetPlayer);
+            CheckReady();
         }
 
         public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
         {
             roomUI.UpdateRoomInfo();
+        }
+
+        private void CheckReady()
+        {
+            int readyCount = 0;
+            foreach (Player player in PhotonNetwork.PlayerList)
+            {
+                if(player.GetReady())
+                    readyCount++;
+            }
+            if (readyCount == PhotonNetwork.PlayerList.Length)
+            {
+                roomUI.ActivateGameStartButton();
+            }
+            else
+            {
+                roomUI.DeActivateGameStartButton();
+            }
         }
     }
 }

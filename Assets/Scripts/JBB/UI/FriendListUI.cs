@@ -19,13 +19,13 @@ namespace JBB
 
         private void OnEnable()
         {
-            ChatManager.OnFriendStatusChanged.AddListener(UpdateFriendStatus);
+            ChatManager.OnFriendStateChanged.AddListener(UpdateFriendStatus);
             ChatManager.OnFriendListChanged.AddListener(UpdateFriendList);
         }
 
         private void OnDisable()
         {
-            ChatManager.OnFriendStatusChanged.RemoveListener(UpdateFriendStatus);
+            ChatManager.OnFriendStateChanged.RemoveListener(UpdateFriendStatus);
             ChatManager.OnFriendListChanged.RemoveListener(UpdateFriendList);
         }
 
@@ -59,7 +59,7 @@ namespace JBB
                         friendSlot.SetState(nickname, 0);
                         friendSlot.transform.SetParent(content.transform, false);
                     }
-                    Debug.Log(i+1 + nickname);
+                    //Debug.Log(i+1 + nickname);
                 }
             }            
         }

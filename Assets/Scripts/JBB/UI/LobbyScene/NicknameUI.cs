@@ -24,7 +24,7 @@ namespace JBB
 
             if (nick == "")
             {
-                GameManager.UI.CreatePopUpMessage("Input Nickname");
+                GameManager.UI.CreatePopUpMessage("Input Nickname", 1f);
                 Debug.Log("Input Nickname");
                 return;
             }
@@ -35,7 +35,7 @@ namespace JBB
             
             if (reader.HasRows)
             {
-                GameManager.UI.CreatePopUpMessage("Same Nickname exists");
+                GameManager.UI.CreatePopUpMessage("Same Nickname exists", 1f);
                 Debug.Log("Same Nickname exists");
             }
             else
@@ -43,7 +43,7 @@ namespace JBB
                 sqlCommand = $"UPDATE user_info SET U_Nickname='{nick}' WHERE U_ID = '{id}'";
                 GameManager.DB.ExecuteNonQuery(sqlCommand);
 
-                GameManager.UI.CreatePopUpMessage("Nickname Create Success");
+                GameManager.UI.CreatePopUpMessage("Nickname Create Success", 1f);
                 this.gameObject.SetActive(false);
             }
         }

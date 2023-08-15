@@ -5,16 +5,17 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/GameStartScene.unity
     guid: fda28edaf4f7ca440b7b4be7926ec478
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/LobbyScene.unity
     guid: c33aa33749a009444add5f892bce05ac
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/RoomScene.unity
     guid: b79fe620cfc1fce40aa688e1d86efc3e
   - enabled: 1
-    path: Assets/YongJoon/YongPlayerGameScene.unity
-    guid: 8e5f6f11b7853d9459626c7b55b1a6e4
+    path: Assets/Scenes/GameScene.unity
+    guid: 35003b75e746e5a40b13fa1f1af1b6d6
+
   m_configObjects: {}

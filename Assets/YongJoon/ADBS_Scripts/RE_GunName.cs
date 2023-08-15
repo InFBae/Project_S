@@ -10,6 +10,7 @@ using UnityEngine.Tilemaps;
 
 public class RE_GunName : RE_Gun
 {
+    [SerializeField] Transform zoomRoot;
     [SerializeField] GameObject hitParticle;
     //[SerializeField] GameObject prefabMaster;
     [SerializeField] ParticleSystem bloodParticle;
@@ -30,7 +31,7 @@ public class RE_GunName : RE_Gun
     Coroutine reloadRoutine;
     public bool isZoom = false;
     PhotonView PV;
-
+    Vector3 realFireRoot;
 
     private void Awake()
     {
@@ -38,7 +39,6 @@ public class RE_GunName : RE_Gun
         hitParticle = GameManager.Resource.Load<GameObject>("HitEffect");
         trailEffect = GameManager.Resource.Load<TrailRenderer>("BulletTrail");
         PV = GetComponent<PhotonView>();
-        
     }
 
     private void Start()
@@ -47,8 +47,6 @@ public class RE_GunName : RE_Gun
         availableBullet = 100;
         fireDamage = 20;
         curAvailavleBullet = availableBullet;
-
-
     }
 
     private void Update()
@@ -103,7 +101,6 @@ public class RE_GunName : RE_Gun
     [PunRPC]
     public override void Fire()
     {
-
         RaycastHit hit;
 
         if (curAvailavleBullet <= 0 || isReload/*anim.GetCurrentAnimatorStateInfo(0).IsName("reloading")*/)   // 총알 없으면 쏘지 못하도록
@@ -118,7 +115,12 @@ public class RE_GunName : RE_Gun
 
         if (isZoom)
         {
+            realFireRoot = zoomRoot.position;
             clampedDir = Vector3.zero;
+        }
+        else
+        {
+            realFireRoot = muzzlePos.transform.position;
         }
 
         Vector3 rayShootDir = camFwd + Vector3.right * clampedDir.x * 2.5f + Vector3.up * clampedDir.y * 0.8f;
@@ -126,26 +128,27 @@ public class RE_GunName : RE_Gun
         //float angle = Random.Range(0, 10* Mathf.PI);
         //float maxValue = Mathf.(Mathf.Cos(angle));
         //Vector3 rayShootDir = new Vector3(camFwd.x + radius * Mathf.Cos(angle), camFwd.y + radius * Mathf.Sin(angle), camFwd.z * Mathf.Sin(angle));
-
+        
+        Vector3 targetTransform;
         // 레이캐스트를 솼는데 부딪힌 물체가 있다면
-        if (Physics.Raycast(muzzlePos.transform.position, rayShootDir /*cam.transform.forward + Vector3.right * 3f *Random.Range(-boundValue,boundValue)  + Vector3.up * Random.Range(-boundValue,boundValue)*/, out hit, maxDistance))
+        if (Physics.Raycast(realFireRoot, rayShootDir /*cam.transform.forward + Vector3.right * 3f *Random.Range(-boundValue,boundValue)  + Vector3.up * Random.Range(-boundValue,boundValue)*/, out hit, maxDistance))
         {
-
+            
             if (hit.transform.gameObject.layer == 7)  // 바디 레이어를 맞췄다면?
             {
-                hit.transform.gameObject.GetComponentInParent<ahndabi.PlayerTakeDamage>().TakeDamage(fireDamage);
+                hit.transform.gameObject.GetComponentInParent<ADB_RE_PlayerTakeDamage>().TakeDamage(fireDamage, PhotonNetwork.LocalPlayer);
                 ParticleSystem hitEffect = GameManager.Pool.Get(bloodParticle, hit.point, Quaternion.LookRotation(hit.normal), hit.transform);
                 Debug.Log("바디");
             }
             else if (hit.transform.gameObject.layer == 9)  // 팔다리 레이어를 맞췄다면?
             {
-                hit.transform.gameObject.GetComponentInParent<ahndabi.PlayerTakeDamage>().TakeDamage(fireDamage);
+                hit.transform.gameObject.GetComponentInParent<ADB_RE_PlayerTakeDamage>().TakeDamage(fireDamage, PhotonNetwork.LocalPlayer);
                 ParticleSystem hitEffect = GameManager.Pool.Get(bloodParticle, hit.point, Quaternion.LookRotation(hit.normal), hit.transform);
                 Debug.Log("팔다리");
             }
             else if (hit.transform.gameObject.layer == 8)  // 헤드 레이어를 맞췄다면?
             {
-                hit.transform.gameObject.GetComponentInParent<ahndabi.PlayerTakeDamage>().TakeDamage(fireDamage * 2);
+                hit.transform.gameObject.GetComponentInParent<ADB_RE_PlayerTakeDamage>().TakeDamage(fireDamage, PhotonNetwork.LocalPlayer);
                 ParticleSystem hitEffect = GameManager.Pool.Get(bloodParticle, hit.point, Quaternion.LookRotation(hit.normal), hit.transform);
                 Debug.Log("헤드");
             }
@@ -155,21 +158,31 @@ public class RE_GunName : RE_Gun
                 GameObject hitEffect = GameManager.Pool.Get(hitParticle, hit.point, Quaternion.LookRotation(hit.normal), hit.transform);
                 StartCoroutine(ReleaseRoutine(hitEffect));
             }
-
-            // 트레일 생성 -> 트레일 이상해서 잠시 뺐음..
-            StartCoroutine(TrailRoutine(muzzlePos.position, hit.point));
-            ReleaseRoutine(trailEffect.gameObject);
-
+            targetTransform = hit.point;
         }
         else
         {
             // 트레일 생성
-            StartCoroutine(TrailRoutine(muzzlePos.position, hit.point));
-            ReleaseRoutine(trailEffect.gameObject);
-
-
+            targetTransform = muzzlePos.forward * 200;
         }
+
+        PV.RPC("MakeTrail", RpcTarget.All, muzzlePos.position, targetTransform);
+        
         Debug.Log("Fire");
+    }
+
+    [PunRPC]
+    public void MakeTrail(Vector3 start, Vector3 end)
+    {
+        StartCoroutine(TrailRoutine(start, end));
+    }
+
+    [PunRPC]
+    public void FireTrailRPC(Vector3 hitPoint)
+    {
+        // 트레일 생성 -> 트레일 이상해서 잠시 뺐음..
+        StartCoroutine(TrailRoutine(realFireRoot, hitPoint));
+        ReleaseRoutine(trailEffect.gameObject);
     }
 
     public override void Reload()    // 재장전
@@ -228,7 +241,7 @@ public class RE_GunName : RE_Gun
         while (rate < 1)
         {
             trailrenderer.transform.position = Vector3.Lerp(startPoint, endPoint, rate);
-            rate += Time.deltaTime / totalTime;
+            rate += (Time.deltaTime / totalTime);
 
             // 시간에 따라 그 위치로 쭉 가도록
             yield return null;

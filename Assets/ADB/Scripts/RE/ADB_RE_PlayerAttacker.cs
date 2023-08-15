@@ -1,3 +1,4 @@
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -72,9 +73,6 @@ public class ADB_RE_PlayerAttacker : ADB_RE_Player
 
     public void ChangeKillCount()
     {
-        killDeathUI.ChagneKillDeathTextUI(killCount, deathCount);
-        ADB_CustomProperty.SetKillCount(me, killCount);
-
-        Debug.Log(ADB_CustomProperty.GetKillCount(me));
+        //killDeathUI.ChagneKillDeathTextUI(killCount, deathCount);
     }
 }
