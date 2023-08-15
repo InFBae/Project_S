@@ -4730,10 +4730,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   muzzlePos: {fileID: 3498845919217791250}
-  fireDamage: 10
-  allBullet: 220
-  availableBullet: 100
-  curAvailavleBullet: 100
+  fireDamage: 20
+  allBullet: 0
+  availableBullet: 30
+  curAvailavleBullet: 30
   zoomRoot: {fileID: 644580950182686174}
   hitParticle: {fileID: 2878998193633755065, guid: 37e8f135196358041bb39d6945c6e185,
     type: 3}
@@ -10839,7 +10839,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de61b23cfa8429d4f8cb0ef9099457d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 6215652802492630566}
+  Player: {fileID: 0}
 --- !u!1 &7574197551800453594
 GameObject:
   m_ObjectHideFlags: 0
