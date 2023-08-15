@@ -4745,6 +4745,7 @@ MonoBehaviour:
   maxDistance: 60
   bulletSpeed: 50
   fireCoolTime: 0.1
+  clip: {fileID: 8300000, guid: 1d84c52d82239cf4898be13e6b8809a3, type: 3}
   isReload: 0
   boundValue: 0
   fireStack: 0
@@ -8799,6 +8800,7 @@ MonoBehaviour:
   crouchSpeed: 3
   cam: {fileID: 1068789190085132769}
   gun: {fileID: 3498845919217791251}
+  clip: {fileID: 8300000, guid: 6dae764c68aa1244a88409def1d94119, type: 3}
 --- !u!114 &6215652802492630567
 MonoBehaviour:
   m_ObjectHideFlags: 0
