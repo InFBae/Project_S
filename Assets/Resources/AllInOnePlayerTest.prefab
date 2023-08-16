@@ -4057,7 +4057,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 337ad76915f881743a6640557c115737, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  visibleBody: {fileID: 8963163098989630252}
+  visibleBody: {fileID: 8146206129514802347}
+  GunHolder: {fileID: 8116300752681268703}
   FPSBody: {fileID: 7476748481473246925}
 --- !u!1 &2936588027231939846
 GameObject:
