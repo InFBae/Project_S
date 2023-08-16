@@ -5,14 +5,20 @@ using UnityEngine;
 
 public class RE_PlayerTakeDamage : RE_Player
 {
-    public void TakeDamage(float damage)    // 데미지 받기
+    public void TakeDamage(int damage, Photon.Realtime.Player enemyPlayer, bool headShot = false)    // 헤드샷 받은 데미지
     {
-        DecreaseHP(damage);     // hp 감소
+        Debug.Log("TakeDamage");
+        DecreaseHp(damage);
         anim.SetTrigger("TakeDamage");
 
-        if (hp <= 0)    // hp가 0이 되면 죽는다.
+        if (Hp <= 0)    // hp가 0이 되면 죽는다.
         {
-            hp = 0;
+            //enemyPlayer.GetComponentInParent<ADB_RE_PlayerAttacker>().killCount++;    // 상대의 킬 카운트 +1
+            //enemyPlayer.GetComponentInParent<ADB_RE_PlayerAttacker>().ChangeKillCount();
+            // 위 두 개는 밑 이벤트로 대체
+
+            JBB.GameSceneManager.OnKilled?.Invoke(enemyPlayer, this.player, headShot);      // 죽인사람, 죽은사람, 헤드샷 판정
+
             Die();
         }
     }
@@ -28,8 +34,4 @@ public class RE_PlayerTakeDamage : RE_Player
         gameObject.SetActive(false);    // 기존 Player는 비활성화
     }
 
-    void DecreaseHP(float damage)
-    {
-        hp -= damage;
-    }
 }
