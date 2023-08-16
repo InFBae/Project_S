@@ -206,21 +206,8 @@ public class RE_GunName : RE_Gun
     [PunRPC]
     public override void Reload()    // 재장전
     {
-        if (remainBullet == 0)
+        if (remainBullet <= 0)
             return;
-
-        if ((remainBullet + curAvailavleBullet) <= availableBullet)
-        {
-            remainBullet = 0;
-            curAvailavleBullet = remainBullet + curAvailavleBullet;
-        }
-        else
-        {
-            remainBullet = remainBullet - (availableBullet - curAvailavleBullet);
-            curAvailavleBullet = availableBullet;
-        }
-
-        JBB.StatusUI.OnBulletCountChanged?.Invoke(curAvailavleBullet, remainBullet);
 
         if (isReload)
         {
@@ -228,7 +215,19 @@ public class RE_GunName : RE_Gun
         }
         else
         {
-            isReload = true;
+            isReload = true;           
+
+            if ((remainBullet + curAvailavleBullet) <= availableBullet)
+            {             
+                curAvailavleBullet = remainBullet + curAvailavleBullet;
+                remainBullet = 0;
+            }
+            else
+            {
+                remainBullet = remainBullet - (availableBullet - curAvailavleBullet);
+                curAvailavleBullet = availableBullet;
+            }
+            JBB.StatusUI.OnBulletCountChanged?.Invoke(curAvailavleBullet, remainBullet);
             reloadRoutine = StartCoroutine(ReloadRoutine());
         }
     }
@@ -246,8 +245,6 @@ public class RE_GunName : RE_Gun
             }
             else
             {
-                remainBullet = remainBullet - (availableBullet - curAvailavleBullet);
-                curAvailavleBullet = availableBullet;
                 tempIsReload = false;
                 yield return new WaitForSeconds(3.08f);
             }

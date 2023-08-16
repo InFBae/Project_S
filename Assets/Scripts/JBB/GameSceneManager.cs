@@ -115,6 +115,7 @@ namespace JBB
                     inGameUI.UpdateKillDeathUI();
                 }
                 inGameUI.UpdateRankingBoard();
+                inGameUI.UpdateTargetKillSliderValue();
             }
         }
         public override void OnRoomPropertiesUpdate(PhotonHashtable propertiesThatChanged)
