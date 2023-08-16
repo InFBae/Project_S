@@ -10,14 +10,18 @@ using UnityEngine.Tilemaps;
 
 public class RE_GunName : RE_Gun
 {
+    [SerializeField] Transform zoomRoot;
     [SerializeField] GameObject hitParticle;
     //[SerializeField] GameObject prefabMaster;
     [SerializeField] ParticleSystem bloodParticle;
     [SerializeField] TrailRenderer trailEffect;
     [SerializeField] Camera cam;
-    [SerializeField] float maxDistance;     // ÃÖ´ë »ç°Å¸®. 60
+    [SerializeField] float maxDistance;     // ìµœëŒ€ ì‚¬ê±°ë¦¬. 60
     [SerializeField] float bulletSpeed;
-    [SerializeField] float fireCoolTime;        // ¿¬¹ß ³ª°¡´Â ÄğÅ¸ÀÓ
+    [SerializeField] float fireCoolTime;        // ì—°ë°œ ë‚˜ê°€ëŠ” ì¿¨íƒ€ì„
+    [SerializeField] AudioClip clip;
+    [SerializeField] JBB.StatusUI statusUI;
+
     public float FireCoolTime { get { return fireCoolTime; } }
     public int GetCurBullet { get { return curAvailavleBullet; } }
 
@@ -30,7 +34,7 @@ public class RE_GunName : RE_Gun
     Coroutine reloadRoutine;
     public bool isZoom = false;
     PhotonView PV;
-
+    Vector3 realFireRoot;
 
     private void Awake()
     {
@@ -38,17 +42,14 @@ public class RE_GunName : RE_Gun
         hitParticle = GameManager.Resource.Load<GameObject>("HitEffect");
         trailEffect = GameManager.Resource.Load<TrailRenderer>("BulletTrail");
         PV = GetComponent<PhotonView>();
-        
     }
 
     private void Start()
     {
-        allBullet = 1000;
-        availableBullet = 100;
+        remainBullet = 120;
+        availableBullet = 30;
         fireDamage = 20;
         curAvailavleBullet = availableBullet;
-
-
     }
 
     private void Update()
@@ -74,14 +75,15 @@ public class RE_GunName : RE_Gun
         }
     }
 
-    private void OnDisable()
+    public override void OnDisable()
     {
+        base.OnDisable();
         StopAllCoroutines();
     }
 
 
 
-    //void ContinueousFire()      // ¿¬¹ß
+    //void ContinueousFire()      // ì—°ë°œ
     //{
     //    timer += Time.deltaTime;
 
@@ -97,20 +99,14 @@ public class RE_GunName : RE_Gun
 
     public void FireRequest()
     {
-        PV.RPC("Fire", RpcTarget.MasterClient);
-    }
-
-    [PunRPC]
-    public override void Fire()
-    {
-
-        RaycastHit hit;
-
-        if (curAvailavleBullet <= 0 || isReload/*anim.GetCurrentAnimatorStateInfo(0).IsName("reloading")*/)   // ÃÑ¾Ë ¾øÀ¸¸é ½îÁö ¸øÇÏµµ·Ï
+        if (curAvailavleBullet <= 0 || isReload/*anim.GetCurrentAnimatorStateInfo(0).IsName("reloading")*/)   // ì´ì•Œ ì—†ìœ¼ë©´ ì˜ì§€ ëª»í•˜ë„ë¡
             return;
 
         --curAvailavleBullet;
         if (curAvailavleBullet < 0) curAvailavleBullet = 0;
+
+        statusUI.OnBulletCountChanged?.Invoke(curAvailavleBullet, remainBullet);
+
         Vector3 camFwd = cam.transform.forward;
 
         Vector2 dir = new Vector2(Random.Range(-boundValue, boundValue), Random.Range(-boundValue, boundValue));
@@ -118,71 +114,120 @@ public class RE_GunName : RE_Gun
 
         if (isZoom)
         {
+            realFireRoot = zoomRoot.position;
             clampedDir = Vector3.zero;
-        }
-
-        Vector3 rayShootDir = camFwd + Vector3.right * clampedDir.x * 2.5f + Vector3.up * clampedDir.y * 0.8f;
-        //float radius = Random.Range(0, boundValue);
-        //float angle = Random.Range(0, 10* Mathf.PI);
-        //float maxValue = Mathf.(Mathf.Cos(angle));
-        //Vector3 rayShootDir = new Vector3(camFwd.x + radius * Mathf.Cos(angle), camFwd.y + radius * Mathf.Sin(angle), camFwd.z * Mathf.Sin(angle));
-
-        // ·¹ÀÌÄ³½ºÆ®¸¦ ™±´Âµ¥ ºÎµúÈù ¹°Ã¼°¡ ÀÖ´Ù¸é
-        if (Physics.Raycast(muzzlePos.transform.position, rayShootDir /*cam.transform.forward + Vector3.right * 3f *Random.Range(-boundValue,boundValue)  + Vector3.up * Random.Range(-boundValue,boundValue)*/, out hit, maxDistance))
-        {
-
-            if (hit.transform.gameObject.layer == 7)  // ¹Ùµğ ·¹ÀÌ¾î¸¦ ¸ÂÃè´Ù¸é?
-            {
-                hit.transform.gameObject.GetComponentInParent<ahndabi.PlayerTakeDamage>().TakeDamage(fireDamage);
-                ParticleSystem hitEffect = GameManager.Pool.Get(bloodParticle, hit.point, Quaternion.LookRotation(hit.normal), hit.transform);
-                Debug.Log("¹Ùµğ");
-            }
-            else if (hit.transform.gameObject.layer == 9)  // ÆÈ´Ù¸® ·¹ÀÌ¾î¸¦ ¸ÂÃè´Ù¸é?
-            {
-                hit.transform.gameObject.GetComponentInParent<ahndabi.PlayerTakeDamage>().TakeDamage(fireDamage);
-                ParticleSystem hitEffect = GameManager.Pool.Get(bloodParticle, hit.point, Quaternion.LookRotation(hit.normal), hit.transform);
-                Debug.Log("ÆÈ´Ù¸®");
-            }
-            else if (hit.transform.gameObject.layer == 8)  // Çìµå ·¹ÀÌ¾î¸¦ ¸ÂÃè´Ù¸é?
-            {
-                hit.transform.gameObject.GetComponentInParent<ahndabi.PlayerTakeDamage>().TakeDamage(fireDamage * 2);
-                ParticleSystem hitEffect = GameManager.Pool.Get(bloodParticle, hit.point, Quaternion.LookRotation(hit.normal), hit.transform);
-                Debug.Log("Çìµå");
-            }
-            else
-            {
-                // ¿ÀºêÁ§Æ® Ç®·Î hit ÆÄÆ¼Å¬ »ı¼º   
-                GameObject hitEffect = GameManager.Pool.Get(hitParticle, hit.point, Quaternion.LookRotation(hit.normal), hit.transform);
-                StartCoroutine(ReleaseRoutine(hitEffect));
-            }
-
-            // Æ®·¹ÀÏ »ı¼º -> Æ®·¹ÀÏ ÀÌ»óÇØ¼­ Àá½Ã »°À½..
-            StartCoroutine(TrailRoutine(muzzlePos.position, hit.point));
-            ReleaseRoutine(trailEffect.gameObject);
-
         }
         else
         {
-            // Æ®·¹ÀÏ »ı¼º
-            StartCoroutine(TrailRoutine(muzzlePos.position, hit.point));
-            ReleaseRoutine(trailEffect.gameObject);
-
-
+            realFireRoot = muzzlePos.transform.position;
         }
+
+        Vector3 rayShootDir = camFwd + Vector3.right * clampedDir.x * 1.5f + Vector3.up * clampedDir.y * 0.8f;
+
+        PV.RPC("Fire", RpcTarget.MasterClient, PhotonNetwork.LocalPlayer, realFireRoot, rayShootDir);
+    }
+
+    [PunRPC]
+    public override void Fire(Photon.Realtime.Player shooter, Vector3 realFireRoot, Vector3 rayShootDir)
+    {
+        RaycastHit hit;   
+        
+        Vector3 targetTransform;
+        int layerMask = LayerMask.GetMask("Environment", "PlayerBody", "PlayerHead", "PlayerArmsAndLegs");
+        // ë ˆì´ìºìŠ¤íŠ¸ë¥¼ Â™êµ”ì¨‰ ë¶€ë”ªíŒ ë¬¼ì²´ê°€ ìˆë‹¤ë©´
+        if (Physics.Raycast(realFireRoot, rayShootDir, out hit, maxDistance, layerMask/*768*/))
+        {
+            if (hit.collider.gameObject.layer == 7)  // ë°”ë”” ë ˆì´ì–´ë¥¼ ë§ì·„ë‹¤ë©´?
+            {
+                hit.collider.gameObject.GetComponentInParent<RE_PlayerTakeDamage>().TakeDamageRequest(fireDamage, shooter);
+                ParticleSystem hitEffect = GameManager.Pool.Get(bloodParticle, hit.point, Quaternion.LookRotation(hit.normal), hit.transform);
+                Debug.Log("ë°”ë””");
+            }
+            else if (hit.collider.gameObject.layer == 9)  // íŒ”ë‹¤ë¦¬ ë ˆì´ì–´ë¥¼ ë§ì·„ë‹¤ë©´?
+            {
+                hit.collider.gameObject.GetComponentInParent<RE_PlayerTakeDamage>().TakeDamageRequest(fireDamage, shooter);
+                ParticleSystem hitEffect = GameManager.Pool.Get(bloodParticle, hit.point, Quaternion.LookRotation(hit.normal), hit.transform);
+                Debug.Log("íŒ”ë‹¤ë¦¬");
+            }
+            else if (hit.collider.gameObject.layer == 8)  // í—¤ë“œ ë ˆì´ì–´ë¥¼ ë§ì·„ë‹¤ë©´?
+            {
+                hit.collider.gameObject.GetComponentInParent<RE_PlayerTakeDamage>().TakeDamageRequest(fireDamage, shooter, true);
+                ParticleSystem hitEffect = GameManager.Pool.Get(bloodParticle, hit.point, Quaternion.LookRotation(hit.normal), hit.transform);
+                Debug.Log("í—¤ë“œ");
+            }
+            else
+            {
+                // ì˜¤ë¸Œì íŠ¸ í’€ë¡œ hit íŒŒí‹°í´ ìƒì„±   
+                GameObject hitEffect = GameManager.Pool.Get(hitParticle, hit.point, Quaternion.LookRotation(hit.normal), hit.transform);
+                StartCoroutine(ReleaseRoutine(hitEffect));
+            }
+            targetTransform = hit.point;
+        }
+        else
+        {
+            // íŠ¸ë ˆì¼ ìƒì„±
+            targetTransform = muzzlePos.forward * 200;
+        }
+
+        PV.RPC("MakeTrail", RpcTarget.All, realFireRoot, targetTransform);
+        PV.RPC("FireSound", RpcTarget.All, realFireRoot);
+
         Debug.Log("Fire");
     }
 
-    public override void Reload()    // ÀçÀåÀü
+    [PunRPC]
+    public void FireSound(Vector3 muzzlePoint)
     {
-        if(isReload)
+        AudioSource.PlayClipAtPoint(clip, muzzlePoint);
+    }
+
+    [PunRPC]
+    public void MakeTrail(Vector3 start, Vector3 end)
+    {
+        StartCoroutine(TrailRoutine(start, end));
+    }
+
+    //[PunRPC]
+    //public void FireTrailRPC(Vector3 hitPoint)
+    //{
+    //    // íŠ¸ë ˆì¼ ìƒì„± -> íŠ¸ë ˆì¼ ì´ìƒí•´ì„œ ì ì‹œ ëºìŒ..
+    //    StartCoroutine(TrailRoutine(realFireRoot, hitPoint));
+    //    ReleaseRoutine(trailEffect.gameObject);
+    //}
+
+    public void ReloadRequest()
+    {
+        if (remainBullet <= 0)
+            return;
+
+        if (isReload)
         {
             return;
         }
         else
         {
             isReload = true;
+
+            if ((remainBullet + curAvailavleBullet) <= availableBullet)
+            {
+                curAvailavleBullet = remainBullet + curAvailavleBullet;
+                remainBullet = 0;
+            }
+            else
+            {
+                remainBullet = remainBullet - (availableBullet - curAvailavleBullet);
+                curAvailavleBullet = availableBullet;
+            }
+            statusUI.OnBulletCountChanged?.Invoke(curAvailavleBullet, remainBullet);
             reloadRoutine = StartCoroutine(ReloadRoutine());
         }
+        //PV.RPC("Reload", RpcTarget.All);
+    }
+
+    [PunRPC]
+    public override void Reload()    // ì¬ì¥ì „
+    {
+        
     }
 
     IEnumerator ReloadRoutine()
@@ -198,8 +243,6 @@ public class RE_GunName : RE_Gun
             }
             else
             {
-                allBullet = allBullet - (availableBullet - curAvailavleBullet);
-                curAvailavleBullet = availableBullet;
                 tempIsReload = false;
                 yield return new WaitForSeconds(3.08f);
             }
@@ -210,7 +253,7 @@ public class RE_GunName : RE_Gun
         StopCoroutine(reloadRoutine); 
     }
 
-    IEnumerator ReleaseRoutine(GameObject effect)   // ¿ÀºêÁ§Æ® Ç® Release ÇÏ±â
+    IEnumerator ReleaseRoutine(GameObject effect)   // ì˜¤ë¸Œì íŠ¸ í’€ Release í•˜ê¸°
     {
         yield return new WaitForSeconds(2f);
         GameManager.Pool.Release(effect);
@@ -221,16 +264,16 @@ public class RE_GunName : RE_Gun
         TrailRenderer trailrenderer = GameManager.Pool.Get(trailEffect, startPoint, Quaternion.identity);
         trailrenderer.Clear();
 
-        // Æ®·¹ÀÏ ·çÆ¾
+        // íŠ¸ë ˆì¼ ë£¨í‹´
         float totalTime = Vector3.Distance(startPoint, endPoint) / bulletSpeed;
 
         float rate = 0;
         while (rate < 1)
         {
             trailrenderer.transform.position = Vector3.Lerp(startPoint, endPoint, rate);
-            rate += Time.deltaTime / totalTime;
+            rate += (Time.deltaTime / totalTime);
 
-            // ½Ã°£¿¡ µû¶ó ±× À§Ä¡·Î Âß °¡µµ·Ï
+            // ì‹œê°„ì— ë”°ë¼ ê·¸ ìœ„ì¹˜ë¡œ ì­‰ ê°€ë„ë¡
             yield return null;
         }
         GameManager.Pool.Release(trailrenderer.gameObject);
