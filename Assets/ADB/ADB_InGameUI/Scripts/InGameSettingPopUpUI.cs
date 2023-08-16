@@ -30,7 +30,7 @@ namespace ahndabi
             buttons["CancleButton"].onClick.AddListener(() => { Cancle(); });
             myMixer = GameManager.Resource.Load<AudioMixer>("MyMixer");
 
-            OnMouseSensiticityControl?.Invoke(sliders["MouseSensitivitySlider"].value);
+            //OnMouseSensiticityControl?.Invoke(sliders["MouseSensitivitySlider"].value);
         }
 
         void OnEnable()
