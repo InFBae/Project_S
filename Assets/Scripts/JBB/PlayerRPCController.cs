@@ -108,7 +108,8 @@ public class PlayerRPCController : MonoBehaviourPun
 
                 JBB.GameSceneManager.OnKilled?.Invoke(enemyPlayer, damagedPlayer, headShot);      // 죽인사람, 죽은사람, 헤드샷 판정
 
-                playerTakeDamage.Die();
+                playerTakeDamage.diePlayer.SetActive(true);
+                playerTakeDamage.gameObject.SetActive(false);
             }
         }
 
