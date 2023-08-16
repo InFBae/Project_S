@@ -4731,7 +4731,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   muzzlePos: {fileID: 3498845919217791250}
   fireDamage: 20
-  allBullet: 0
+  remainBullet: 120
   availableBullet: 30
   curAvailavleBullet: 30
   zoomRoot: {fileID: 644580950182686174}
@@ -8815,6 +8815,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   diePlayer: {fileID: 7498499812823032062}
+  gun: {fileID: 3498845919217791251}
   hp: 200
   rank: 0
   killCount: 0
@@ -8890,6 +8891,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   diePlayer: {fileID: 7498499812823032062}
+  gun: {fileID: 0}
   hp: 200
   rank: 0
   killCount: 0

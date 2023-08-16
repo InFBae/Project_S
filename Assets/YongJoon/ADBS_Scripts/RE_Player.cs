@@ -10,7 +10,7 @@ public class RE_Player : MonoBehaviourPunCallbacks
 
     protected Animator anim;
     [SerializeField] protected GameObject diePlayer;
-    protected RE_GunName gun;
+    [SerializeField] protected RE_GunName gun;
     [SerializeField] int hp = 200;
     [SerializeField] public int Hp { get { return hp; } private set 
         { if (hp <= 0) 
