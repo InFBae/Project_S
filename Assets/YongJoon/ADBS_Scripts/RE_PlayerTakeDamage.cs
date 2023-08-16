@@ -6,18 +6,12 @@ using JBB;
 
 public class RE_PlayerTakeDamage : RE_Player
 {
-    public PhotonView PV;
-
-    private void Awake()
-    {
-        PV = GetComponent<PhotonView>();
-    }
-
-
+    [SerializeField] public PhotonView PV;
     public void TakeDamageRequest(int damage, Photon.Realtime.Player enemyPlayer, Photon.Realtime.Player damagedPlayer, bool headShot = false)    // 헤드샷 받은 데미지
     {
         PV.RPC("TakeDamage", RpcTarget.All, damage, enemyPlayer, damagedPlayer, headShot);
     }
+    /*
     [PunRPC]
     public void TakeDamage(int damage, Photon.Realtime.Player enemyPlayer, Photon.Realtime.Player damagedPlayer ,bool headShot)
     {
@@ -40,7 +34,8 @@ public class RE_PlayerTakeDamage : RE_Player
         }
 
     }
-    void Die()
+    */
+    public void Die()
     {
         // 충돌체 등의 문제 때문에 죽는 애니메이션을 하는 플레이어를 하나 따로 두어서
         // 이 함수가 호출되면 기존의 플레이어는 비활성화, DIe플레이어는 활성화시키고 애니메이션 발동한뒤에
