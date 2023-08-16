@@ -11,16 +11,14 @@ public class ADB_RE_DiePlayer : MonoBehaviour
     private void Awake()
     {
         //gameObject.SetActive(false);
+
     }
 
     private void OnEnable()
     {
+        gameObject.transform.position = Player.transform.position;
+        gameObject.transform.rotation = Player.transform.rotation;
         Destroy(gameObject.transform.parent.gameObject, 5f);
     }
 
-    private void LateUpdate()
-    {
-        gameObject.transform.position = Player.transform.position;
-        gameObject.transform.rotation = Player.transform.rotation;
-    }
 }

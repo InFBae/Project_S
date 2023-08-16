@@ -7208,6 +7208,7 @@ GameObject:
   - component: {fileID: 4769848338943112689}
   - component: {fileID: 4769848338943112688}
   - component: {fileID: 4769848338943112690}
+  - component: {fileID: 5143014286781784156}
   m_Layer: 0
   m_Name: Player2
   m_TagString: Player
@@ -7245,7 +7246,7 @@ Animator:
   m_GameObject: {fileID: 4769848338943112695}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: fccf9c3a9fe47914999b6fc3a89da926, type: 3}
-  m_Controller: {fileID: 9100000, guid: 3db431c8e7d83b74dafef300cb19502a, type: 2}
+  m_Controller: {fileID: 9100000, guid: 9f66c33548f23e6418c08c25289fc56b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -7303,6 +7304,24 @@ MonoBehaviour:
   tripodSize: 1
   boneColor: {r: 0, g: 0, b: 1, a: 0.5}
   m_Transforms: []
+--- !u!114 &5143014286781784156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4769848338943112695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters: []
+  m_SynchronizeLayers:
+  - SynchronizeType: 2
+    LayerIndex: 0
 --- !u!1 &4788315809836715754
 GameObject:
   m_ObjectHideFlags: 0
