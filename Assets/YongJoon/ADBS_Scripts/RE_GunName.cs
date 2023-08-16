@@ -137,23 +137,22 @@ public class RE_GunName : RE_Gun
         // 레이캐스트를 굔쨉 부딪힌 물체가 있다면
         if (Physics.Raycast(realFireRoot, rayShootDir, out hit, maxDistance, layerMask/*768*/))
         {
-            RE_PlayerTakeDamage damagedPlayer = hit.collider.gameObject.GetComponent<RE_PlayerTakeDamage>();
+            RE_PlayerTakeDamage damagedPlayer = hit.collider.gameObject.GetComponentInParent<RE_PlayerTakeDamage>();
             if (hit.collider.gameObject.layer == 7)  // 바디 레이어를 맞췄다면?
-            {
-                
-                hit.collider.gameObject.GetComponentInParent<RE_PlayerTakeDamage>().TakeDamageRequest(fireDamage, damagedPlayer.player, shooter);
+            {                
+                damagedPlayer.TakeDamageRequest(fireDamage, damagedPlayer.player, shooter);
                 ParticleSystem hitEffect = GameManager.Pool.Get(bloodParticle, hit.point, Quaternion.LookRotation(hit.normal), hit.transform);
                 Debug.Log("바디");
             }
             else if (hit.collider.gameObject.layer == 9)  // 팔다리 레이어를 맞췄다면?
             {
-                hit.collider.gameObject.GetComponentInParent<RE_PlayerTakeDamage>().TakeDamageRequest(fireDamage, damagedPlayer.player, shooter);
+                damagedPlayer.TakeDamageRequest(fireDamage, damagedPlayer.player, shooter);
                 ParticleSystem hitEffect = GameManager.Pool.Get(bloodParticle, hit.point, Quaternion.LookRotation(hit.normal), hit.transform);
                 Debug.Log("팔다리");
             }
             else if (hit.collider.gameObject.layer == 8)  // 헤드 레이어를 맞췄다면?
             {
-                hit.collider.gameObject.GetComponentInParent<RE_PlayerTakeDamage>().TakeDamageRequest(fireDamage, damagedPlayer.player, shooter, true);
+                damagedPlayer.TakeDamageRequest(fireDamage, damagedPlayer.player, shooter, true);
                 ParticleSystem hitEffect = GameManager.Pool.Get(bloodParticle, hit.point, Quaternion.LookRotation(hit.normal), hit.transform);
                 Debug.Log("헤드");
             }
