@@ -22,8 +22,9 @@ namespace JBB
         public void CreateKillLog(Player killed, Player dead, bool isHeadShot)
         {
             Debug.Log($"Create KillLog {killed.GetNickname()} killed {dead.GetNickname()}");
-            texts["HeadShot"].text = isHeadShot ? "[Head Shot]" : "";
-            texts["Nickname"].text = killed.GetNickname();
+            // TODO 킬로그 만들기
+            //texts["HeadShot"].text = isHeadShot ? "[Head Shot]" : "";
+            //texts["Nickname"].text = killed.GetNickname();
         }
     }
 }

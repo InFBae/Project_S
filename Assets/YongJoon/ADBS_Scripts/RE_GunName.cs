@@ -20,7 +20,6 @@ public class RE_GunName : RE_Gun
     [SerializeField] float bulletSpeed;
     [SerializeField] float fireCoolTime;        // 연발 나가는 쿨타임
     [SerializeField] AudioClip clip;
-    [SerializeField] LayerMask layerMask;
     [SerializeField] JBB.StatusUI statusUI;
 
     public float FireCoolTime { get { return fireCoolTime; } }
