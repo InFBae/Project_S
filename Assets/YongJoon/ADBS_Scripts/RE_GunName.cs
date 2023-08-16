@@ -137,29 +137,29 @@ public class RE_GunName : RE_Gun
         // 레이캐스트를 굔쨉 부딪힌 물체가 있다면
         if (Physics.Raycast(realFireRoot, rayShootDir, out hit, maxDistance, layerMask/*768*/))
         {
+            RE_PlayerTakeDamage damagedPlayer = hit.collider.gameObject.GetComponentInParent<RE_PlayerTakeDamage>();
             if (hit.collider.gameObject.layer == 7)  // 바디 레이어를 맞췄다면?
-            {
-                hit.collider.gameObject.GetComponentInParent<RE_PlayerTakeDamage>().TakeDamageRequest(fireDamage, shooter);
-                ParticleSystem hitEffect = GameManager.Pool.Get(bloodParticle, hit.point, Quaternion.LookRotation(hit.normal), hit.transform);
+            {                
+                damagedPlayer.TakeDamageRequest(fireDamage, shooter, damagedPlayer.PV.Owner);
+                PV.RPC("MakeEffect", RpcTarget.All, "bloodParticle", hit.point, hit.normal);
                 Debug.Log("바디");
             }
             else if (hit.collider.gameObject.layer == 9)  // 팔다리 레이어를 맞췄다면?
             {
-                hit.collider.gameObject.GetComponentInParent<RE_PlayerTakeDamage>().TakeDamageRequest(fireDamage, shooter);
-                ParticleSystem hitEffect = GameManager.Pool.Get(bloodParticle, hit.point, Quaternion.LookRotation(hit.normal), hit.transform);
+                damagedPlayer.TakeDamageRequest(fireDamage, shooter, damagedPlayer.PV.Owner);
+                PV.RPC("MakeEffect", RpcTarget.All, "bloodParticle", hit.point, hit.normal);
                 Debug.Log("팔다리");
             }
             else if (hit.collider.gameObject.layer == 8)  // 헤드 레이어를 맞췄다면?
             {
-                hit.collider.gameObject.GetComponentInParent<RE_PlayerTakeDamage>().TakeDamageRequest(fireDamage, shooter, true);
-                ParticleSystem hitEffect = GameManager.Pool.Get(bloodParticle, hit.point, Quaternion.LookRotation(hit.normal), hit.transform);
+                damagedPlayer.TakeDamageRequest(fireDamage, shooter, damagedPlayer.PV.Owner, true);
+                PV.RPC("MakeEffect", RpcTarget.All, "bloodParticle", hit.point, hit.normal);
                 Debug.Log("헤드");
             }
             else
             {
                 // 오브젝트 풀로 hit 파티클 생성   
-                GameObject hitEffect = GameManager.Pool.Get(hitParticle, hit.point, Quaternion.LookRotation(hit.normal), hit.transform);
-                StartCoroutine(ReleaseRoutine(hitEffect));
+                PV.RPC("MakeEffect", RpcTarget.All ,"hitEffect", hit.point, hit.normal);
             }
             targetTransform = hit.point;
         }
@@ -187,6 +187,19 @@ public class RE_GunName : RE_Gun
         StartCoroutine(TrailRoutine(start, end));
     }
 
+    [PunRPC]
+    public void MakeEffect(string name, Vector3 hitPoint, Vector3 hitRotation)
+    {
+        if (name == "hitEffect")
+        {
+            GameObject hitEffect = GameManager.Pool.Get(hitParticle, hitPoint, Quaternion.LookRotation(hitRotation));
+            StartCoroutine(ReleaseRoutine(hitEffect));
+        }
+        else if(name == "bloodParticle")
+        {            
+            GameManager.Pool.Get(bloodParticle, hitPoint, Quaternion.LookRotation(hitRotation));
+        }
+    }
     //[PunRPC]
     //public void FireTrailRPC(Vector3 hitPoint)
     //{
