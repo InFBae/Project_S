@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using JBB;
 
 public class RE_PlayerTakeDamage : RE_Player
 {
@@ -12,27 +13,31 @@ public class RE_PlayerTakeDamage : RE_Player
         PV = GetComponent<PhotonView>();
     }
 
-    public void TakeDamage(int damage, Photon.Realtime.Player enemyPlayer, bool headShot = false)    // 헤드샷 받은 데미지
+    public void TakeDamageRequest(int damage, Photon.Realtime.Player enemyPlayer, bool headShot = false)    // 헤드샷 받은 데미지
     {
-        PV.RPC("HPControl", RpcTarget.All, damage, enemyPlayer, headShot);
+        PV.RPC("TakeDamage", RpcTarget.All, damage, enemyPlayer, this.player, headShot);
     }
     [PunRPC]
-    public void HPControl(int damage, Photon.Realtime.Player enemyPlayer, bool headShot)
+    public void TakeDamage(int damage, Photon.Realtime.Player enemyPlayer, Photon.Realtime.Player damagedPlayer ,bool headShot)
     {
-        Debug.Log("TakeDamage");
-        DecreaseHp(damage);
-        anim.SetTrigger("TakeDamage");
-
-        if (Hp <= 0)    // hp가 0이 되면 죽는다.
+        if (damagedPlayer.IsLocal)
         {
-            //enemyPlayer.GetComponentInParent<ADB_RE_PlayerAttacker>().killCount++;    // 상대의 킬 카운트 +1
-            //enemyPlayer.GetComponentInParent<ADB_RE_PlayerAttacker>().ChangeKillCount();
-            // 위 두 개는 밑 이벤트로 대체
+            Debug.Log($"{damagedPlayer.GetNickname()} TakeDamage by {enemyPlayer.GetNickname()}");
+            DecreaseHp(damage);
+            anim.SetTrigger("TakeDamage");
 
-            JBB.GameSceneManager.OnKilled?.Invoke(enemyPlayer, this.player, headShot);      // 죽인사람, 죽은사람, 헤드샷 판정
+            if (Hp <= 0)    // hp가 0이 되면 죽는다.
+            {
+                //enemyPlayer.GetComponentInParent<ADB_RE_PlayerAttacker>().killCount++;    // 상대의 킬 카운트 +1
+                //enemyPlayer.GetComponentInParent<ADB_RE_PlayerAttacker>().ChangeKillCount();
+                // 위 두 개는 밑 이벤트로 대체
 
-            Die();
+                JBB.GameSceneManager.OnKilled?.Invoke(enemyPlayer, damagedPlayer, headShot);      // 죽인사람, 죽은사람, 헤드샷 판정
+
+                Die();
+            }
         }
+
     }
     void Die()
     {
