@@ -20,7 +20,7 @@ public class RE_GunName : RE_Gun
     [SerializeField] float bulletSpeed;
     [SerializeField] float fireCoolTime;        // 연발 나가는 쿨타임
     [SerializeField] AudioClip clip;
-    [SerializeField] LayerMask layerMask;
+    //[SerializeField] LayerMask layerMask;
 
     public float FireCoolTime { get { return fireCoolTime; } }
     public int GetCurBullet { get { return curAvailavleBullet; } }
@@ -137,23 +137,23 @@ public class RE_GunName : RE_Gun
         //Vector3 rayShootDir = new Vector3(camFwd.x + radius * Mathf.Cos(angle), camFwd.y + radius * Mathf.Sin(angle), camFwd.z * Mathf.Sin(angle));
         
         Vector3 targetTransform;
-        //int layerMask = LayerMask.GetMask("PlayerBody", "PlayerHead", "PlayerArmsAndLegs");
+        int layerMask = LayerMask.GetMask(/*"Environment", */"PlayerBody", "PlayerHead", "PlayerArmsAndLegs");
         // 레이캐스트를 굔쨉 부딪힌 물체가 있다면
         if (Physics.Raycast(realFireRoot, rayShootDir, out hit, maxDistance, layerMask/*768*/))
         {
-            if (hit.transform.gameObject.layer == 7)  // 바디 레이어를 맞췄다면?
+            if (hit.collider.gameObject.layer == 7)  // 바디 레이어를 맞췄다면?
             {
                 hit.transform.gameObject.GetComponentInParent<RE_PlayerTakeDamage>().TakeDamage(fireDamage, shooter);
                 ParticleSystem hitEffect = GameManager.Pool.Get(bloodParticle, hit.point, Quaternion.LookRotation(hit.normal), hit.transform);
                 Debug.Log("바디");
             }
-            else if (hit.transform.gameObject.layer == 9)  // 팔다리 레이어를 맞췄다면?
+            else if (hit.collider.gameObject.layer == 9)  // 팔다리 레이어를 맞췄다면?
             {
                 hit.transform.gameObject.GetComponentInParent<RE_PlayerTakeDamage>().TakeDamage(fireDamage, shooter);
                 ParticleSystem hitEffect = GameManager.Pool.Get(bloodParticle, hit.point, Quaternion.LookRotation(hit.normal), hit.transform);
                 Debug.Log("팔다리");
             }
-            else if (hit.transform.gameObject.layer == 8)  // 헤드 레이어를 맞췄다면?
+            else if (hit.collider.gameObject.layer == 8)  // 헤드 레이어를 맞췄다면?
             {
                 hit.transform.gameObject.GetComponentInParent<RE_PlayerTakeDamage>().TakeDamage(fireDamage, shooter, true);
                 ParticleSystem hitEffect = GameManager.Pool.Get(bloodParticle, hit.point, Quaternion.LookRotation(hit.normal), hit.transform);
