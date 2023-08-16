@@ -7714,7 +7714,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4466248022076647860}
   - component: {fileID: 7399436347152799376}
-  - component: {fileID: 7399436347152799391}
   - component: {fileID: 9106646635157379132}
   - component: {fileID: 9106646635157379106}
   - component: {fileID: 9106646635157379133}
@@ -7780,26 +7779,6 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &7399436347152799391
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4466248022076647863}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24d7532e907853749872261e7af8010d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cameraRoot: {fileID: 7308279757883977331}
-  realAimTarget: {fileID: 4466248023278003567}
-  playerAimTarget: {fileID: 1953373852575578403}
-  shootRoot: {fileID: 6572799630050082545}
-  fireRoot: {fileID: 6572799629696065152}
-  zoomRoot: {fileID: 7154849088633569868}
-  cameraSensitivity: 10
-  lookDistance: 20
 --- !u!54 &9106646635157379132
 Rigidbody:
   m_ObjectHideFlags: 0
