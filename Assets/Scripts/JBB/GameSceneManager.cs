@@ -23,20 +23,21 @@ namespace JBB
         {
             spawnPoints = spawnPointsPrefab.GetComponentsInChildren<Transform>();
         }
+
         private void Start()
         {          
             if (PhotonNetwork.InRoom)
             {
                 inGameUI.InitUI();
                 Transform spawnPoint = GetSpawnPoint();
-                GameManager.Resource.Instantiate(GameManager.Resource.Load<GameObject>("AllInOnePlayerTest"), spawnPoint.position, Quaternion.identity);
+                PhotonNetwork.Instantiate("AllInOnePlayerTest", spawnPoint.position, Quaternion.identity);
                 // 게임 준비사항 다 마치고 SetLoad 설정
                 PhotonNetwork.LocalPlayer.SetLoad(true);
             }
             else
             {
                 // DebugMode
-                PhotonNetwork.LocalPlayer.NickName = "111";
+                PhotonNetwork.LocalPlayer.NickName = $"Debug {UnityEngine.Random.Range(100, 200)}";
                 PhotonNetwork.ConnectUsingSettings();
             }
         }
@@ -61,8 +62,8 @@ namespace JBB
             Debug.Log("Joined DebugRoom");
             PhotonNetwork.LeaveLobby();
 
-            PhotonNetwork.LocalPlayer.SetNickname("111");
             PhotonNetwork.LocalPlayer.SetLoad(true);
+            PhotonNetwork.LocalPlayer.SetNickname(PhotonNetwork.LocalPlayer.NickName);
 
             inGameUI.InitUI();
 
@@ -105,8 +106,17 @@ namespace JBB
                 {
                     Debug.Log($"Wait players {PlayerLoadCount()} / {PhotonNetwork.PlayerList.Length}");
                 }
+                inGameUI.InitUI();
+            }  
+            if (changedProps.ContainsKey("KillCount"))
+            {
+                if (targetPlayer == PhotonNetwork.LocalPlayer)
+                {
+                    inGameUI.UpdateKillDeathUI();
+                }
+                inGameUI.UpdateRankingBoard();
+                inGameUI.UpdateTargetKillSliderValue();
             }
-            inGameUI.InitUI();
         }
         public override void OnRoomPropertiesUpdate(PhotonHashtable propertiesThatChanged)
         {
@@ -133,7 +143,7 @@ namespace JBB
 
         IEnumerator TimerRoutine()
         {
-            double gameEndTime = (PhotonNetwork.Time + PhotonNetwork.CurrentRoom.GetGameTime() * 60);
+            double gameEndTime = (PhotonNetwork.CurrentRoom.GetLoadTime() + PhotonNetwork.CurrentRoom.GetGameTime() * 60);
             while (PhotonNetwork.Time < gameEndTime)
             {
                 int remainTime = (int)(gameEndTime - PhotonNetwork.Time);

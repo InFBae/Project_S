@@ -1,12 +1,17 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Events;
 
 namespace JBB
 {
     public class StatusUI : BaseUI
     {
+        public UnityEvent<float> OnHPChanged = new UnityEvent<float>();
+        public UnityEvent<int, int> OnBulletCountChanged = new UnityEvent<int, int>();
+        PhotonView PV;
+
         protected override void Awake()
         {
             base.Awake();
@@ -14,12 +19,19 @@ namespace JBB
 
         private void OnEnable()
         {
-            
+            OnHPChanged.AddListener(SetHP);
+            OnBulletCountChanged.AddListener(SetBullets);
+            PV = GetComponent<PhotonView>();    
+            if (!PV.IsMine)
+            {
+                this.gameObject.SetActive(false);
+            }
         }
 
         private void OnDisable()
         {
-            
+            OnHPChanged.RemoveListener(SetHP);
+            OnBulletCountChanged.RemoveListener(SetBullets);
         }
         public void SetWeaponName(string weaponName)
         {

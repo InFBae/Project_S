@@ -1,7 +1,7 @@
 using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -14,6 +14,7 @@ namespace ahndabi
         // 배경음, 효과음, 감도, Cancle, 로비로 나가기, Confirm
 
         public static UnityEvent<float> OnMouseSensiticityControl = new UnityEvent<float>();
+        public static UnityEvent OnPlayerInputActive = new UnityEvent();
 
         // Cancle을 위한 초기값들
         float initalMouseSensitivityValue;
@@ -23,7 +24,7 @@ namespace ahndabi
         private void Awake()
         {
             base.Awake();
-            buttons["ConfirmButton"].onClick.AddListener(() => { Confirm(); });
+            buttons["ApplyButton"].onClick.AddListener(() => { Apply(); });
             buttons["CancleButton"].onClick.AddListener(() => { Cancle(); });
         }
 
@@ -35,33 +36,81 @@ namespace ahndabi
             initalEffectSoundValue = sliders["EffectSoundSlider"].value;
         }
 
-        public void VolumeControl()
+        public void BacckGroundSoundControl()
         {
+            foreach (Photon.Realtime.Player player in PhotonNetwork.PlayerList)
+            {
+                if (player.IsLocal)
+                {
+                    // TODO : BackGroundSound Control
+                }
+            }
+        }
 
+        public void EffectSoundControl()
+        {
+            foreach (Photon.Realtime.Player player in PhotonNetwork.PlayerList)
+            {
+                if (player.IsLocal)
+                {
+                    // TODO : EffectSound Control
+                }
+            }
         }
 
         public void MouseSensitivityControl(float sensitivity)
         {
-            OnMouseSensiticityControl?.Invoke(sliders["MouseSensitivitySlider"].value);
+            foreach (Photon.Realtime.Player player in PhotonNetwork.PlayerList)
+            {
+                if (player.IsLocal)
+                {
+                    OnMouseSensiticityControl?.Invoke(sliders["MouseSensitivitySlider"].value);
+                }
+            }
         }
 
-        public void Confirm()
+        public void Apply()
         {
-            UnityEngine.Cursor.lockState = CursorLockMode.Locked;
-            GameObject.FindWithTag("Player").GetComponentInChildren<PlayerInput>().enabled = true;
-            CloseUI();
+            // 서버에서 내 플레이어만 찾아야 해서, 모든 플레이어를 순회하고 내 플레이어를 찾으면 그 플레이어에게만 반영되도록
+            foreach (Photon.Realtime.Player player in PhotonNetwork.PlayerList)
+            {
+                if (player.IsLocal)
+                {
+                    UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+                    OnPlayerInputActive?.Invoke();      // Player의 InputSystem을 Active해주는 이벤트
+                    CloseUI();
+                }
+            }
         }
 
         public void Cancle()
         {
-            // STart()에서 기초 값들을 다 저장해놓고 그 기초값들로 다 바꿔주면 됨
-            sliders["MouseSensitivitySlider"].value = initalMouseSensitivityValue;
-            sliders["BackgroundSoundSlider"].value = initalBackgroundSoundValue;
-            sliders["EffectSoundSlider"].value = initalEffectSoundValue;
-            UnityEngine.Cursor.lockState = CursorLockMode.Locked;
-            GameObject.FindWithTag("Player").GetComponentInChildren<PlayerInput>().enabled = true;
-            CloseUI();
+            // STart()에서 기초 값들을 다 저장해놓고 그 기초값들로 다 바꿔줌
+
+            // 서버에서 내 플레이어만 찾아야 해서, 모든 플레이어를 순회하고 내 플레이어를 찾으면 그 플레이어에게만 반영되도록
+            foreach (Photon.Realtime.Player player in PhotonNetwork.PlayerList)
+            {
+                if (player.IsLocal)
+                {
+                    sliders["MouseSensitivitySlider"].value = initalMouseSensitivityValue;
+                    sliders["BackgroundSoundSlider"].value = initalBackgroundSoundValue;
+                    sliders["EffectSoundSlider"].value = initalEffectSoundValue;
+                    UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+                    OnPlayerInputActive?.Invoke();      // Player의 InputSystem을 Active해주는 이벤트
+                    CloseUI();
+                }
+            }
         }
 
+        public void BackToLobby()   // 로비로 돌아가는 버튼
+        {
+            foreach (Photon.Realtime.Player player in PhotonNetwork.PlayerList)
+            {
+                if (player.IsLocal)
+                {
+                    PhotonNetwork.LoadLevel("LobbyScene");
+                }
+            }
+        }
     }
 }

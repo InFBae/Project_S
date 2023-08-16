@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Photon.Pun;
+using System;
 
 public class PlayerMover : MonoBehaviour
 {
@@ -10,9 +11,11 @@ public class PlayerMover : MonoBehaviour
     [SerializeField] private float nomalSpeed;
     [SerializeField] private float walkSpeed;
     [SerializeField] private float jumpSpeed;
+    [SerializeField] private float crouchSpeed;
     [SerializeField] private Camera cam;
     [SerializeField] RE_GunName gun;
-    
+    [SerializeField] AudioClip clip;
+
     private LayerMask layerMask = 64;
 
     private Rigidbody rb;
@@ -23,7 +26,13 @@ public class PlayerMover : MonoBehaviour
     private float curSpeed;
     private float zSpeed = 0; // 위, 아래
     private bool isWalk = false;
+    private bool isSit = false;
+    private bool isMove = false;
+    private bool isJump = false;
+    
+
     PhotonView PV;
+    Coroutine jumpRoutine;
 
     private void Awake()
     {
@@ -32,6 +41,8 @@ public class PlayerMover : MonoBehaviour
         // 부딪혔을 떄 회전 방지
         rb.freezeRotation = true;
         PV = GetComponentInParent<PhotonView>();
+
+        StartCoroutine(MoveSoundRoutine());
     }
     private void Start()
     {
@@ -57,9 +68,37 @@ public class PlayerMover : MonoBehaviour
         {
             return;
         }
-
+        if (jumpRoutine != null)
+        {
+            isJump = false;
+            StopCoroutine(jumpRoutine);
+        }
         Move();
     }
+
+    IEnumerator MoveSoundRoutine()
+    {
+        while (true)
+        {
+            if (isMove && !isJump)
+            {
+                PV.RPC("MoveSound", RpcTarget.AllViaServer);
+                yield return new WaitForSeconds(0.3f);
+            }
+            else
+            {
+                yield return null;
+            }
+        }
+    }
+
+    [PunRPC]
+    public void MoveSound()
+    {
+        AudioSource.PlayClipAtPoint(clip, this.transform.position);
+    }
+
+
 
     private void Move()
     {
@@ -79,16 +118,32 @@ public class PlayerMover : MonoBehaviour
         {
             rb.velocity = new Vector3(0, moveVec.y, 0);
             curSpeed = 0;
+            isMove = false;
         }
         else
         {
+            isMove = true;
             dir = transform.localRotation * moveDir;
             dir = new Vector3(dir.x, 0f, dir.z);
 
-            curSpeed = isWalk ? walkSpeed : nomalSpeed;
+            if (isWalk)
+            {
+                curSpeed = walkSpeed;
+            }
+            else if (isSit)
+            {
+                curSpeed = crouchSpeed;
+            }
+            else
+            {
+                curSpeed = nomalSpeed;
+            }
+
+            //curSpeed = isWalk ? walkSpeed : nomalSpeed;
 
             moveVec = dir * curSpeed;
             rb.velocity = moveVec + Vector3.up * rb.velocity.y;
+
         }
         anim.SetFloat("XSpeed", moveDir.x, 0.1f, Time.deltaTime);
         anim.SetFloat("YSpeed", moveDir.z, 0.1f, Time.deltaTime);
@@ -101,18 +156,19 @@ public class PlayerMover : MonoBehaviour
             return;
         }
         rb.AddForce(Vector3.up * jumpSpeed, ForceMode.Impulse);
-        StartCoroutine(JumpRoutine());
+        jumpRoutine = StartCoroutine(JumpRoutine());
     }
     IEnumerator JumpRoutine()
     {
         while (true)
         {
             zSpeed += Physics.gravity.y * Time.deltaTime;
+
+            Debug.Log("zSpeed : " + zSpeed);
             if(IsGrounded() && zSpeed < 0)
             {
                 zSpeed = -1;
-                anim.SetTrigger("JumpEnd");
-                StopAllCoroutines();
+                anim.SetTrigger("JumpEnd");               
             }
             transform.Translate(Vector3.up * jumpSpeed * Time.deltaTime);
             //rb.velocity = new Vector3(moveVec.x, zSpeed, moveVec.z);
@@ -188,6 +244,7 @@ public class PlayerMover : MonoBehaviour
     {
         if (IsGrounded())
         {
+            isJump = true;
             anim.SetTrigger("Jump");
             Jump();
         }
@@ -198,11 +255,13 @@ public class PlayerMover : MonoBehaviour
         {
             if (IsGrounded())
             {
+                isSit = true;
                 anim.SetBool("Crouch", true);
             }
         }
         else
         {
+            isSit = false;
             anim.SetBool("Crouch", false);
         }
     }
