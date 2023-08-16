@@ -12,7 +12,7 @@ public class ADB_PlayerAimMove : MonoBehaviour
     [SerializeField] Transform playerAimTarget;
     [SerializeField] Transform shootRoot;
     [SerializeField] Transform fireRoot;
-    [SerializeField] public static float cameraSensitivity = 10;    //
+    [SerializeField] public float cameraSensitivity = 10;    //
     [SerializeField] float lookDistance;
 
     private Vector2 lookDelta;

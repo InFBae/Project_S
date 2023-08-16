@@ -36,14 +36,37 @@ namespace ahndabi
             initalEffectSoundValue = sliders["EffectSoundSlider"].value;
         }
 
-        public void VolumeControl()
+        public void BacckGroundSoundControl()
         {
+            foreach (Photon.Realtime.Player player in PhotonNetwork.PlayerList)
+            {
+                if (player.IsLocal)
+                {
+                    // TODO : BackGroundSound Control
+                }
+            }
+        }
 
+        public void EffectSoundControl()
+        {
+            foreach (Photon.Realtime.Player player in PhotonNetwork.PlayerList)
+            {
+                if (player.IsLocal)
+                {
+                    // TODO : EffectSound Control
+                }
+            }
         }
 
         public void MouseSensitivityControl(float sensitivity)
         {
-            OnMouseSensiticityControl?.Invoke(sliders["MouseSensitivitySlider"].value);
+            foreach (Photon.Realtime.Player player in PhotonNetwork.PlayerList)
+            {
+                if (player.IsLocal)
+                {
+                    OnMouseSensiticityControl?.Invoke(sliders["MouseSensitivitySlider"].value);
+                }
+            }
         }
 
         public void Apply()
@@ -73,7 +96,7 @@ namespace ahndabi
                     sliders["BackgroundSoundSlider"].value = initalBackgroundSoundValue;
                     sliders["EffectSoundSlider"].value = initalEffectSoundValue;
                     UnityEngine.Cursor.lockState = CursorLockMode.Locked;
-                    OnPlayerInputActive?.Invoke();      // Player의 InputSystem을 Active해주는 이벤트ㄴ
+                    OnPlayerInputActive?.Invoke();      // Player의 InputSystem을 Active해주는 이벤트
                     CloseUI();
                 }
             }
@@ -81,7 +104,13 @@ namespace ahndabi
 
         public void BackToLobby()   // 로비로 돌아가는 버튼
         {
-
+            foreach (Photon.Realtime.Player player in PhotonNetwork.PlayerList)
+            {
+                if (player.IsLocal)
+                {
+                    PhotonNetwork.LoadLevel("LobbyScene");
+                }
+            }
         }
     }
 }
