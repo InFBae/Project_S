@@ -7,6 +7,11 @@ namespace ahndabi
 {
     public class ShowInGameSettingPopUpUI : MonoBehaviour
     {
+        private void OnEnable()
+        {
+            InGameSettingPopUpUI.OnPlayerInputActive.AddListener(() => { PlayerInputActive();});
+        }
+
         public void SettingPopUpUI()
         {
             GameManager.UI.ShowPopUpUI<InGameSettingPopUpUI>("UI/InGameSettingPopUpUI");
@@ -20,6 +25,11 @@ namespace ahndabi
         {
             // ESC키를 누르면 세팅팝업UI가 떠야함
             SettingPopUpUI();
+        }
+
+        public void PlayerInputActive()
+        {
+            gameObject.GetComponent<PlayerInput>().enabled = true;
         }
     }
 }

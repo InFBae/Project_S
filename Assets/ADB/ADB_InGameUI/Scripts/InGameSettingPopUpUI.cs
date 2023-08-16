@@ -1,7 +1,7 @@
 using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -14,6 +14,7 @@ namespace ahndabi
         // 배경음, 효과음, 감도, Cancle, 로비로 나가기, Confirm
 
         public static UnityEvent<float> OnMouseSensiticityControl = new UnityEvent<float>();
+        public static UnityEvent OnPlayerInputActive = new UnityEvent();
 
         // Cancle을 위한 초기값들
         float initalMouseSensitivityValue;
@@ -23,7 +24,7 @@ namespace ahndabi
         private void Awake()
         {
             base.Awake();
-            buttons["ConfirmButton"].onClick.AddListener(() => { Confirm(); });
+            buttons["ApplyButton"].onClick.AddListener(() => { Apply(); });
             buttons["CancleButton"].onClick.AddListener(() => { Cancle(); });
         }
 
@@ -45,16 +46,16 @@ namespace ahndabi
             OnMouseSensiticityControl?.Invoke(sliders["MouseSensitivitySlider"].value);
         }
 
-        public void Confirm()
+        public void Apply()
         {
             UnityEngine.Cursor.lockState = CursorLockMode.Locked;
-            GameObject.FindWithTag("Player").GetComponentInChildren<PlayerInput>().enabled = true;
+            OnPlayerInputActive?.Invoke();
             CloseUI();
         }
 
         public void Cancle()
         {
-            // STart()에서 기초 값들을 다 저장해놓고 그 기초값들로 다 바꿔주면 됨
+            // STart()에서 기초 값들을 다 저장해놓고 그 기초값들로 다 바꿔줌
             sliders["MouseSensitivitySlider"].value = initalMouseSensitivityValue;
             sliders["BackgroundSoundSlider"].value = initalBackgroundSoundValue;
             sliders["EffectSoundSlider"].value = initalEffectSoundValue;
