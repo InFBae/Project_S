@@ -14,6 +14,7 @@ public class PlayerAimMove : MonoBehaviourPunCallbacks
     [SerializeField] Transform playerAimTarget;
     [SerializeField] Transform shootRoot;
     [SerializeField] Transform fireRoot;
+    [SerializeField] Transform zoomRoot;
     [SerializeField] float cameraSensitivity;
     [SerializeField] float lookDistance;
 
@@ -24,6 +25,7 @@ public class PlayerAimMove : MonoBehaviourPunCallbacks
     Vector3 upTrans;
     Vector3 point;
     Vector3 v;
+    Vector3 v2;
     private float sitValue = 0.7f;
     PlayerMover mover;
     PhotonView PV;
@@ -108,10 +110,13 @@ public class PlayerAimMove : MonoBehaviourPunCallbacks
             //shootRoot.transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
 
             v = shootRoot.forward.normalized * Mathf.Cos(-xRotation / 80);
-            if (isSit) v.y -= sitValue;
-            //v.z = Mathf.Clamp(v.z - 0.2f, 0, 1);
-            fireRoot.transform.position = v + shootRoot.position;/*transform.position+ upTrans + new Vector3(0, -xRotation/80, 0);*/
+            if (isSit)
+            { 
+                v.y -= sitValue;
+                zoomRoot.position = new Vector3(zoomRoot.position.x, 1, zoomRoot.position.z);
 
+            }//v.z = Mathf.Clamp(v.z - 0.2f, 0, 1);
+            fireRoot.transform.position = v + shootRoot.position;/*transform.position+ upTrans + new Vector3(0, -xRotation/80, 0);*/
         }
         else
         {

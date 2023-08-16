@@ -1,22 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Photon.Pun;
 
 public class RE_PlayerTakeDamage : RE_Player
 {
-    public void TakeDamage(float damage)    // 데미지 받기
+    PhotonView PV;
+
+    private void Awake()
     {
-        DecreaseHP(damage);     // hp 감소
+        PV = GetComponent<PhotonView>();
+    }
+
+    public void TakeDamage(int damage, Photon.Realtime.Player enemyPlayer, bool headShot = false)    // 헤드샷 받은 데미지
+    {
+        PV.RPC("HPControl", RpcTarget.All, damage, enemyPlayer, headShot);
+    }
+    [PunRPC]
+    public void HPControl(int damage, Photon.Realtime.Player enemyPlayer, bool headShot)
+    {
+        Debug.Log("TakeDamage");
+        DecreaseHp(damage);
         anim.SetTrigger("TakeDamage");
 
-        if (hp <= 0)    // hp가 0이 되면 죽는다.
+        if (Hp <= 0)    // hp가 0이 되면 죽는다.
         {
-            hp = 0;
+            //enemyPlayer.GetComponentInParent<ADB_RE_PlayerAttacker>().killCount++;    // 상대의 킬 카운트 +1
+            //enemyPlayer.GetComponentInParent<ADB_RE_PlayerAttacker>().ChangeKillCount();
+            // 위 두 개는 밑 이벤트로 대체
+
+            JBB.GameSceneManager.OnKilled?.Invoke(enemyPlayer, this.player, headShot);      // 죽인사람, 죽은사람, 헤드샷 판정
+
             Die();
         }
     }
-
     void Die()
     {
         // 충돌체 등의 문제 때문에 죽는 애니메이션을 하는 플레이어를 하나 따로 두어서
@@ -28,8 +45,4 @@ public class RE_PlayerTakeDamage : RE_Player
         gameObject.SetActive(false);    // 기존 Player는 비활성화
     }
 
-    void DecreaseHP(float damage)
-    {
-        hp -= damage;
-    }
 }
