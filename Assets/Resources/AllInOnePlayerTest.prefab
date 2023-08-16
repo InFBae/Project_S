@@ -6508,7 +6508,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   statusUI: {fileID: 8068130203168203841}
   anim: {fileID: 8963163098989630250}
-  diePlayer: {fileID: 0}
   gun: {fileID: 3498845919217791251}
   hp: 200
   rank: 0
@@ -6586,7 +6585,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   statusUI: {fileID: 8068130203168203841}
   anim: {fileID: 8963163098989630250}
-  diePlayer: {fileID: 0}
   gun: {fileID: 3498845919217791251}
   hp: 200
   rank: 0
