@@ -4746,6 +4746,9 @@ MonoBehaviour:
   bulletSpeed: 50
   fireCoolTime: 0.1
   clip: {fileID: 8300000, guid: 1d84c52d82239cf4898be13e6b8809a3, type: 3}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 999
   isReload: 0
   boundValue: 0
   fireStack: 0
@@ -8891,7 +8894,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   diePlayer: {fileID: 7498499812823032062}
-  gun: {fileID: 0}
+  gun: {fileID: 3498845919217791251}
   hp: 200
   rank: 0
   killCount: 0
