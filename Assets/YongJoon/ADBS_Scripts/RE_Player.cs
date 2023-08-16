@@ -30,7 +30,6 @@ public class RE_Player : MonoBehaviourPunCallbacks
     {
         anim = GetComponentInChildren<Animator>();
         gun = GetComponentInChildren<RE_GunName>();
-        player = PhotonNetwork.LocalPlayer;
     }
 
     public override void OnEnable()
@@ -39,7 +38,6 @@ public class RE_Player : MonoBehaviourPunCallbacks
 
         anim = GetComponentInChildren<Animator>();
         gun = GetComponentInChildren<RE_GunName>();
-        player = PhotonNetwork.LocalPlayer;
     }
 
     private void Start()

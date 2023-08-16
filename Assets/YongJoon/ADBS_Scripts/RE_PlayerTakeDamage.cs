@@ -6,12 +6,13 @@ using JBB;
 
 public class RE_PlayerTakeDamage : RE_Player
 {
-    PhotonView PV;
+    public PhotonView PV;
 
     private void Awake()
     {
         PV = GetComponent<PhotonView>();
     }
+
 
     public void TakeDamageRequest(int damage, Photon.Realtime.Player enemyPlayer, Photon.Realtime.Player damagedPlayer, bool headShot = false)    // 헤드샷 받은 데미지
     {
