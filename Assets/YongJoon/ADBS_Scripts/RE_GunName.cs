@@ -100,14 +100,6 @@ public class RE_GunName : RE_Gun
 
     public void FireRequest()
     {
-        PV.RPC("Fire", RpcTarget.MasterClient, PhotonNetwork.LocalPlayer);
-    }
-
-    [PunRPC]
-    public override void Fire(Photon.Realtime.Player shooter)
-    {
-        RaycastHit hit;
-
         if (curAvailavleBullet <= 0 || isReload/*anim.GetCurrentAnimatorStateInfo(0).IsName("reloading")*/)   // 총알 없으면 쏘지 못하도록
             return;
 
@@ -132,10 +124,14 @@ public class RE_GunName : RE_Gun
         }
 
         Vector3 rayShootDir = camFwd + Vector3.right * clampedDir.x * 1.5f + Vector3.up * clampedDir.y * 0.8f;
-        //float radius = Random.Range(0, boundValue);
-        //float angle = Random.Range(0, 10* Mathf.PI);
-        //float maxValue = Mathf.(Mathf.Cos(angle));
-        //Vector3 rayShootDir = new Vector3(camFwd.x + radius * Mathf.Cos(angle), camFwd.y + radius * Mathf.Sin(angle), camFwd.z * Mathf.Sin(angle));
+
+        PV.RPC("Fire", RpcTarget.MasterClient, PhotonNetwork.LocalPlayer, realFireRoot, rayShootDir);
+    }
+
+    [PunRPC]
+    public override void Fire(Photon.Realtime.Player shooter, Vector3 realFireRoot, Vector3 rayShootDir)
+    {
+        RaycastHit hit;   
         
         Vector3 targetTransform;
         int layerMask = LayerMask.GetMask(/*"Environment", */"PlayerBody", "PlayerHead", "PlayerArmsAndLegs");
@@ -181,9 +177,9 @@ public class RE_GunName : RE_Gun
     }
 
     [PunRPC]
-    public void FireSound(Vector3 muzzlPoint)
+    public void FireSound(Vector3 muzzlePoint)
     {
-        AudioSource.PlayClipAtPoint(clip, muzzlPoint);
+        AudioSource.PlayClipAtPoint(clip, muzzlePoint);
     }
 
     [PunRPC]
@@ -202,12 +198,6 @@ public class RE_GunName : RE_Gun
 
     public void ReloadRequest()
     {
-        PV.RPC("Reload", RpcTarget.All);
-    }
-
-    [PunRPC]
-    public override void Reload()    // 재장전
-    {
         if (remainBullet <= 0)
             return;
 
@@ -217,10 +207,10 @@ public class RE_GunName : RE_Gun
         }
         else
         {
-            isReload = true;           
+            isReload = true;
 
             if ((remainBullet + curAvailavleBullet) <= availableBullet)
-            {             
+            {
                 curAvailavleBullet = remainBullet + curAvailavleBullet;
                 remainBullet = 0;
             }
@@ -230,8 +220,15 @@ public class RE_GunName : RE_Gun
                 curAvailavleBullet = availableBullet;
             }
             statusUI.OnBulletCountChanged?.Invoke(curAvailavleBullet, remainBullet);
-            reloadRoutine = StartCoroutine(ReloadRoutine());
+            
         }
+        PV.RPC("Reload", RpcTarget.All);
+    }
+
+    [PunRPC]
+    public override void Reload()    // 재장전
+    {
+        reloadRoutine = StartCoroutine(ReloadRoutine());
     }
 
     IEnumerator ReloadRoutine()

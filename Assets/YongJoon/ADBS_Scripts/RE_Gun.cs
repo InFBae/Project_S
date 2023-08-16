@@ -16,7 +16,7 @@ public abstract class RE_Gun : MonoBehaviourPunCallbacks
     [SerializeField] protected int availableBullet;       // 재장전 하기 전 사용 가능한 총탄 개수 
     [SerializeField] protected int curAvailavleBullet;    // 계속 사용 중인 현재 총알 개수   
 
-    public abstract void Fire(Photon.Realtime.Player shooter);        // 총마다 Fire 방식이 다르니까 abstract로
+    public abstract void Fire(Photon.Realtime.Player shooter, Vector3 shootPos, Vector3 shootDir);        // 총마다 Fire 방식이 다르니까 abstract로
     public abstract void Reload();   // 재장전
 
     public bool IsBulletRemain()
