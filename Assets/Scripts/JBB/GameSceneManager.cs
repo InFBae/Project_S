@@ -63,6 +63,7 @@ namespace JBB
             PhotonNetwork.LeaveLobby();
 
             PhotonNetwork.LocalPlayer.SetLoad(true);
+            PhotonNetwork.LocalPlayer.SetNickname(PhotonNetwork.LocalPlayer.NickName);
 
             inGameUI.InitUI();
 

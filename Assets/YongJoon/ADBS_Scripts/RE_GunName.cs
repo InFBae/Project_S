@@ -139,19 +139,19 @@ public class RE_GunName : RE_Gun
         {
             if (hit.collider.gameObject.layer == 7)  // 바디 레이어를 맞췄다면?
             {
-                hit.transform.gameObject.GetComponentInParent<RE_PlayerTakeDamage>().TakeDamage(fireDamage, shooter);
+                hit.collider.gameObject.GetComponentInParent<RE_PlayerTakeDamage>().TakeDamageRequest(fireDamage, shooter);
                 ParticleSystem hitEffect = GameManager.Pool.Get(bloodParticle, hit.point, Quaternion.LookRotation(hit.normal), hit.transform);
                 Debug.Log("바디");
             }
             else if (hit.collider.gameObject.layer == 9)  // 팔다리 레이어를 맞췄다면?
             {
-                hit.transform.gameObject.GetComponentInParent<RE_PlayerTakeDamage>().TakeDamage(fireDamage, shooter);
+                hit.collider.gameObject.GetComponentInParent<RE_PlayerTakeDamage>().TakeDamageRequest(fireDamage, shooter);
                 ParticleSystem hitEffect = GameManager.Pool.Get(bloodParticle, hit.point, Quaternion.LookRotation(hit.normal), hit.transform);
                 Debug.Log("팔다리");
             }
             else if (hit.collider.gameObject.layer == 8)  // 헤드 레이어를 맞췄다면?
             {
-                hit.transform.gameObject.GetComponentInParent<RE_PlayerTakeDamage>().TakeDamage(fireDamage, shooter, true);
+                hit.collider.gameObject.GetComponentInParent<RE_PlayerTakeDamage>().TakeDamageRequest(fireDamage, shooter, true);
                 ParticleSystem hitEffect = GameManager.Pool.Get(bloodParticle, hit.point, Quaternion.LookRotation(hit.normal), hit.transform);
                 Debug.Log("헤드");
             }
@@ -219,15 +219,15 @@ public class RE_GunName : RE_Gun
                 curAvailavleBullet = availableBullet;
             }
             statusUI.OnBulletCountChanged?.Invoke(curAvailavleBullet, remainBullet);
-            
+            reloadRoutine = StartCoroutine(ReloadRoutine());
         }
-        PV.RPC("Reload", RpcTarget.All);
+        //PV.RPC("Reload", RpcTarget.All);
     }
 
     [PunRPC]
     public override void Reload()    // 재장전
     {
-        reloadRoutine = StartCoroutine(ReloadRoutine());
+        
     }
 
     IEnumerator ReloadRoutine()
