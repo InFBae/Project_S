@@ -63,13 +63,13 @@ public class Yong_PlayerController : MonoBehaviourPunCallbacks
             {
                 ChangeLayerRecursively(visibleBody, 10);
                 ChangeLayerRecursively(GunHolder, 10);
-                ChangeLayerRecursively(playerColliderBody, 10);
+                playerColliderBody.layer =  10;
             }
             else
             {
                 ChangeLayerRecursively(visibleBody, 4);
                 ChangeLayerRecursively(GunHolder, 4);
-                ChangeLayerRecursively(playerColliderBody, 4);
+                playerColliderBody.layer = 4;
             }
             //visibleBody.SetActive(false);
         }
