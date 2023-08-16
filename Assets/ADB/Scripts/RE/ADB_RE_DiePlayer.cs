@@ -14,7 +14,7 @@ public class ADB_RE_DiePlayer : MonoBehaviourPun
 
     private void OnEnable()
     {
-        Destroy(gameObject.transform.parent.gameObject, 5f);
+        Destroy(gameObject, 5f);
     }
 
 }
