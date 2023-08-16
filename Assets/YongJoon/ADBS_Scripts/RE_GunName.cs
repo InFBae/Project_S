@@ -133,7 +133,7 @@ public class RE_GunName : RE_Gun
         RaycastHit hit;   
         
         Vector3 targetTransform;
-        int layerMask = LayerMask.GetMask(/*"Environment", */"PlayerBody", "PlayerHead", "PlayerArmsAndLegs");
+        int layerMask = LayerMask.GetMask("Environment", "PlayerBody", "PlayerHead", "PlayerArmsAndLegs");
         // 레이캐스트를 굔쨉 부딪힌 물체가 있다면
         if (Physics.Raycast(realFireRoot, rayShootDir, out hit, maxDistance, layerMask/*768*/))
         {
