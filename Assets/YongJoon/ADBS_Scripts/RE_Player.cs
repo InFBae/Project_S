@@ -24,7 +24,7 @@ public class RE_Player : MonoBehaviourPunCallbacks
     public int killCount;
     public int deathCount;
     public string nickName;
-    protected Photon.Realtime.Player player;
+    public Photon.Realtime.Player player;
 
     private void Awake()
     {
