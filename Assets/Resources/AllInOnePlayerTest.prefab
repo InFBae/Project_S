@@ -9399,6 +9399,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statusUI: {fileID: 8068130203168203841}
+  anim: {fileID: 8963163098989630250}
   diePlayer: {fileID: 7498499812823032062}
   gun: {fileID: 3498845919217791251}
   hp: 200
@@ -9476,6 +9477,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statusUI: {fileID: 8068130203168203841}
+  anim: {fileID: 8963163098989630250}
   diePlayer: {fileID: 7498499812823032062}
   gun: {fileID: 3498845919217791251}
   hp: 200
