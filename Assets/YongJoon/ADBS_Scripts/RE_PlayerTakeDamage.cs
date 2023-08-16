@@ -1,11 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Photon.Pun;
 
 public class RE_PlayerTakeDamage : RE_Player
 {
+    PhotonView PV;
+
+    private void Awake()
+    {
+        PV = GetComponent<PhotonView>();
+    }
+
     public void TakeDamage(int damage, Photon.Realtime.Player enemyPlayer, bool headShot = false)    // 헤드샷 받은 데미지
+    {
+        PV.RPC("HPControl", RpcTarget.All, damage, enemyPlayer, headShot);
+    }
+    [PunRPC]
+    public void HPControl(int damage, Photon.Realtime.Player enemyPlayer, bool headShot)
     {
         Debug.Log("TakeDamage");
         DecreaseHp(damage);
@@ -22,7 +34,6 @@ public class RE_PlayerTakeDamage : RE_Player
             Die();
         }
     }
-
     void Die()
     {
         // 충돌체 등의 문제 때문에 죽는 애니메이션을 하는 플레이어를 하나 따로 두어서
