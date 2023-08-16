@@ -9,7 +9,6 @@ public class RE_Player : MonoBehaviourPunCallbacks
     // 플레이어가 가지고 있는 것들
     [SerializeField] public JBB.StatusUI statusUI;
     [SerializeField] public Animator anim;
-    [SerializeField] public GameObject diePlayer;
     [SerializeField] public RE_GunName gun;
     [SerializeField] int hp = 200;
     [SerializeField] public int Hp { get { return hp; } private set 
