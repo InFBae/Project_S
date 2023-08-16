@@ -325,6 +325,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 286477084156121223, guid: 71949ff8d9ef63841b9f0dcf52e5e922,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1273975260595175555, guid: 71949ff8d9ef63841b9f0dcf52e5e922,
         type: 3}
       propertyPath: m_RootOrder
@@ -384,6 +389,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ADB_PlayerAllInOne
+      objectReference: {fileID: 0}
+    - target: {fileID: 2969306524529153859, guid: 71949ff8d9ef63841b9f0dcf52e5e922,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3621704708771592919, guid: 71949ff8d9ef63841b9f0dcf52e5e922,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9100796606863069538, guid: 71949ff8d9ef63841b9f0dcf52e5e922,
         type: 3}

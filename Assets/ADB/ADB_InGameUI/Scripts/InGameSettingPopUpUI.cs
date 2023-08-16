@@ -48,21 +48,40 @@ namespace ahndabi
 
         public void Apply()
         {
-            UnityEngine.Cursor.lockState = CursorLockMode.Locked;
-            OnPlayerInputActive?.Invoke();
-            CloseUI();
+            // 서버에서 내 플레이어만 찾아야 해서, 모든 플레이어를 순회하고 내 플레이어를 찾으면 그 플레이어에게만 반영되도록
+            foreach (Photon.Realtime.Player player in PhotonNetwork.PlayerList)
+            {
+                if (player.IsLocal)
+                {
+                    UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+                    OnPlayerInputActive?.Invoke();      // Player의 InputSystem을 Active해주는 이벤트
+                    CloseUI();
+                }
+            }
         }
 
         public void Cancle()
         {
             // STart()에서 기초 값들을 다 저장해놓고 그 기초값들로 다 바꿔줌
-            sliders["MouseSensitivitySlider"].value = initalMouseSensitivityValue;
-            sliders["BackgroundSoundSlider"].value = initalBackgroundSoundValue;
-            sliders["EffectSoundSlider"].value = initalEffectSoundValue;
-            UnityEngine.Cursor.lockState = CursorLockMode.Locked;
-            GameObject.FindWithTag("Player").GetComponentInChildren<PlayerInput>().enabled = true;
-            CloseUI();
+
+            // 서버에서 내 플레이어만 찾아야 해서, 모든 플레이어를 순회하고 내 플레이어를 찾으면 그 플레이어에게만 반영되도록
+            foreach (Photon.Realtime.Player player in PhotonNetwork.PlayerList)
+            {
+                if (player.IsLocal)
+                {
+                    sliders["MouseSensitivitySlider"].value = initalMouseSensitivityValue;
+                    sliders["BackgroundSoundSlider"].value = initalBackgroundSoundValue;
+                    sliders["EffectSoundSlider"].value = initalEffectSoundValue;
+                    UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+                    OnPlayerInputActive?.Invoke();      // Player의 InputSystem을 Active해주는 이벤트ㄴ
+                    CloseUI();
+                }
+            }
         }
 
+        public void BackToLobby()   // 로비로 돌아가는 버튼
+        {
+
+        }
     }
 }
