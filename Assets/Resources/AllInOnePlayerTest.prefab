@@ -5249,6 +5249,7 @@ MonoBehaviour:
   bulletSpeed: 50
   fireCoolTime: 0.1
   clip: {fileID: 8300000, guid: 1d84c52d82239cf4898be13e6b8809a3, type: 3}
+  statusUI: {fileID: 8068130203168203841}
   isReload: 0
   boundValue: 0
   fireStack: 0
