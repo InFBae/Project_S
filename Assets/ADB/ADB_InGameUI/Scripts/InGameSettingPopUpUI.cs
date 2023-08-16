@@ -3,6 +3,7 @@ using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -15,6 +16,7 @@ namespace ahndabi
 
         public static UnityEvent<float> OnMouseSensiticityControl = new UnityEvent<float>();
         public static UnityEvent OnPlayerInputActive = new UnityEvent();
+        [SerializeField] AudioMixer myMixer;   // 리소스로 가져오기
 
         // Cancle을 위한 초기값들
         float initalMouseSensitivityValue;
@@ -26,6 +28,7 @@ namespace ahndabi
             base.Awake();
             buttons["ApplyButton"].onClick.AddListener(() => { Apply(); });
             buttons["CancleButton"].onClick.AddListener(() => { Cancle(); });
+            myMixer = GameManager.Resource.Load<AudioMixer>("MyMixer");
         }
 
         void OnEnable()
@@ -42,7 +45,8 @@ namespace ahndabi
             {
                 if (player.IsLocal)
                 {
-                    // TODO : BackGroundSound Control
+                    float volume = sliders["BackgroundSoundSlider"].value;
+                    myMixer.SetFloat("BGM", volume);
                 }
             }
         }
@@ -53,12 +57,13 @@ namespace ahndabi
             {
                 if (player.IsLocal)
                 {
-                    // TODO : EffectSound Control
+                    float volume = sliders["EffectSoundSlider"].value;
+                    myMixer.SetFloat("SFX", volume);
                 }
             }
         }
 
-        public void MouseSensitivityControl(float sensitivity)
+        public void MouseSensitivityControl()
         {
             foreach (Photon.Realtime.Player player in PhotonNetwork.PlayerList)
             {

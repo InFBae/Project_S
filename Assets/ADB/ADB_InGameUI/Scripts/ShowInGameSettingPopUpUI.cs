@@ -25,7 +25,6 @@ namespace ahndabi
         void OnPopUpUI(InputValue value)
         {
             // ESC키를 누르면 세팅팝업UI가 떠야함
-
             // 서버에서 내 플레이어만 찾아야 해서, 모든 플레이어를 순회하고 내 플레이어를 찾으면 그 플레이어에게만 반영되도록
             foreach (Photon.Realtime.Player player in PhotonNetwork.PlayerList)
             {

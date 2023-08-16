@@ -243,6 +243,34 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ac5e60f3a1b7aff4d9d25cefb2ebb401, type: 3}
+--- !u!1 &221748794 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6391344188451532704, guid: 71949ff8d9ef63841b9f0dcf52e5e922,
+    type: 3}
+  m_PrefabInstance: {fileID: 686198892}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &221748806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 221748794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15baf1797682af2438540217305370eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 1
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!224 &227937232 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1234051975699048200, guid: aaca17806437a134c83921e5f45d62c3,
@@ -352,7 +380,9 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4695905810695438312, guid: 71949ff8d9ef63841b9f0dcf52e5e922, type: 3}
+    - {fileID: 9100796606863069538, guid: 71949ff8d9ef63841b9f0dcf52e5e922, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 71949ff8d9ef63841b9f0dcf52e5e922, type: 3}
 --- !u!1 &900913631
 GameObject:

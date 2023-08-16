@@ -162,6 +162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3e1cb16ce8505646a3514bf1ef4f195, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myMixer: {fileID: 0}
 --- !u!1 &295409689431054879
 GameObject:
   m_ObjectHideFlags: 0
@@ -2242,7 +2243,19 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3775330187618327550}
+        m_TargetAssemblyTypeName: ahndabi.LobbyGameSettingUI, Assembly-CSharp
+        m_MethodName: EffectSoundControl
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4926730518146967884
 GameObject:
   m_ObjectHideFlags: 0
@@ -2565,7 +2578,19 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3775330187618327550}
+        m_TargetAssemblyTypeName: ahndabi.LobbyGameSettingUI, Assembly-CSharp
+        m_MethodName: BackGroundSoundControl
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5944532880356288176
 GameObject:
   m_ObjectHideFlags: 0
@@ -2905,13 +2930,13 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 3775330187618327550}
+        m_TargetAssemblyTypeName: ahndabi.LobbyGameSettingUI, Assembly-CSharp
+        m_MethodName: MouseSensitivityControl
+        m_Mode: 4
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
