@@ -21,6 +21,7 @@ public class RE_GunName : RE_Gun
     [SerializeField] float fireCoolTime;        // 연발 나가는 쿨타임
     [SerializeField] AudioClip clip;
     [SerializeField] LayerMask layerMask;
+    [SerializeField] JBB.StatusUI statusUI;
 
     public float FireCoolTime { get { return fireCoolTime; } }
     public int GetCurBullet { get { return curAvailavleBullet; } }
@@ -113,7 +114,7 @@ public class RE_GunName : RE_Gun
         --curAvailavleBullet;
         if (curAvailavleBullet < 0) curAvailavleBullet = 0;
 
-        JBB.StatusUI.OnBulletCountChanged?.Invoke(curAvailavleBullet, remainBullet);
+        statusUI.OnBulletCountChanged?.Invoke(curAvailavleBullet, remainBullet);
 
         Vector3 camFwd = cam.transform.forward;
 
@@ -228,7 +229,7 @@ public class RE_GunName : RE_Gun
                 remainBullet = remainBullet - (availableBullet - curAvailavleBullet);
                 curAvailavleBullet = availableBullet;
             }
-            JBB.StatusUI.OnBulletCountChanged?.Invoke(curAvailavleBullet, remainBullet);
+            statusUI.OnBulletCountChanged?.Invoke(curAvailavleBullet, remainBullet);
             reloadRoutine = StartCoroutine(ReloadRoutine());
         }
     }
