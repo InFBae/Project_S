@@ -28,9 +28,11 @@ public class PlayerMover : MonoBehaviour
     private bool isWalk = false;
     private bool isSit = false;
     private bool isMove = false;
+    private bool isJump = false;
     
 
     PhotonView PV;
+    Coroutine jumpRoutine;
 
     private void Awake()
     {
@@ -66,6 +68,11 @@ public class PlayerMover : MonoBehaviour
         {
             return;
         }
+        if (jumpRoutine != null)
+        {
+            isJump = false;
+            StopCoroutine(jumpRoutine);
+        }
         Move();
     }
 
@@ -73,13 +80,15 @@ public class PlayerMover : MonoBehaviour
     {
         while (true)
         {
-            if (isMove)
+            if (isMove && !isJump)
             {
                 PV.RPC("MoveSound", RpcTarget.AllViaServer);
                 yield return new WaitForSeconds(0.3f);
             }
             else
+            {
                 yield return null;
+            }
         }
     }
 
@@ -147,18 +156,19 @@ public class PlayerMover : MonoBehaviour
             return;
         }
         rb.AddForce(Vector3.up * jumpSpeed, ForceMode.Impulse);
-        StartCoroutine(JumpRoutine());
+        jumpRoutine = StartCoroutine(JumpRoutine());
     }
     IEnumerator JumpRoutine()
     {
         while (true)
         {
             zSpeed += Physics.gravity.y * Time.deltaTime;
+
+            Debug.Log("zSpeed : " + zSpeed);
             if(IsGrounded() && zSpeed < 0)
             {
                 zSpeed = -1;
-                anim.SetTrigger("JumpEnd");
-                StopAllCoroutines();
+                anim.SetTrigger("JumpEnd");               
             }
             transform.Translate(Vector3.up * jumpSpeed * Time.deltaTime);
             //rb.velocity = new Vector3(moveVec.x, zSpeed, moveVec.z);
@@ -234,6 +244,7 @@ public class PlayerMover : MonoBehaviour
     {
         if (IsGrounded())
         {
+            isJump = true;
             anim.SetTrigger("Jump");
             Jump();
         }
