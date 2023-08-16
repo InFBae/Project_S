@@ -33,6 +33,15 @@ public class RE_Player : MonoBehaviourPunCallbacks
         player = PhotonNetwork.LocalPlayer;
     }
 
+    public override void OnEnable()
+    {
+        base.OnEnable();
+
+        anim = GetComponentInChildren<Animator>();
+        gun = GetComponentInChildren<RE_GunName>();
+        player = PhotonNetwork.LocalPlayer;
+    }
+
     private void Start()
     {
         anim.Play("rifle aiming idle");
