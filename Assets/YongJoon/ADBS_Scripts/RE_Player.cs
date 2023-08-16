@@ -7,7 +7,7 @@ using Photon.Pun;
 public class RE_Player : MonoBehaviourPunCallbacks
 {
     // 플레이어가 가지고 있는 것들
-
+    [SerializeField] JBB.StatusUI statusUI;
     protected Animator anim;
     [SerializeField] protected GameObject diePlayer;
     [SerializeField] protected RE_GunName gun;
@@ -17,7 +17,7 @@ public class RE_Player : MonoBehaviourPunCallbacks
                 hp = 0; 
             else 
                 hp = value; 
-            JBB.StatusUI.OnHPChanged?.Invoke(hp);
+            statusUI.OnHPChanged?.Invoke(hp);
         } }
     [SerializeField] int rank;
     [SerializeField] public int Rank { get { return rank; } set { rank = value; } }
@@ -33,16 +33,11 @@ public class RE_Player : MonoBehaviourPunCallbacks
         player = PhotonNetwork.LocalPlayer;
     }
 
-    public override void OnEnable()
-    {
-        base.OnEnable();
-        JBB.StatusUI.OnHPChanged?.Invoke(Hp);
-    }
-
     private void Start()
     {
         anim.Play("rifle aiming idle");
         nickName = PhotonNetwork.LocalPlayer.NickName;      // 자신의 닉네임을 저장한다.
+        statusUI.OnHPChanged?.Invoke(Hp);
     }
 
     protected void DecreaseHp(int damage)

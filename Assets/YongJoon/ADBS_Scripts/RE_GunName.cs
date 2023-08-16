@@ -20,7 +20,8 @@ public class RE_GunName : RE_Gun
     [SerializeField] float bulletSpeed;
     [SerializeField] float fireCoolTime;        // 연발 나가는 쿨타임
     [SerializeField] AudioClip clip;
-    //[SerializeField] LayerMask layerMask;
+    [SerializeField] LayerMask layerMask;
+    [SerializeField] JBB.StatusUI statusUI;
 
     public float FireCoolTime { get { return fireCoolTime; } }
     public int GetCurBullet { get { return curAvailavleBullet; } }
@@ -113,7 +114,7 @@ public class RE_GunName : RE_Gun
         --curAvailavleBullet;
         if (curAvailavleBullet < 0) curAvailavleBullet = 0;
 
-        JBB.StatusUI.OnBulletCountChanged?.Invoke(curAvailavleBullet, remainBullet);
+        statusUI.OnBulletCountChanged?.Invoke(curAvailavleBullet, remainBullet);
 
         Vector3 camFwd = cam.transform.forward;
 
@@ -207,21 +208,8 @@ public class RE_GunName : RE_Gun
     [PunRPC]
     public override void Reload()    // 재장전
     {
-        if (remainBullet == 0)
+        if (remainBullet <= 0)
             return;
-
-        if ((remainBullet + curAvailavleBullet) <= availableBullet)
-        {
-            remainBullet = 0;
-            curAvailavleBullet = remainBullet + curAvailavleBullet;
-        }
-        else
-        {
-            remainBullet = remainBullet - (availableBullet - curAvailavleBullet);
-            curAvailavleBullet = availableBullet;
-        }
-
-        JBB.StatusUI.OnBulletCountChanged?.Invoke(curAvailavleBullet, remainBullet);
 
         if (isReload)
         {
@@ -229,7 +217,19 @@ public class RE_GunName : RE_Gun
         }
         else
         {
-            isReload = true;
+            isReload = true;           
+
+            if ((remainBullet + curAvailavleBullet) <= availableBullet)
+            {             
+                curAvailavleBullet = remainBullet + curAvailavleBullet;
+                remainBullet = 0;
+            }
+            else
+            {
+                remainBullet = remainBullet - (availableBullet - curAvailavleBullet);
+                curAvailavleBullet = availableBullet;
+            }
+            statusUI.OnBulletCountChanged?.Invoke(curAvailavleBullet, remainBullet);
             reloadRoutine = StartCoroutine(ReloadRoutine());
         }
     }
@@ -247,8 +247,6 @@ public class RE_GunName : RE_Gun
             }
             else
             {
-                remainBullet = remainBullet - (availableBullet - curAvailavleBullet);
-                curAvailavleBullet = availableBullet;
                 tempIsReload = false;
                 yield return new WaitForSeconds(3.08f);
             }
