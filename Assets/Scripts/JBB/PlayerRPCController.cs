@@ -96,7 +96,7 @@ public class PlayerRPCController : MonoBehaviourPun
     {
         if (damagedPlayer.IsLocal)
         {
-            if (playerTakeDamage.Hp < 0)
+            if (playerTakeDamage.Hp <= 0)
                 return;
 
             Debug.Log($"{damagedPlayer.GetNickname()} TakeDamage by {enemyPlayer.GetNickname()}");
@@ -112,6 +112,7 @@ public class PlayerRPCController : MonoBehaviourPun
 
                 JBB.GameSceneManager.OnKilled?.Invoke(enemyPlayer, damagedPlayer, headShot);      // 죽인사람, 죽은사람, 헤드샷 판정
 
+                PhotonNetwork.Destroy(transform.parent.parent.gameObject);
                 GameObject diePlayer = PhotonNetwork.Instantiate("DiePlayer", transform.position, transform.rotation);
                 StartCoroutine(DestroyRoutine(diePlayer, 5f));
                 
