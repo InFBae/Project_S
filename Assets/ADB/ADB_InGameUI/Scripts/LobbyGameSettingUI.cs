@@ -43,13 +43,13 @@ namespace ahndabi
         public void BackGroundSoundControl()       // BGM
         {
             float volume = sliders["BackgroundSoundSlider"].value;
-            myMixer.SetFloat("BGM", volume);
+            myMixer.SetFloat("BGM", Mathf.Log10(volume) * 20);
         }
 
         public void EffectSoundControl()           // SFX
         {
             float volume = sliders["EffectSoundSlider"].value;
-            myMixer.SetFloat("SFX", volume);
+            myMixer.SetFloat("SFX", Mathf.Log10(volume) * 20);
         }
 
         public void Return()     // 취소버튼
