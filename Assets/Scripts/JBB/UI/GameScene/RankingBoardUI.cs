@@ -10,7 +10,7 @@ namespace JBB
 {
     public class RankingBoardUI : BaseUI
     {
-        Player[] rankers = new Player[5];
+        public Player[] rankers = new Player[8];
         protected override void Awake()
         {
             base.Awake();
@@ -31,7 +31,7 @@ namespace JBB
         }
         public void UpdateRankingBoard()
         {
-            for(int i = 0; i < rankers.Length; i++)
+            for(int i = 0; i < 5; i++)
             {
                 if (rankers[i] != null)
                 {

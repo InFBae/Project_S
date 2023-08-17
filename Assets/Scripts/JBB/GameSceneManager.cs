@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using PhotonHashtable = ExitGames.Client.Photon.Hashtable;
+using UnityEngine.InputSystem;
 
 namespace JBB
 {
@@ -52,7 +53,7 @@ namespace JBB
                 inGameUI.InitUI();
                 Transform spawnPoint = GetSpawnPoint();
                 PhotonNetwork.Instantiate("AllInOnePlayerTest", spawnPoint.position, Quaternion.identity);
-                // °ÔÀÓ ÁØºñ»çÇ× ´Ù ¸¶Ä¡°í SetLoad ¼³Á¤
+                // ê²Œì„ ì¤€ë¹„ì‚¬í•­ ë‹¤ ë§ˆì¹˜ê³  SetLoad ì„¤ì •
                 PhotonNetwork.LocalPlayer.SetLoad(true);
             }
             else
@@ -61,6 +62,19 @@ namespace JBB
                 PhotonNetwork.LocalPlayer.NickName = $"Debug {UnityEngine.Random.Range(100, 200)}";
                 PhotonNetwork.ConnectUsingSettings();
             }
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                isTab = true;
+            }
+            if (Input.GetKeyUp(KeyCode.Tab))
+            {
+                isTab = false;
+            }
+            tabUI.gameObject.SetActive(isTab);
         }
 
         public override void OnConnectedToMaster()
@@ -83,6 +97,12 @@ namespace JBB
         {
             PhotonNetwork.CurrentRoom.SetLoadTime(PhotonNetwork.Time);
         }
+
+        public override void OnCreatedRoom()
+        {
+            PhotonNetwork.CurrentRoom.SetLoadTime(PhotonNetwork.Time);
+        }
+
         public override void OnJoinedRoom()
         {
             Debug.Log("Joined DebugRoom");
@@ -93,7 +113,7 @@ namespace JBB
 
             inGameUI.InitUI();
 
-            // TODO : Player ÇÑ¸í¸¸ ¼ÒÈ¯À¸·Î ¼öÁ¤
+            // TODO : Player í•œëª…ë§Œ ì†Œí™˜ìœ¼ë¡œ ìˆ˜ì •
             //for (int i = 0; i < 7; i++)
             //{
                 Transform spawnPoint = GetSpawnPoint();
@@ -142,14 +162,24 @@ namespace JBB
                 }
                 inGameUI.UpdateRankingBoard();
                 inGameUI.UpdateTargetKillSliderValue();
+                inGameUI.UpdateKillDeathUI();
+
+                if (inGameUI.GetFirstPlayerKill() >= PhotonNetwork.CurrentRoom.GetMaxKill())
+                {
+                    StartCoroutine(EndRoutine());
+                }
             }
         }
         public override void OnRoomPropertiesUpdate(PhotonHashtable propertiesThatChanged)
         {
             if (propertiesThatChanged.ContainsKey("LoadTime"))
             {
-                // ÇÃ·¹ÀÌ¾î°¡ ¸ğµÎ ·ÎµåµÇ¸é °ÔÀÓ ½ÃÀÛ
+                // í”Œë ˆì´ì–´ê°€ ëª¨ë‘ ë¡œë“œë˜ë©´ ê²Œì„ ì‹œì‘
                 GameStart();
+            }
+            if (propertiesThatChanged.ContainsKey("IsEnd"))
+            {
+                StartCoroutine(EndRoutine());
             }
         }
 
@@ -173,13 +203,20 @@ namespace JBB
                 TimeUI.OnLeftTimeChanged?.Invoke(remainTime);
                 yield return new WaitForSeconds(1f);
             }
-            StartCoroutine(EndRoutine());
+            if (PhotonNetwork.CurrentRoom.GetLoadTime() != -1)
+                PhotonNetwork.CurrentRoom.SetIsEnd(true);
         }
 
         IEnumerator EndRoutine()
         {
             while (true)
             {
+                PlayerInput[] inputs = GetComponents<PlayerInput>();
+                foreach (PlayerInput input in inputs)
+                {
+                    input.enabled = false;
+                }
+                
                 Time.timeScale = 0f;
                 clearTextUI.gameObject.SetActive(true);
                 yield return new WaitForSecondsRealtime(2f);

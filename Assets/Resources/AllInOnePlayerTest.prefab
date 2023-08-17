@@ -6607,6 +6607,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerTakeDamage: {fileID: 5532482846916584153}
   gun: {fileID: 3498845919217791251}
+  killLogContent: {fileID: 0}
 --- !u!1 &6215652803261079805
 GameObject:
   m_ObjectHideFlags: 0
@@ -6657,7 +6658,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6215652803261079805}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1

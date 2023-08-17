@@ -282,6 +282,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5862430411303941344}
   - component: {fileID: 5862430411303941347}
+  - component: {fileID: 3305754582240054591}
   m_Layer: 5
   m_Name: KillLogText
   m_TagString: Untagged
@@ -320,6 +321,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5862430411303941345}
   m_CullTransparentMesh: 1
+--- !u!114 &3305754582240054591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5862430411303941345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff1bcaede355a844994134bda574f4c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5862430412489256019
 GameObject:
   m_ObjectHideFlags: 0

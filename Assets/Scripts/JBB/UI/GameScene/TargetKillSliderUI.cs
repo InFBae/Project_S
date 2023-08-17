@@ -42,7 +42,7 @@ namespace JBB
             Player second = rankingBoardUI.GetSecondPlayer();
             if (second != null)
             {
-                secondSlider.value = first.GetKillCount();
+                secondSlider.value = second.GetKillCount();
                 texts["SecondPlayerKill"].text = $"{second.GetKillCount()} Kill";
                 texts["SecondPlayerName"].text = second.GetNickname();
             }
