@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 using PhotonHashtable = ExitGames.Client.Photon.Hashtable;
 using UnityEngine.InputSystem;
 
@@ -32,6 +33,19 @@ namespace JBB
             resultUI.gameObject.SetActive(false);
         }
 
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                isTab = true;
+            }
+            if (Input.GetKeyUp(KeyCode.Tab))
+            {
+                isTab = false;
+            }
+            tabUI.gameObject.SetActive(isTab);
+        }
+
         private void Start()
         {          
             if (PhotonNetwork.InRoom)
@@ -39,7 +53,7 @@ namespace JBB
                 inGameUI.InitUI();
                 Transform spawnPoint = GetSpawnPoint();
                 PhotonNetwork.Instantiate("AllInOnePlayerTest", spawnPoint.position, Quaternion.identity);
-                // °ÔÀÓ ÁØºñ»çÇ× ´Ù ¸¶Ä¡°í SetLoad ¼³Á¤
+                // ê²Œìž„ ì¤€ë¹„ì‚¬í•­ ë‹¤ ë§ˆì¹˜ê³  SetLoad ì„¤ì •
                 PhotonNetwork.LocalPlayer.SetLoad(true);
             }
             else
@@ -76,7 +90,12 @@ namespace JBB
             };
 
             roomOptions.CustomRoomProperties = RoomCustomProps;
-            PhotonNetwork.JoinOrCreateRoom("Debug", roomOptions, TypedLobby.Default);
+            PhotonNetwork.JoinOrCreateRoom("Debug1000", roomOptions, TypedLobby.Default);
+        }
+
+        public override void OnCreatedRoom()
+        {
+            PhotonNetwork.CurrentRoom.SetLoadTime(PhotonNetwork.Time);
         }
 
         public override void OnCreatedRoom()
@@ -94,14 +113,14 @@ namespace JBB
 
             inGameUI.InitUI();
 
-            // TODO : Player ÇÑ¸í¸¸ ¼ÒÈ¯À¸·Î ¼öÁ¤
+            // TODO : Player í•œëª…ë§Œ ì†Œí™˜ìœ¼ë¡œ ìˆ˜ì •
             //for (int i = 0; i < 7; i++)
             //{
                 Transform spawnPoint = GetSpawnPoint();
                 PhotonNetwork.Instantiate("AllInOnePlayerTest", spawnPoint.position, Quaternion.identity);
             //}
             
-            GameStart();
+            //GameStart();
         }
 
 
@@ -155,7 +174,7 @@ namespace JBB
         {
             if (propertiesThatChanged.ContainsKey("LoadTime"))
             {
-                // ÇÃ·¹ÀÌ¾î°¡ ¸ðµÎ ·ÎµåµÇ¸é °ÔÀÓ ½ÃÀÛ
+                // í”Œë ˆì´ì–´ê°€ ëª¨ë‘ ë¡œë“œë˜ë©´ ê²Œìž„ ì‹œìž‘
                 GameStart();
             }
             if (propertiesThatChanged.ContainsKey("IsEnd"))
@@ -177,7 +196,7 @@ namespace JBB
 
         IEnumerator TimerRoutine()
         {
-            double gameEndTime = (PhotonNetwork.CurrentRoom.GetLoadTime() + PhotonNetwork.CurrentRoom.GetGameTime() * 60);
+            double gameEndTime = (PhotonNetwork.CurrentRoom.GetLoadTime() + PhotonNetwork.CurrentRoom.GetGameTime() *1);
             while (PhotonNetwork.Time < gameEndTime)
             {
                 int remainTime = (int)(gameEndTime - PhotonNetwork.Time);
@@ -197,7 +216,7 @@ namespace JBB
                 {
                     input.enabled = false;
                 }
-
+                
                 Time.timeScale = 0f;
                 clearTextUI.gameObject.SetActive(true);
                 yield return new WaitForSecondsRealtime(2f);
