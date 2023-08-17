@@ -35,24 +35,20 @@ MonoBehaviour:
   StartInOfflineMode: 0
   RpcList:
   - ClickRpc
+  - CreateMessage
   - DestroyRpc
   - DestroySpaceship
   - Fire
-  - RespawnSpaceship
-  - CreateMessage
-  - RequestCreateBullet
-  - ResultCreateBullet
-  - TestRPC
-  - LookAtTestRPC
-  - LookAtRPC
-  - LookRotateRPC
   - FireSound
-  - MoveSound
-  - FireTrailRPC
-  - MakeTrail
-  - Reload
-  - TakeDamage
+  - LookRotateRPC
   - MakeEffect
+  - MakeTrail
+  - MoveSound
+  - Reload
+  - RequestCreateBullet
+  - RespawnSpaceship
+  - ResultCreateBullet
+  - TakeDamage
   DisableAutoOpenWizard: 1
   ShowSettings: 1
-  DevRegionSetOnce: 1
+  DevRegionSetOnce: 0
