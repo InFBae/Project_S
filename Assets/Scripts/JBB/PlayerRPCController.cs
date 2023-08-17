@@ -96,7 +96,11 @@ public class PlayerRPCController : MonoBehaviourPun
     {
         if (damagedPlayer.IsLocal)
         {
+            if (playerTakeDamage.Hp < 0)
+                return;
+
             Debug.Log($"{damagedPlayer.GetNickname()} TakeDamage by {enemyPlayer.GetNickname()}");
+
             playerTakeDamage.DecreaseHp(damage);
             playerTakeDamage.anim.SetTrigger("TakeDamage");
 
@@ -108,10 +112,17 @@ public class PlayerRPCController : MonoBehaviourPun
 
                 JBB.GameSceneManager.OnKilled?.Invoke(enemyPlayer, damagedPlayer, headShot);      // 죽인사람, 죽은사람, 헤드샷 판정
 
-                PhotonNetwork.Instantiate("DiePlayer", transform.position, transform.rotation);
+                GameObject diePlayer = PhotonNetwork.Instantiate("DiePlayer", transform.position, transform.rotation);
+                StartCoroutine(DestroyRoutine(diePlayer, 5f));
                 playerTakeDamage.gameObject.SetActive(false);
             }
         }
 
+    }
+
+    IEnumerator DestroyRoutine(GameObject gameObject, float time)
+    {
+        yield return new WaitForSeconds(time);
+        PhotonNetwork.Destroy(gameObject);
     }
 }

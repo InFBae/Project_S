@@ -14,7 +14,13 @@ public class ADB_RE_DiePlayer : MonoBehaviourPun
 
     private void OnEnable()
     {
-        Destroy(gameObject, 5f);
+
+    }
+
+    IEnumerator DestroyRoutine(float time)
+    {
+        yield return new WaitForSeconds(time);
+        PhotonNetwork.Destroy(gameObject);
     }
 
 }
