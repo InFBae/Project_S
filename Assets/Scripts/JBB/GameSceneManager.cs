@@ -178,7 +178,7 @@ namespace JBB
 
         IEnumerator TimerRoutine()
         {
-            double gameEndTime = (PhotonNetwork.CurrentRoom.GetLoadTime() + PhotonNetwork.CurrentRoom.GetGameTime() *1);
+            double gameEndTime = (PhotonNetwork.CurrentRoom.GetLoadTime() + PhotonNetwork.CurrentRoom.GetGameTime() * 60);
             while (PhotonNetwork.Time < gameEndTime)
             {
                 int remainTime = (int)(gameEndTime - PhotonNetwork.Time);
