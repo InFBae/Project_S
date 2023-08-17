@@ -7,6 +7,8 @@ using JBB;
 public class RE_PlayerTakeDamage : RE_Player
 {
     [SerializeField] public PhotonView PV;
+    [SerializeField] GameObject playerPrefab;
+    [SerializeField] Collider col;
     public void TakeDamageRequest(int damage, Photon.Realtime.Player enemyPlayer, Photon.Realtime.Player damagedPlayer, bool headShot = false)    // 헤드샷 받은 데미지
     {
         PV.RPC("TakeDamage", RpcTarget.All, damage, enemyPlayer, damagedPlayer, headShot);
@@ -42,7 +44,8 @@ public class RE_PlayerTakeDamage : RE_Player
         // 애니메이션 끝나면 플레이어 Destroy
         // diePlayer는 기존플레이어의 transform을 계속 따라다녀야 함
 
-        gameObject.SetActive(false);    // 기존 Player는 비활성화
+        playerPrefab.SetActive(false);    // 기존 Player는 비활성화
+        col.enabled = false;
     }
 
 }

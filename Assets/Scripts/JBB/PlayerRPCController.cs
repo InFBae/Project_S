@@ -114,7 +114,8 @@ public class PlayerRPCController : MonoBehaviourPun
 
                 GameObject diePlayer = PhotonNetwork.Instantiate("DiePlayer", transform.position, transform.rotation);
                 StartCoroutine(DestroyRoutine(diePlayer, 5f));
-                playerTakeDamage.gameObject.SetActive(false);
+                
+                playerTakeDamage.Die();
             }
         }
 
