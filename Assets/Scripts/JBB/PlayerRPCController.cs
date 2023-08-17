@@ -1,6 +1,7 @@
 ﻿using ahndabi;
 using JBB;
 using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,7 @@ public class PlayerRPCController : MonoBehaviourPun
     PhotonView PV;
     [SerializeField] RE_PlayerTakeDamage playerTakeDamage;
     [SerializeField] RE_GunName gun;
+    [SerializeField] GameObject killLogContent;
 
     private void Awake()
     {
@@ -124,5 +126,15 @@ public class PlayerRPCController : MonoBehaviourPun
     {
         yield return new WaitForSeconds(time);
         PhotonNetwork.Destroy(gameObject);
+    }
+
+    [PunRPC]
+    public void CreateKillLog(bool isHeadShot, Photon.Realtime.Player killed)
+    {
+        GameObject go = PhotonNetwork.Instantiate("KillLogText", Vector3.zero, Quaternion.identity);
+        KillLogText killLogText = go.GetComponent<KillLogText>();
+        killLogText.transform.parent = killLogContent.transform;
+        killLogText.SetKillLogText(isHeadShot, killed);
+        StartCoroutine(DestroyRoutine(go, 5f));
     }
 }

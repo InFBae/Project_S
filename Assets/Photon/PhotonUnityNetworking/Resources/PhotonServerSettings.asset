@@ -49,6 +49,7 @@ MonoBehaviour:
   - RespawnSpaceship
   - ResultCreateBullet
   - TakeDamage
+  - CreateKillLog
   DisableAutoOpenWizard: 1
   ShowSettings: 1
-  DevRegionSetOnce: 0
+  DevRegionSetOnce: 1

@@ -143,6 +143,11 @@ namespace JBB
                 }
                 inGameUI.UpdateRankingBoard();
                 inGameUI.UpdateTargetKillSliderValue();
+
+                if (inGameUI.GetFirstPlayerKill() >= PhotonNetwork.CurrentRoom.GetMaxKill())
+                {
+                    StartCoroutine(EndRoutine());
+                }
             }
         }
         public override void OnRoomPropertiesUpdate(PhotonHashtable propertiesThatChanged)
@@ -151,6 +156,10 @@ namespace JBB
             {
                 // 플레이어가 모두 로드되면 게임 시작
                 GameStart();
+            }
+            if (propertiesThatChanged.ContainsKey("IsEnd"))
+            {
+                StartCoroutine(EndRoutine());
             }
         }
 
@@ -174,13 +183,20 @@ namespace JBB
                 TimeUI.OnLeftTimeChanged?.Invoke(remainTime);
                 yield return new WaitForSeconds(1f);
             }
-            StartCoroutine(EndRoutine());
+            if (PhotonNetwork.CurrentRoom.GetLoadTime() != -1)
+                PhotonNetwork.CurrentRoom.SetIsEnd(true);
         }
 
         IEnumerator EndRoutine()
         {
             while (true)
             {
+                PlayerInput[] inputs = GetComponents<PlayerInput>();
+                foreach (PlayerInput input in inputs)
+                {
+                    input.enabled = false;
+                }
+
                 Time.timeScale = 0f;
                 clearTextUI.gameObject.SetActive(true);
                 yield return new WaitForSecondsRealtime(2f);
