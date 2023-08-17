@@ -123,7 +123,7 @@ namespace JBB
 
         public override void OnPlayerPropertiesUpdate(Player targetPlayer, PhotonHashtable changedProps)
         {
-            if (changedProps.ContainsKey("LOAD"))
+            if (changedProps.ContainsKey("Load"))
             {
                 if (PlayerLoadCount() == PhotonNetwork.PlayerList.Length)
                 {
@@ -150,6 +150,10 @@ namespace JBB
                 {
                     StartCoroutine(EndRoutine());
                 }
+            }
+            if (changedProps.ContainsKey("DeathCount"))
+            {
+                inGameUI.UpdateKillDeathUI();
             }
         }
         public override void OnRoomPropertiesUpdate(PhotonHashtable propertiesThatChanged)
@@ -198,7 +202,8 @@ namespace JBB
                 {
                     input.enabled = false;
                 }
-                
+                UnityEngine.Cursor.lockState = CursorLockMode.None;
+
                 Time.timeScale = 0f;
                 clearTextUI.gameObject.SetActive(true);
                 yield return new WaitForSecondsRealtime(2f);

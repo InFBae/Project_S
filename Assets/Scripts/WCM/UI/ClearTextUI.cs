@@ -19,7 +19,7 @@ public class ClearTextUI : BaseUI
         {
             if (rankingBoardUI.rankers[i].IsLocal)
             {
-                texts["Rank"].text = i.ToString();
+                texts["Rank"].text = (i+1).ToString();
             }
         }
         
