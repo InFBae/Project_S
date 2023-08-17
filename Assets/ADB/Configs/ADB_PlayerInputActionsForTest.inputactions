@@ -16,7 +16,7 @@
                 },
                 {
                     "name": "Fire",
-                    "type": "Button",
+                    "type": "PassThrough",
                     "id": "f1e0d31e-db13-46c5-b3c2-f83b6a6513e3",
                     "expectedControlType": "Button",
                     "processors": "",
@@ -54,6 +54,33 @@
                     "name": "Walk",
                     "type": "PassThrough",
                     "id": "ce9082bd-eb6f-4692-bf83-de36c5722d14",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Sit",
+                    "type": "PassThrough",
+                    "id": "ce83ae8e-e7e4-4463-afab-667f90a57bb8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Zoom",
+                    "type": "PassThrough",
+                    "id": "baedb9eb-1605-423d-96b7-301228960bd8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "PopUpUI",
+                    "type": "Button",
+                    "id": "e820c66d-3b6e-42fb-a8bc-ac7cbad136f3",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -168,6 +195,50 @@
                     "processors": "",
                     "groups": "",
                     "action": "Walk",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bde8a50a-127f-44e1-b1de-191d227c1a1e",
+                    "path": "<Keyboard>/ctrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Sit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2c16e63d-8f9d-4738-9aa6-c8dcba6b8109",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Zoom",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ec563ec1-3d6a-4928-8c59-1b8438956787",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PopUpUI",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e452c7fe-2880-4491-804d-33117fbf556b",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PopUpUI",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
