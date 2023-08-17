@@ -64,19 +64,6 @@ namespace JBB
             }
         }
 
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.Tab))
-            {
-                isTab = true;
-            }
-            if (Input.GetKeyUp(KeyCode.Tab))
-            {
-                isTab = false;
-            }
-            tabUI.gameObject.SetActive(isTab);
-        }
-
         public override void OnConnectedToMaster()
         {
             RoomOptions roomOptions = new RoomOptions() { IsVisible = false, IsOpen = true, MaxPlayers = 8 };
@@ -91,11 +78,6 @@ namespace JBB
 
             roomOptions.CustomRoomProperties = RoomCustomProps;
             PhotonNetwork.JoinOrCreateRoom("Debug1000", roomOptions, TypedLobby.Default);
-        }
-
-        public override void OnCreatedRoom()
-        {
-            PhotonNetwork.CurrentRoom.SetLoadTime(PhotonNetwork.Time);
         }
 
         public override void OnCreatedRoom()

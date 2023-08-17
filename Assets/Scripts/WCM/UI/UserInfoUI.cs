@@ -10,7 +10,7 @@ using Player = Photon.Realtime.Player;
 
 public class UserInfoUI : BaseUI
 {
-    Player[] RankList = new Player[PhotonNetwork.CurrentRoom.PlayerCount];
+    Player[] RankList;//= new Player[PhotonNetwork.CurrentRoom.PlayerCount];
     protected override void Awake()
     {
         base.Awake();   
