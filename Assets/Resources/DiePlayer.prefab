@@ -1385,9 +1385,7 @@ MonoBehaviour:
   ShowLayerWeightsInspector: 1
   ShowParameterInspector: 1
   m_SynchronizeParameters: []
-  m_SynchronizeLayers:
-  - SynchronizeType: 2
-    LayerIndex: 0
+  m_SynchronizeLayers: []
 --- !u!1 &2205937625602592134
 GameObject:
   m_ObjectHideFlags: 0
@@ -2225,6 +2223,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 2017926611}
+  audioListener: {fileID: 2017926610}
 --- !u!114 &6380886327121274620
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2242,9 +2241,9 @@ MonoBehaviour:
   prefixField: -1
   Synchronization: 3
   OwnershipTransfer: 0
-  observableSearch: 2
+  observableSearch: 0
   ObservedComponents:
-  - {fileID: 1827432619924573193}
+  - {fileID: 0}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0

@@ -9,6 +9,7 @@ public class ADB_RE_DiePlayer : MonoBehaviourPun
     Transform[] spawnPoints;
 
     [SerializeField] Camera cam;
+    [SerializeField] AudioListener audioListener;
     PhotonView PV;
 
 
@@ -29,6 +30,7 @@ public class ADB_RE_DiePlayer : MonoBehaviourPun
         else
         {
             cam.enabled = false;
+            audioListener.enabled = false;
         }
     }
 

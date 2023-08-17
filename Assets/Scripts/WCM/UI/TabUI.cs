@@ -20,6 +20,7 @@ public class TabUI : BaseUI
         {
             texts["RoomText"].text = $"{PhotonNetwork.CurrentRoom.Name}";
         }
+        rankingBoardUI.UpdateRankerList();
 
         for (int i = 0; i < 8; i++)
         {

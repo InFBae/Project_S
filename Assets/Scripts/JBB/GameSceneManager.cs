@@ -143,6 +143,7 @@ namespace JBB
                 }
                 inGameUI.UpdateRankingBoard();
                 inGameUI.UpdateTargetKillSliderValue();
+                inGameUI.UpdateKillDeathUI();
 
                 if (inGameUI.GetFirstPlayerKill() >= PhotonNetwork.CurrentRoom.GetMaxKill())
                 {
