@@ -86465,6 +86465,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1963468965, guid: 10055c0b95c998a428df1a385818b3ae, type: 3}
+      propertyPath: m_Name
+      value: Crosshair
+      objectReference: {fileID: 0}
     - target: {fileID: 4173460884171137308, guid: 10055c0b95c998a428df1a385818b3ae,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -86473,26 +86477,16 @@ PrefabInstance:
     - target: {fileID: 4173460884171137308, guid: 10055c0b95c998a428df1a385818b3ae,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4243693413829195261, guid: 10055c0b95c998a428df1a385818b3ae,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4243693413829195261, guid: 10055c0b95c998a428df1a385818b3ae,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4243693413829195261, guid: 10055c0b95c998a428df1a385818b3ae,
-        type: 3}
-      propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4243693414037496503, guid: 10055c0b95c998a428df1a385818b3ae,
         type: 3}
       propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4243693414037496503, guid: 10055c0b95c998a428df1a385818b3ae,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4243693415394502417, guid: 10055c0b95c998a428df1a385818b3ae,
@@ -86628,11 +86622,6 @@ PrefabInstance:
     - target: {fileID: 5721519845390704249, guid: 10055c0b95c998a428df1a385818b3ae,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5721519845509101205, guid: 10055c0b95c998a428df1a385818b3ae,
-        type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
