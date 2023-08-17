@@ -1,26 +1,51 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ADB_RE_DiePlayer : MonoBehaviour
+public class ADB_RE_DiePlayer : MonoBehaviourPun
 {
-    // Player의 transform와 계속 똑같아야 함
+    GameObject spawnPointsPrefab;
+    Transform[] spawnPoints;
 
-    [SerializeField] Transform Player;
+    [SerializeField] Camera cam;
+    PhotonView PV;
+
 
     private void Awake()
     {
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
+        PV = GetComponent<PhotonView>();
+        spawnPointsPrefab = GameObject.FindWithTag("Respawn");
+        spawnPoints = spawnPointsPrefab.GetComponentsInChildren<Transform>();
     }
 
     private void OnEnable()
     {
-        Destroy(gameObject.transform.parent.gameObject, 5f);
+        if (PV.IsMine)
+        {
+            StartCoroutine(RespawnRoutine(5f));
+        }
+        else
+        {
+            cam.enabled = false;
+        }
     }
 
-    private void LateUpdate()
+    IEnumerator RespawnRoutine(float time)
     {
-        gameObject.transform.position = Player.transform.position;
-        gameObject.transform.rotation = Player.transform.rotation;
+        yield return new WaitForSeconds(time);
+        Transform spawnPoint = GetSpawnPoint();
+        PhotonNetwork.Instantiate("AllInOnePlayerTest", spawnPoint.position, Quaternion.identity);
+        PhotonNetwork.Destroy(gameObject);
+    }
+    public Transform GetSpawnPoint()
+    {
+        Transform spawnPoint = spawnPoints[UnityEngine.Random.Range(0, 8)];
+        while (Physics.Raycast(spawnPoint.position, Vector3.up, 2))
+        {
+            spawnPoint = spawnPoints[UnityEngine.Random.Range(0, 8)];
+        }
+        return spawnPoint;
     }
 }
