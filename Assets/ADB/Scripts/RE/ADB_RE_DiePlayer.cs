@@ -5,8 +5,7 @@ using UnityEngine;
 
 public class ADB_RE_DiePlayer : MonoBehaviourPun
 {
-    [SerializeField] GameObject spawnPointsPrefab;
-
+    GameObject spawnPointsPrefab;
     Transform[] spawnPoints;
 
     PhotonView PV;
@@ -16,6 +15,7 @@ public class ADB_RE_DiePlayer : MonoBehaviourPun
     {
         //gameObject.SetActive(false);
         PV = GetComponent<PhotonView>();
+        spawnPointsPrefab = GameObject.FindWithTag("Respawn");
         spawnPoints = spawnPointsPrefab.GetComponentsInChildren<Transform>();
     }
 
