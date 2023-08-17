@@ -162,7 +162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3e1cb16ce8505646a3514bf1ef4f195, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myMixer: {fileID: 0}
+  myMixer: {fileID: 24100000, guid: e693a78a7a89d584a869e2e428621023, type: 2}
 --- !u!1 &295409689431054879
 GameObject:
   m_ObjectHideFlags: 0
@@ -2237,17 +2237,17 @@ MonoBehaviour:
   m_FillRect: {fileID: 5199156622338567586}
   m_HandleRect: {fileID: 6580834293843869248}
   m_Direction: 0
-  m_MinValue: 0
+  m_MinValue: 0.0001
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 0.8
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 3775330187618327550}
         m_TargetAssemblyTypeName: ahndabi.LobbyGameSettingUI, Assembly-CSharp
         m_MethodName: EffectSoundControl
-        m_Mode: 4
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2572,17 +2572,17 @@ MonoBehaviour:
   m_FillRect: {fileID: 2473833659552932006}
   m_HandleRect: {fileID: 2909916917942116093}
   m_Direction: 0
-  m_MinValue: 0
+  m_MinValue: 0.001
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 0.8
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 3775330187618327550}
         m_TargetAssemblyTypeName: ahndabi.LobbyGameSettingUI, Assembly-CSharp
         m_MethodName: BackGroundSoundControl
-        m_Mode: 4
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2924,16 +2924,16 @@ MonoBehaviour:
   m_HandleRect: {fileID: 8473738615863043964}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 1
+  m_MaxValue: 100
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 10
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 3775330187618327550}
         m_TargetAssemblyTypeName: ahndabi.LobbyGameSettingUI, Assembly-CSharp
         m_MethodName: MouseSensitivityControl
-        m_Mode: 4
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

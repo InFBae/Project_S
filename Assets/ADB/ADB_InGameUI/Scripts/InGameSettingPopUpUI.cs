@@ -30,7 +30,7 @@ namespace ahndabi
             buttons["CancleButton"].onClick.AddListener(() => { Cancle(); });
             myMixer = GameManager.Resource.Load<AudioMixer>("MyMixer");
 
-            OnMouseSensiticityControl?.Invoke(sliders["MouseSensitivitySlider"].value);
+            //OnMouseSensiticityControl?.Invoke(sliders["MouseSensitivitySlider"].value);
         }
 
         void OnEnable()
@@ -41,6 +41,12 @@ namespace ahndabi
             initalEffectSoundValue = sliders["EffectSoundSlider"].value;
         }
 
+        /*
+        public void BackGroundSoundTest(float volume)
+        {
+            myMixer.SetFloat("BGM", Mathf.Log10(volume) * 20);
+        }*/
+
         public void BacckGroundSoundControl()
         {
             foreach (Photon.Realtime.Player player in PhotonNetwork.PlayerList)
@@ -48,7 +54,7 @@ namespace ahndabi
                 if (player.IsLocal)
                 {
                     float volume = sliders["BackgroundSoundSlider"].value;
-                    myMixer.SetFloat("BGM", volume);
+                    myMixer.SetFloat("BGM", Mathf.Log10(volume) * 20);
                 }
             }
         }
@@ -60,7 +66,9 @@ namespace ahndabi
                 if (player.IsLocal)
                 {
                     float volume = sliders["EffectSoundSlider"].value;
+                    //myMixer.SetFloat("SFX", Mathf.Log10(volume) * 20);
                     myMixer.SetFloat("SFX", volume);
+
                 }
             }
         }
