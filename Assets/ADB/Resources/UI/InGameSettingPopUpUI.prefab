@@ -2127,7 +2127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f60abc028c78b141801453d1c646208, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myMixer: {fileID: 0}
+  myMixer: {fileID: 24100000, guid: e693a78a7a89d584a869e2e428621023, type: 2}
 --- !u!1 &7338643287916209165
 GameObject:
   m_ObjectHideFlags: 0
@@ -2220,9 +2220,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 4614126570681865135}
-        m_TargetAssemblyTypeName: ahndabi.SettingPopUpUI, Assembly-CSharp
+        m_TargetAssemblyTypeName: ahndabi.InGameSettingPopUpUI, Assembly-CSharp
         m_MethodName: MouseSensitivityControl
-        m_Mode: 4
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
