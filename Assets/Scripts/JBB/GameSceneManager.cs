@@ -7,6 +7,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using PhotonHashtable = ExitGames.Client.Photon.Hashtable;
+using UnityEngine.InputSystem;
 
 namespace JBB
 {
@@ -14,6 +15,11 @@ namespace JBB
     {
         [SerializeField] JBB.InGameUI inGameUI;
         [SerializeField] GameObject spawnPointsPrefab;
+        [SerializeField] RectTransform clearTextUI;
+        [SerializeField] RectTransform resultUI;
+        [SerializeField] RectTransform tabUI;
+
+        bool isTab = false;
 
         Transform[] spawnPoints;
 
@@ -22,6 +28,8 @@ namespace JBB
         private void Awake()
         {
             spawnPoints = spawnPointsPrefab.GetComponentsInChildren<Transform>();
+            clearTextUI.gameObject.SetActive(false);
+            resultUI.gameObject.SetActive(false);
         }
 
         private void Start()
@@ -42,6 +50,19 @@ namespace JBB
             }
         }
 
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                isTab = true;
+            }
+            if (Input.GetKeyUp(KeyCode.Tab))
+            {
+                isTab = false;
+            }
+            tabUI.gameObject.SetActive(isTab);
+        }
+
         public override void OnConnectedToMaster()
         {
             RoomOptions roomOptions = new RoomOptions() { IsVisible = false, IsOpen = true, MaxPlayers = 8 };
@@ -57,6 +78,12 @@ namespace JBB
             roomOptions.CustomRoomProperties = RoomCustomProps;
             PhotonNetwork.JoinOrCreateRoom("Debug", roomOptions, TypedLobby.Default);
         }
+
+        public override void OnCreatedRoom()
+        {
+            PhotonNetwork.CurrentRoom.SetLoadTime(PhotonNetwork.Time);
+        }
+
         public override void OnJoinedRoom()
         {
             Debug.Log("Joined DebugRoom");
@@ -135,10 +162,7 @@ namespace JBB
 
         public void GameStart()
         {
-            if (PhotonNetwork.IsMasterClient)
-            {
-                StartCoroutine(TimerRoutine());
-            }           
+            StartCoroutine(TimerRoutine());
         }
 
         IEnumerator TimerRoutine()
@@ -149,8 +173,20 @@ namespace JBB
                 int remainTime = (int)(gameEndTime - PhotonNetwork.Time);
                 TimeUI.OnLeftTimeChanged?.Invoke(remainTime);
                 yield return new WaitForSeconds(1f);
-            } 
-            // 타이머 종료 > END GAME
+            }
+            StartCoroutine(EndRoutine());
+        }
+
+        IEnumerator EndRoutine()
+        {
+            while (true)
+            {
+                Time.timeScale = 0f;
+                clearTextUI.gameObject.SetActive(true);
+                yield return new WaitForSecondsRealtime(2f);
+                resultUI.gameObject.SetActive(true);
+                Time.timeScale = 1f;
+            }
         }
 
         private int PlayerLoadCount()
