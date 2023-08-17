@@ -123,7 +123,7 @@ namespace JBB
 
         public override void OnPlayerPropertiesUpdate(Player targetPlayer, PhotonHashtable changedProps)
         {
-            if (changedProps.ContainsKey("LOAD"))
+            if (changedProps.ContainsKey("Load"))
             {
                 if (PlayerLoadCount() == PhotonNetwork.PlayerList.Length)
                 {
