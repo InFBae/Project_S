@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 using PhotonHashtable = ExitGames.Client.Photon.Hashtable;
 
 namespace JBB
@@ -14,6 +15,11 @@ namespace JBB
     {
         [SerializeField] JBB.InGameUI inGameUI;
         [SerializeField] GameObject spawnPointsPrefab;
+        [SerializeField] RectTransform clearTextUI;
+        [SerializeField] RectTransform resultUI;
+        [SerializeField] RectTransform tabUI;
+
+        bool isTab = false;
 
         Transform[] spawnPoints;
 
@@ -22,6 +28,21 @@ namespace JBB
         private void Awake()
         {
             spawnPoints = spawnPointsPrefab.GetComponentsInChildren<Transform>();
+            clearTextUI.gameObject.SetActive(false);
+            resultUI.gameObject.SetActive(false);
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                isTab = true;
+            }
+            if (Input.GetKeyUp(KeyCode.Tab))
+            {
+                isTab = false;
+            }
+            tabUI.gameObject.SetActive(isTab);
         }
 
         private void Start()
@@ -55,7 +76,12 @@ namespace JBB
             };
 
             roomOptions.CustomRoomProperties = RoomCustomProps;
-            PhotonNetwork.JoinOrCreateRoom("Debug", roomOptions, TypedLobby.Default);
+            PhotonNetwork.JoinOrCreateRoom("Debug1000", roomOptions, TypedLobby.Default);
+        }
+
+        public override void OnCreatedRoom()
+        {
+            PhotonNetwork.CurrentRoom.SetLoadTime(PhotonNetwork.Time);
         }
         public override void OnJoinedRoom()
         {
@@ -74,7 +100,7 @@ namespace JBB
                 PhotonNetwork.Instantiate("AllInOnePlayerTest", spawnPoint.position, Quaternion.identity);
             //}
             
-            GameStart();
+            //GameStart();
         }
 
 
@@ -135,22 +161,31 @@ namespace JBB
 
         public void GameStart()
         {
-            if (PhotonNetwork.IsMasterClient)
-            {
-                StartCoroutine(TimerRoutine());
-            }           
+            StartCoroutine(TimerRoutine());
         }
 
         IEnumerator TimerRoutine()
         {
-            double gameEndTime = (PhotonNetwork.CurrentRoom.GetLoadTime() + PhotonNetwork.CurrentRoom.GetGameTime() * 60);
+            double gameEndTime = (PhotonNetwork.CurrentRoom.GetLoadTime() + PhotonNetwork.CurrentRoom.GetGameTime() *1);
             while (PhotonNetwork.Time < gameEndTime)
             {
                 int remainTime = (int)(gameEndTime - PhotonNetwork.Time);
                 TimeUI.OnLeftTimeChanged?.Invoke(remainTime);
                 yield return new WaitForSeconds(1f);
-            } 
-            // 타이머 종료 > END GAME
+            }
+            StartCoroutine(EndRoutine());
+        }
+
+        IEnumerator EndRoutine()
+        {
+            while (true)
+            {
+                Time.timeScale = 0f;
+                clearTextUI.gameObject.SetActive(true);
+                yield return new WaitForSecondsRealtime(2f);
+                resultUI.gameObject.SetActive(true);
+                Time.timeScale = 1f;
+            }
         }
 
         private int PlayerLoadCount()
