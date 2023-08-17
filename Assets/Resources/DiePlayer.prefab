@@ -2224,7 +2224,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de61b23cfa8429d4f8cb0ef9099457d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnPointsPrefab: {fileID: 0}
+  cam: {fileID: 2017926611}
 --- !u!114 &6380886327121274620
 MonoBehaviour:
   m_ObjectHideFlags: 0

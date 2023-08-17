@@ -8,6 +8,7 @@ public class ADB_RE_DiePlayer : MonoBehaviourPun
     GameObject spawnPointsPrefab;
     Transform[] spawnPoints;
 
+    [SerializeField] Camera cam;
     PhotonView PV;
 
 
@@ -24,7 +25,11 @@ public class ADB_RE_DiePlayer : MonoBehaviourPun
         if (PV.IsMine)
         {
             StartCoroutine(RespawnRoutine(5f));
-        }        
+        }
+        else
+        {
+            cam.enabled = false;
+        }
     }
 
     IEnumerator RespawnRoutine(float time)
