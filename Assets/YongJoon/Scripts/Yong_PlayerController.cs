@@ -7,7 +7,9 @@ using System.Linq;
 
 public class Yong_PlayerController : MonoBehaviourPunCallbacks
 {
+    [SerializeField] GameObject playerColliderBody;
     [SerializeField] GameObject visibleBody;
+    [SerializeField] GameObject GunHolder;
     [SerializeField] GameObject FPSBody;
 
 
@@ -57,8 +59,19 @@ public class Yong_PlayerController : MonoBehaviourPunCallbacks
         }
         else
         {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                ChangeLayerRecursively(visibleBody, 10);
+                ChangeLayerRecursively(GunHolder, 10);
+                playerColliderBody.layer =  10;
+            }
+            else
+            {
+                ChangeLayerRecursively(visibleBody, 4);
+                ChangeLayerRecursively(GunHolder, 4);
+                playerColliderBody.layer = 4;
+            }
             //visibleBody.SetActive(false);
-            ChangeLayerRecursively(visibleBody, 4);
         }
 
     }

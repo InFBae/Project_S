@@ -7,10 +7,9 @@ using Photon.Pun;
 public class RE_Player : MonoBehaviourPunCallbacks
 {
     // 플레이어가 가지고 있는 것들
-    [SerializeField] JBB.StatusUI statusUI;
-    [SerializeField] protected Animator anim;
-    [SerializeField] protected GameObject diePlayer;
-    [SerializeField] protected RE_GunName gun;
+    [SerializeField] public JBB.StatusUI statusUI;
+    [SerializeField] public Animator anim;
+    [SerializeField] public RE_GunName gun;
     [SerializeField] int hp = 200;
     [SerializeField] public int Hp { get { return hp; } private set 
         { if (hp <= 0) 
@@ -29,7 +28,7 @@ public class RE_Player : MonoBehaviourPunCallbacks
     private void Awake()
     {
         anim = GetComponentInChildren<Animator>();
-        gun = GetComponentInChildren<RE_GunName>();
+        gun = GetComponentInChildren<RE_GunName>();        
     }
 
     public override void OnEnable()
@@ -47,7 +46,7 @@ public class RE_Player : MonoBehaviourPunCallbacks
         statusUI.OnHPChanged?.Invoke(Hp);
     }
 
-    protected void DecreaseHp(int damage)
+    public void DecreaseHp(int damage)
     {
         Hp -= damage;
     }

@@ -10,17 +10,17 @@ using UnityEngine.Tilemaps;
 
 public class RE_GunName : RE_Gun
 {
-    [SerializeField] Transform zoomRoot;
-    [SerializeField] GameObject hitParticle;
+    [SerializeField] public Transform zoomRoot;
+    [SerializeField] public GameObject hitParticle;
     //[SerializeField] GameObject prefabMaster;
-    [SerializeField] ParticleSystem bloodParticle;
-    [SerializeField] TrailRenderer trailEffect;
+    [SerializeField] public ParticleSystem bloodParticle;
+    [SerializeField] public TrailRenderer trailEffect;
     [SerializeField] Camera cam;
-    [SerializeField] float maxDistance;     // 최대 사거리. 60
-    [SerializeField] float bulletSpeed;
-    [SerializeField] float fireCoolTime;        // 연발 나가는 쿨타임
-    [SerializeField] AudioClip clip;
-    [SerializeField] JBB.StatusUI statusUI;
+    [SerializeField] public float maxDistance;     // 최대 사거리. 60
+    [SerializeField] public float bulletSpeed;
+    [SerializeField] public float fireCoolTime;        // 연발 나가는 쿨타임
+    [SerializeField] public AudioClip clip;
+    [SerializeField] public JBB.StatusUI statusUI;
 
     public float FireCoolTime { get { return fireCoolTime; } }
     public int GetCurBullet { get { return curAvailavleBullet; } }
@@ -31,17 +31,16 @@ public class RE_GunName : RE_Gun
     public bool isReload = false;
     public float boundValue = 0f;
     public int fireStack = 0;
-    Coroutine reloadRoutine;
+    public Coroutine reloadRoutine;
     public bool isZoom = false;
-    PhotonView PV;
-    Vector3 realFireRoot;
+    [SerializeField] PhotonView PV;
+    public Vector3 realFireRoot;
 
     private void Awake()
     {
         bloodParticle = GameManager.Resource.Load<ParticleSystem>("BloodParticle");
         hitParticle = GameManager.Resource.Load<GameObject>("HitEffect");
         trailEffect = GameManager.Resource.Load<TrailRenderer>("BulletTrail");
-        PV = GetComponent<PhotonView>();
     }
 
     private void Start()
@@ -127,7 +126,6 @@ public class RE_GunName : RE_Gun
         PV.RPC("Fire", RpcTarget.MasterClient, PhotonNetwork.LocalPlayer, realFireRoot, rayShootDir);
     }
 
-    [PunRPC]
     public override void Fire(Photon.Realtime.Player shooter, Vector3 realFireRoot, Vector3 rayShootDir)
     {
         RaycastHit hit;   
@@ -174,7 +172,7 @@ public class RE_GunName : RE_Gun
 
         Debug.Log("Fire");
     }
-
+    /*
     [PunRPC]
     public void FireSound(Vector3 muzzlePoint)
     {
@@ -207,7 +205,7 @@ public class RE_GunName : RE_Gun
     //    StartCoroutine(TrailRoutine(realFireRoot, hitPoint));
     //    ReleaseRoutine(trailEffect.gameObject);
     //}
-
+    */
     public void ReloadRequest()
     {
         if (remainBullet <= 0)
@@ -236,14 +234,14 @@ public class RE_GunName : RE_Gun
         }
         //PV.RPC("Reload", RpcTarget.All);
     }
-
+    
     [PunRPC]
     public override void Reload()    // 재장전
     {
         
     }
-
-    IEnumerator ReloadRoutine()
+    
+    public IEnumerator ReloadRoutine()
     {
         bool tempIsReload = isReload;
         while (true)
@@ -261,18 +259,18 @@ public class RE_GunName : RE_Gun
             }
         }
     }
-    private void StopReload()
+    public void StopReload()
     {
         StopCoroutine(reloadRoutine); 
     }
 
-    IEnumerator ReleaseRoutine(GameObject effect)   // 오브젝트 풀 Release 하기
+    public IEnumerator ReleaseRoutine(GameObject effect)   // 오브젝트 풀 Release 하기
     {
         yield return new WaitForSeconds(2f);
         GameManager.Pool.Release(effect);
     }
 
-    IEnumerator TrailRoutine(Vector3 startPoint, Vector3 endPoint)
+    public IEnumerator TrailRoutine(Vector3 startPoint, Vector3 endPoint)
     {
         TrailRenderer trailrenderer = GameManager.Pool.Get(trailEffect, startPoint, Quaternion.identity);
         trailrenderer.Clear();

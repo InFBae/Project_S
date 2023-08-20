@@ -36,10 +36,10 @@ public class PlayerAimMove : MonoBehaviourPunCallbacks
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
     }
 
-    private void OnDisable()
-    {
-        UnityEngine.Cursor.lockState = CursorLockMode.None;
-    }
+    //private void OnDisable()
+    //{
+    //    UnityEngine.Cursor.lockState = CursorLockMode.None;
+    //}
 
     private void Awake()
     {

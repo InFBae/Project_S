@@ -175,8 +175,8 @@ namespace JBB
         public static bool GetIsPlaying(this Room room)
         {
             PhotonHashtable property = room.CustomProperties;
-            if (property.ContainsKey("IsPlayingNow"))
-                return (bool)property["IsPlayingNow"];
+            if (property.ContainsKey("IsPlaying"))
+                return (bool)property["IsPlaying"];
             else
                 return false;
         }
@@ -188,5 +188,20 @@ namespace JBB
             room.SetCustomProperties(property);
         }
 
+        public static bool GetIsEnd(this Room room)
+        {
+            PhotonHashtable property = room.CustomProperties;
+            if (property.ContainsKey("IsEnd"))
+                return (bool)property["IsEnd"];
+            else
+                return false;
+        }
+
+        public static void SetIsEnd(this Room room, bool isEnd)
+        {
+            PhotonHashtable property = new PhotonHashtable();
+            property["IsEnd"] = isEnd;
+            room.SetCustomProperties(property);
+        }
     }
 }

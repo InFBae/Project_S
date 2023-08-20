@@ -49,6 +49,11 @@ namespace JBB
         {
             targetKillSliderUI.UpdateSliderValue();
         }
+
+        public int GetFirstPlayerKill()
+        {
+            return rankingBoardUI.GetFirstPlayer().GetKillCount();
+        }
     }
 }
 
