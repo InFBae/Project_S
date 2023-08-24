@@ -23,6 +23,12 @@ public class RE_PlayerAttacker : RE_Player
     {
         fireStackRoutine = StartCoroutine(FireStackRoutine());
     }
+    public void RespawnGun()
+    {
+        StopAllCoroutines();
+        fireStackRoutine = StartCoroutine(FireStackRoutine());
+        statusUI.OnBulletCountChanged?.Invoke(gun.GetCurBullet, gun.remainBullet);
+    }
     IEnumerator FireRoutine()
     {
         while (true)

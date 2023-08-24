@@ -50,5 +50,10 @@ public class RE_Player : MonoBehaviourPunCallbacks
     {
         Hp -= damage;
     }
+    public void ResetHp()
+    {
+        hp = 200;
+        statusUI.OnHPChanged?.Invoke(Hp);
+    }
 
 }

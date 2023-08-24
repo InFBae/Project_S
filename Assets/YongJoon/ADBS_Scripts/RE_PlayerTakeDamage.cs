@@ -37,6 +37,7 @@ public class RE_PlayerTakeDamage : RE_Player
 
     }
     */
+
     public void Die()
     {
         // 충돌체 등의 문제 때문에 죽는 애니메이션을 하는 플레이어를 하나 따로 두어서
