@@ -34,12 +34,13 @@ namespace JBB
             }
             else
             {
-                GameManager.Chat.Connect(nick);
+                if (!GameManager.Chat.IsConnected)
+                    GameManager.Chat.Connect(nick);
             }           
 
             if (PhotonNetwork.IsConnected)
             {
-                if (!PhotonNetwork.InLobby)
+                if (!PhotonNetwork.InLobby && PhotonNetwork.IsConnectedAndReady)
                 {
                     PhotonNetwork.JoinLobby();
                 }
@@ -102,6 +103,7 @@ namespace JBB
         public override void OnJoinRandomFailed(short returnCode, string message)
         {
             Debug.Log($"Join Random Failed With Error({returnCode}) : {message}");
+            GameManager.UI.CreatePopUpMessage(message, 1f);
         }
         public override void OnCreatedRoom()
         {

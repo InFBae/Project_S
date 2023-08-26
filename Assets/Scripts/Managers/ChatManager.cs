@@ -14,6 +14,7 @@ public class ChatManager : MonoBehaviour, IChatClientListener
     private string noticeChannel;
 
     public string Nickname { get { return chatClient.UserId; } }
+    public bool IsConnected { get { return chatClient.CanChat; } }
 
     public static UnityEvent<string> OnGetLobbyMessage = new UnityEvent<string>();
     public static UnityEvent<string, int> OnFriendStateChanged = new UnityEvent<string, int>();
