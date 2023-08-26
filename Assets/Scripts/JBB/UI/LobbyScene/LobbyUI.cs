@@ -1,3 +1,4 @@
+using ahndabi;
 using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
@@ -12,6 +13,7 @@ namespace JBB
         MakeRoomUI makeRoomUI;
         FindFriendUI findFriendUI;
         RoomListUI roomListUI;
+        LobbyGameSettingUI lobbySettingUI;
         protected override void Awake()
         {
             base.Awake();
@@ -23,6 +25,8 @@ namespace JBB
             findFriendUI = GetComponentInChildren<FindFriendUI>();
             findFriendUI.gameObject.SetActive(false);
             roomListUI = GetComponentInChildren<RoomListUI>();
+            lobbySettingUI = GetComponentInChildren<LobbyGameSettingUI>();
+            lobbySettingUI.gameObject.SetActive(false);         
 
             buttons["MakeRoomButton"].onClick.AddListener(OnMakeRoomButtonClicked);
             buttons["QuickMatchButton"].onClick.AddListener(OnQuickMatchButtonClicked);
@@ -48,7 +52,7 @@ namespace JBB
 
         public void OnSettingsButtonClicked()
         {
-            // TODO : 세팅 UI 생성 및 세팅 기능 구현
+            lobbySettingUI.gameObject.SetActive(true);
         }
         public void OnFindFriendButtonClicked()
         {
