@@ -44,7 +44,6 @@ namespace JBB
         public void OnQuickMatchButtonClicked()
         {
             PhotonNetwork.JoinRandomRoom();
-            // TODO : 방을 생성도 할 것인지, 실패했을 때 OnJoinRandomFailed 함수 작성
         }
 
         public void OnSettingsButtonClicked()

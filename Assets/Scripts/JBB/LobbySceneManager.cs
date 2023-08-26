@@ -31,9 +31,11 @@ namespace JBB
             {
                 // 닉네임 생성
                 lobbyUI.EnableNicknameUI();
-                nick = NickNameChecking();
             }
-            GameManager.Chat.Connect(nick);
+            else
+            {
+                GameManager.Chat.Connect(nick);
+            }           
 
             if (PhotonNetwork.IsConnected)
             {
@@ -97,6 +99,10 @@ namespace JBB
             Debug.Log($"Join Room Failed With Error({returnCode}) : {message}");
         }
 
+        public override void OnJoinRandomFailed(short returnCode, string message)
+        {
+            Debug.Log($"Join Random Failed With Error({returnCode}) : {message}");
+        }
         public override void OnCreatedRoom()
         {
             Debug.Log("Create Room Success");
