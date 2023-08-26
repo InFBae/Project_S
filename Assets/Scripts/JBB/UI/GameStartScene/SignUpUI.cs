@@ -6,9 +6,9 @@ using UnityEngine.Events;
 
 namespace JBB
 {
-    public class SignInUI : BaseUI
+    public class SignUpUI : BaseUI
     {
-        public static UnityEvent<string, string, string> OnSignInClicked = new UnityEvent<string, string, string>();
+        public static UnityEvent<string, string, string> OnSignUpClicked = new UnityEvent<string, string, string>();
 
         [SerializeField] TMP_InputField idInput;
         [SerializeField] TMP_InputField passwordInput;
@@ -18,7 +18,7 @@ namespace JBB
             base.Awake();
 
             buttons["ReturnButton"].onClick.AddListener(OnReturnButtonClicked);
-            buttons["SignInButton"].onClick.AddListener(OnSignInButtonClicked);
+            buttons["SignUpButton"].onClick.AddListener(OnSignUpButtonClicked);
         }
 
         public void OnReturnButtonClicked()
@@ -26,9 +26,9 @@ namespace JBB
             this.gameObject.SetActive(false);
         }
 
-        public void OnSignInButtonClicked()
+        public void OnSignUpButtonClicked()
         {
-            OnSignInClicked?.Invoke(idInput.text, passwordInput.text, passwordCheckInput.text);
+            OnSignUpClicked?.Invoke(idInput.text, passwordInput.text, passwordCheckInput.text);
         }
     }
 }

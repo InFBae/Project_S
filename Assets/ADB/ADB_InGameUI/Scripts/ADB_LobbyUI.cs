@@ -50,7 +50,7 @@ namespace ahndabi
 
         public void OnSettingsButtonClicked()
         {
-            GameManager.UI.ShowPopUpUI<LobbyGameSettingUI>("UI/LobbyGameSettingUI");
+            //GameManager.UI.ShowPopUpUI<LobbyGameSettingUI>("UI/LobbyGameSettingUI");
         }
         public void OnFindFriendButtonClicked()
         {

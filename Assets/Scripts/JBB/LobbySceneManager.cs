@@ -31,13 +31,16 @@ namespace JBB
             {
                 // 닉네임 생성
                 lobbyUI.EnableNicknameUI();
-                nick = NickNameChecking();
             }
-            GameManager.Chat.Connect(nick);
+            else
+            {
+                if (!GameManager.Chat.IsConnected)
+                    GameManager.Chat.Connect(nick);
+            }           
 
             if (PhotonNetwork.IsConnected)
             {
-                if (!PhotonNetwork.InLobby)
+                if (!PhotonNetwork.InLobby && PhotonNetwork.IsConnectedAndReady)
                 {
                     PhotonNetwork.JoinLobby();
                 }
@@ -97,6 +100,11 @@ namespace JBB
             Debug.Log($"Join Room Failed With Error({returnCode}) : {message}");
         }
 
+        public override void OnJoinRandomFailed(short returnCode, string message)
+        {
+            Debug.Log($"Join Random Failed With Error({returnCode}) : {message}");
+            GameManager.UI.CreatePopUpMessage(message, 1f);
+        }
         public override void OnCreatedRoom()
         {
             Debug.Log("Create Room Success");

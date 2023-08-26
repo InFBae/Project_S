@@ -8,20 +8,20 @@ namespace JBB
     public class GameStartUI : SceneUI
     {
         private LogInUI logInUI;
-        private SignInUI signInUI;
+        private SignUpUI signUpUI;
 
         protected override void Awake()
         {
             base.Awake();
 
             logInUI = GetComponentInChildren<LogInUI>();
-            signInUI = GetComponentInChildren<SignInUI>();
+            signUpUI = GetComponentInChildren<SignUpUI>();
 
             logInUI.gameObject.SetActive(false);
-            signInUI.gameObject.SetActive(false);
+            signUpUI.gameObject.SetActive(false);
 
             buttons["LogInButton"].onClick.AddListener(OnLogInButtonClicked);
-            buttons["SignInButton"].onClick.AddListener(OnSignInButtonClicked);
+            buttons["SignUpButton"].onClick.AddListener(OnSignInButtonClicked);
             buttons["QuitButton"].onClick.AddListener(OnQuitButtonClicked);
         }
 
@@ -32,7 +32,7 @@ namespace JBB
 
         public void OnSignInButtonClicked()
         {
-            signInUI.gameObject.SetActive(true);
+            signUpUI.gameObject.SetActive(true);
         }
 
         public void OnQuitButtonClicked()
@@ -46,7 +46,7 @@ namespace JBB
         }
         public void CloseSignInUI()
         {
-            signInUI.gameObject.SetActive(false);
+            signUpUI.gameObject.SetActive(false);
         }
     }
 }

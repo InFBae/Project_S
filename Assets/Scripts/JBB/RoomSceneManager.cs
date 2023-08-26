@@ -45,9 +45,9 @@ namespace JBB
 
         public override void OnConnectedToMaster()
         {            
-            RoomOptions roomOptions = new RoomOptions() { IsVisible = false, IsOpen = true, MaxPlayers = 8 };
+            //RoomOptions roomOptions = new RoomOptions() { IsVisible = false, IsOpen = true, MaxPlayers = 8 };
 
-            PhotonNetwork.JoinOrCreateRoom("Debug", roomOptions, TypedLobby.Default);           
+            //PhotonNetwork.JoinOrCreateRoom("Debug", roomOptions, TypedLobby.Default);           
         }
         public override void OnJoinedRoom()
         {                      
@@ -97,7 +97,7 @@ namespace JBB
                 if(player.GetReady())
                     readyCount++;
             }
-            if (readyCount == PhotonNetwork.PlayerList.Length)
+            if (readyCount == PhotonNetwork.PlayerList.Length && readyCount > 1)
             {
                 roomUI.ActivateGameStartButton();
             }

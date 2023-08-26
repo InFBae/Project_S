@@ -65,6 +65,7 @@ namespace JBB
         private void OnExitButtonClicked()
         {
             PhotonNetwork.LeaveRoom();
+            GameManager.UI.CreatePopUpMessage("Exiting Room", 3f);
         }
 
         public void UpdateRoomInfo()
