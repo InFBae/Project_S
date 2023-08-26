@@ -14,14 +14,14 @@ namespace JBB
         {
             base.OnEnable();
             LogInUI.OnLogInClicked.AddListener(Login);
-            SignInUI.OnSignInClicked.AddListener(SignIn);
+            SignUpUI.OnSignUpClicked.AddListener(SignUp);
         }
 
         public override void OnDisable()
         {
             base.OnDisable();
             LogInUI.OnLogInClicked.RemoveListener(Login);
-            SignInUI.OnSignInClicked.RemoveListener(SignIn);
+            SignUpUI.OnSignUpClicked.RemoveListener(SignUp);
         }
 
         public override void OnConnectedToMaster()
@@ -85,7 +85,7 @@ namespace JBB
             }
         }
 
-        public void SignIn(string id, string password, string passwordCheck)
+        public void SignUp(string id, string password, string passwordCheck)
         {
             try
             {
@@ -109,7 +109,7 @@ namespace JBB
                     }
                     else
                     {
-                        string sqlCommand2 = $"INSERT INTO user_info(U_ID, U_Password) VALUES({id}, {password})";                        
+                        string sqlCommand2 = $"INSERT INTO user_info(U_ID, U_Password) VALUES('{id}', '{password}')";                        
                         GameManager.DB.ExecuteNonQuery(sqlCommand2);
                         Debug.Log("Complete sign up");
                         gameStartUI.CloseSignInUI();
