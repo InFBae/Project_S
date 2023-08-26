@@ -26,15 +26,15 @@ public class TabUI : BaseUI
         {
             if (rankingBoardUI.rankers[i] != null)
             {
-                texts[$"nick{i}"].text = $"{rankingBoardUI.rankers[i].GetNickname()}";
-                texts[$"kill{i}"].text = $"{rankingBoardUI.rankers[i].GetKillCount()}";
-                texts[$"death{i}"].text = $"{rankingBoardUI.rankers[i].GetDeathCount()}";
+                texts[$"player{i + 1}"].text = $"{rankingBoardUI.rankers[i].GetNickname()}";
+                texts[$"Kill_{i + 1}"].text = $"{rankingBoardUI.rankers[i].GetKillCount()}";
+                texts[$"Death_{i + 1}"].text = $"{rankingBoardUI.rankers[i].GetDeathCount()}";
             }
             else
             {
-                texts[$"nick{i}"].text = "";
-                texts[$"kill{i}"].text = "";
-                texts[$"death{i}"].text = "";
+                texts[$"player{i + 1}"].text = "";
+                texts[$"Kill_{i + 1}"].text = "";
+                texts[$"Death_{i + 1}"].text = "";
             }
         }
     }

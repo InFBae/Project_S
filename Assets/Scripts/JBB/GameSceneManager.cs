@@ -64,19 +64,6 @@ namespace JBB
             }
         }
 
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.Tab))
-            {
-                isTab = true;
-            }
-            if (Input.GetKeyUp(KeyCode.Tab))
-            {
-                isTab = false;
-            }
-            tabUI.gameObject.SetActive(isTab);
-        }
-
         public override void OnConnectedToMaster()
         {
             RoomOptions roomOptions = new RoomOptions() { IsVisible = false, IsOpen = true, MaxPlayers = 8 };
@@ -91,11 +78,6 @@ namespace JBB
 
             roomOptions.CustomRoomProperties = RoomCustomProps;
             PhotonNetwork.JoinOrCreateRoom("Debug1000", roomOptions, TypedLobby.Default);
-        }
-
-        public override void OnCreatedRoom()
-        {
-            PhotonNetwork.CurrentRoom.SetLoadTime(PhotonNetwork.Time);
         }
 
         public override void OnCreatedRoom()
@@ -141,7 +123,7 @@ namespace JBB
 
         public override void OnPlayerPropertiesUpdate(Player targetPlayer, PhotonHashtable changedProps)
         {
-            if (changedProps.ContainsKey("LOAD"))
+            if (changedProps.ContainsKey("Load"))
             {
                 if (PlayerLoadCount() == PhotonNetwork.PlayerList.Length)
                 {
@@ -168,6 +150,10 @@ namespace JBB
                 {
                     StartCoroutine(EndRoutine());
                 }
+            }
+            if (changedProps.ContainsKey("DeathCount"))
+            {
+                inGameUI.UpdateKillDeathUI();
             }
         }
         public override void OnRoomPropertiesUpdate(PhotonHashtable propertiesThatChanged)
@@ -196,7 +182,7 @@ namespace JBB
 
         IEnumerator TimerRoutine()
         {
-            double gameEndTime = (PhotonNetwork.CurrentRoom.GetLoadTime() + PhotonNetwork.CurrentRoom.GetGameTime() *1);
+            double gameEndTime = (PhotonNetwork.CurrentRoom.GetLoadTime() + PhotonNetwork.CurrentRoom.GetGameTime() * 60);
             while (PhotonNetwork.Time < gameEndTime)
             {
                 int remainTime = (int)(gameEndTime - PhotonNetwork.Time);
@@ -216,7 +202,8 @@ namespace JBB
                 {
                     input.enabled = false;
                 }
-                
+                UnityEngine.Cursor.lockState = CursorLockMode.None;
+
                 Time.timeScale = 0f;
                 clearTextUI.gameObject.SetActive(true);
                 yield return new WaitForSecondsRealtime(2f);
