@@ -2,6 +2,7 @@ using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace JBB
 {
@@ -12,7 +13,7 @@ namespace JBB
         StatusUI statusUI;
         KillLogUI killLogUI;
         TargetKillSliderUI targetKillSliderUI;
-
+        InGameSettingUI inGameSettingUI;
 
         protected override void Awake()
         {
@@ -23,7 +24,23 @@ namespace JBB
             statusUI = GetComponentInChildren<StatusUI>();
             killLogUI = GetComponentInChildren<KillLogUI>();
             targetKillSliderUI = GetComponentInChildren<TargetKillSliderUI>();
+            inGameSettingUI = GetComponentInChildren<InGameSettingUI>();
+            inGameSettingUI.gameObject.SetActive(false);
+        }
 
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                if (inGameSettingUI.isActiveAndEnabled)
+                {
+                    inGameSettingUI.Cancel();
+                }
+                else
+                {
+                    inGameSettingUI.gameObject.SetActive(true);
+                }                              
+            }
         }
 
         public void InitUI()
