@@ -21,7 +21,7 @@ namespace JBB
         {
             OnHPChanged.AddListener(SetHP);
             OnBulletCountChanged.AddListener(SetBullets);
-            PV = GetComponent<PhotonView>();    
+            PV = GetComponentInParent<PhotonView>();    
             if (!PV.IsMine)
             {
                 this.gameObject.SetActive(false);
