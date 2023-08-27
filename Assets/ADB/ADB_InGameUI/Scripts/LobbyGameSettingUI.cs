@@ -37,7 +37,7 @@ namespace ahndabi
 
         public void MouseSensitivityControl()      // 마우스 감도
         {
-            InGameSettingPopUpUI.OnMouseSensiticityControl?.Invoke(sliders["MouseSensitivitySlider"].value);
+            JBB.InGameSettingUI.OnMouseSensitivityChanged?.Invoke(sliders["MouseSensitivitySlider"].value);
         }
 
         public void BackGroundSoundControl()       // BGM

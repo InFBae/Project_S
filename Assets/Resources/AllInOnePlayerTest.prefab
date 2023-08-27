@@ -6607,7 +6607,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerTakeDamage: {fileID: 5532482846916584153}
   gun: {fileID: 3498845919217791251}
-  killLogContent: {fileID: 0}
 --- !u!1 &6215652803261079805
 GameObject:
   m_ObjectHideFlags: 0

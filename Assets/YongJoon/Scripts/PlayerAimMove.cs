@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 using Photon.Pun;
+using ahndabi;
 
 public class PlayerAimMove : MonoBehaviourPunCallbacks
 {
@@ -31,9 +32,12 @@ public class PlayerAimMove : MonoBehaviourPunCallbacks
     PhotonView PV;
 
 
-    private void OnEnable()
+    public override void OnEnable()
     {
+        base.OnEnable();
+
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+        JBB.InGameSettingUI.OnMouseSensitivityChanged.AddListener(ChangedCameraSensitivity);
     }
 
     //private void OnDisable()
@@ -139,5 +143,9 @@ public class PlayerAimMove : MonoBehaviourPunCallbacks
         {
             isSit = false;
         }
+    }
+    public void ChangedCameraSensitivity(float sliderValue)
+    {
+        cameraSensitivity = sliderValue;
     }
 }
