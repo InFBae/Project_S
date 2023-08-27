@@ -14,6 +14,8 @@ public class PlayerRPCController : MonoBehaviourPun
     PhotonView PV;
     [SerializeField] RE_PlayerTakeDamage playerTakeDamage;
     [SerializeField] RE_GunName gun;
+    [SerializeField] PlayerMover playerMover;
+
     RigBuilder rb;
     PlayerInput pInput;
     RE_PlayerAttacker playerAttacker;
@@ -78,7 +80,12 @@ public class PlayerRPCController : MonoBehaviourPun
     [PunRPC]
     public void FireSound(Vector3 muzzlePoint)
     {
-        AudioSource.PlayClipAtPoint(gun.clip, muzzlePoint);
+        gun.audioSource.Play();
+    }
+
+    public void MoveSound(Vector3 position)
+    {
+        playerMover.audioSource.Play();
     }
 
     [PunRPC]
