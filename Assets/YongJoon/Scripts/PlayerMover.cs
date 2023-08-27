@@ -40,7 +40,7 @@ public class PlayerMover : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         // ºÎµúÇûÀ» ‹š È¸Àü ¹æÁö
         rb.freezeRotation = true;
-        PV = GetComponentInParent<PhotonView>();
+        PV = GetComponent<PhotonView>();
 
         StartCoroutine(MoveSoundRoutine());
     }
@@ -164,7 +164,7 @@ public class PlayerMover : MonoBehaviour
         {
             zSpeed += Physics.gravity.y * Time.deltaTime;
 
-            Debug.Log("zSpeed : " + zSpeed);
+            //Debug.Log("zSpeed : " + zSpeed);
             if(IsGrounded() && zSpeed < 0)
             {
                 zSpeed = -1;
