@@ -1,4 +1,5 @@
 using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,7 +15,7 @@ namespace JBB
 
         public static UnityEvent<float> OnMouseSensiticityControl = new UnityEvent<float>();
         public static UnityEvent OnPlayerInputActive = new UnityEvent();
-        AudioMixer myMixer;   // 리소스로 가져오기
+        [SerializeField] AudioMixer myMixer;   // 리소스로 가져오기
         [SerializeField] PlayerInput playerInput;
 
         // Cancle을 위한 초기값들
@@ -50,7 +51,7 @@ namespace JBB
                 if (player.IsLocal)
                 {
                     float volume = sliders["BackgroundSoundSlider"].value;
-                    myMixer.SetFloat("BGM", Mathf.Log10(volume) * 20);
+                    myMixer.SetFloat("BGM", volume);
                 }
             }
         }
@@ -62,7 +63,6 @@ namespace JBB
                 if (player.IsLocal)
                 {
                     float volume = sliders["EffectSoundSlider"].value;
-                    //myMixer.SetFloat("SFX", Mathf.Log10(volume) * 20);
                     myMixer.SetFloat("SFX", volume);
 
                 }

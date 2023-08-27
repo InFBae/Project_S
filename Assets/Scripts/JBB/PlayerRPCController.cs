@@ -159,7 +159,7 @@ public class PlayerRPCController : MonoBehaviourPun
     }
 
 
-    GameObject killLogContent;
+    //GameObject killLogContent;
     [PunRPC]
     public void CreateKillLog(bool isHeadShot, Photon.Realtime.Player killed)
     {
