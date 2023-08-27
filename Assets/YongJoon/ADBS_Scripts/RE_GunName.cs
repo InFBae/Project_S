@@ -19,7 +19,7 @@ public class RE_GunName : RE_Gun
     [SerializeField] public float maxDistance;     // 최대 사거리. 60
     [SerializeField] public float bulletSpeed;
     [SerializeField] public float fireCoolTime;        // 연발 나가는 쿨타임
-    [SerializeField] public AudioClip clip;
+    public AudioSource audioSource;
     [SerializeField] public JBB.StatusUI statusUI;
 
     public float FireCoolTime { get { return fireCoolTime; } }
@@ -41,6 +41,7 @@ public class RE_GunName : RE_Gun
         bloodParticle = GameManager.Resource.Load<ParticleSystem>("BloodParticle");
         hitParticle = GameManager.Resource.Load<GameObject>("HitEffect");
         trailEffect = GameManager.Resource.Load<TrailRenderer>("BulletTrail");
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
