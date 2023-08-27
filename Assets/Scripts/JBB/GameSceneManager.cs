@@ -72,8 +72,6 @@ namespace JBB
                 {"IsPlaying" , false},
                 { "GameType", "SOLO"},
                 {"GameTime", 20 },
-                // 맥스킬 원래 20임
-                {"MaxKill", 5 },
                 {"Intrusion", false}
             };
 
