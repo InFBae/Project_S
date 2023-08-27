@@ -169,9 +169,9 @@ public class PlayerRPCController : MonoBehaviourPun
     [PunRPC]
     public void CreateKillLog(bool isHeadShot, Photon.Realtime.Player killed)
     {
-        if (chattingContent == null)
+        if (killLogContent == null)
         {
-            chattingContent = FindObjectOfType<InGameChattingUI>().GetComponent<InGameChattingUI>().content;
+            killLogContent = FindObjectOfType<InGameChattingUI>().GetComponent<InGameChattingUI>().content;
         }
         KillLogText killLogText = GameManager.Pool.GetUI(GameManager.Resource.Load<KillLogText>("UI/KillLogText"));
         killLogText.SetKillLogText(isHeadShot, killed);
