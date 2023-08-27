@@ -72,7 +72,6 @@ namespace JBB
                 {"IsPlaying" , false},
                 { "GameType", "SOLO"},
                 {"GameTime", 20 },
-                {"MaxKill", 20 },
                 {"Intrusion", false}
             };
 

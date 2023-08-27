@@ -51,6 +51,14 @@ public class RE_GunName : RE_Gun
         curAvailavleBullet = availableBullet;
     }
 
+    public void ResetGun()
+    {
+        remainBullet = 120;
+        availableBullet = 30;
+        fireDamage = 20;
+        curAvailavleBullet = availableBullet;
+    }
+
     private void Update()
     {
         Debug.DrawRay(muzzlePos.transform.position, cam.transform.forward * maxDistance, Color.green);
