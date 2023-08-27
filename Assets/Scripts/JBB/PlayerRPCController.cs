@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerRPCController : MonoBehaviourPun
 {
@@ -108,6 +109,8 @@ public class PlayerRPCController : MonoBehaviourPun
         {
             if (playerTakeDamage.Hp <= 0)
                 return;
+            if (enemyPlayer == damagedPlayer)
+                return;
 
             Debug.Log($"{damagedPlayer.GetNickname()} TakeDamage by {enemyPlayer.GetNickname()}");
 
@@ -121,6 +124,7 @@ public class PlayerRPCController : MonoBehaviourPun
                 // 위 두 개는 밑 이벤트로 대체
 
                 JBB.GameSceneManager.OnKilled?.Invoke(enemyPlayer, damagedPlayer, headShot);      // 죽인사람, 죽은사람, 헤드샷 판정
+                PV.RPC("CreateKillLog", RpcTarget.All ,headShot, damagedPlayer);
 
                 rb.enabled = false;
                 pInput.enabled = false;
@@ -154,13 +158,33 @@ public class PlayerRPCController : MonoBehaviourPun
         PhotonNetwork.Destroy(gameObject);
     }
 
+
+    GameObject killLogContent;
     [PunRPC]
     public void CreateKillLog(bool isHeadShot, Photon.Realtime.Player killed)
     {
-        GameObject go = PhotonNetwork.Instantiate("KillLogText", Vector3.zero, Quaternion.identity);
-        KillLogText killLogText = go.GetComponent<KillLogText>();
-        killLogText.transform.parent = killLogContent.transform;
+        if (chattingContent == null)
+        {
+            chattingContent = FindObjectOfType<InGameChattingUI>().GetComponent<InGameChattingUI>().content;
+        }
+        KillLogText killLogText = GameManager.Pool.GetUI(GameManager.Resource.Load<KillLogText>("UI/KillLogText"));
         killLogText.SetKillLogText(isHeadShot, killed);
-        StartCoroutine(DestroyRoutine(go, 5f));
+        killLogText.transform.parent = killLogContent.transform;        
+        GameManager.Pool.ReleaseUI(killLogText.gameObject, 5f);
     }
+
+
+    GameObject chattingContent;
+    [PunRPC]
+    public void CreateMessage(string text)
+    {
+        if (chattingContent == null)
+        {
+            chattingContent = FindObjectOfType<InGameChattingUI>().GetComponent<InGameChattingUI>().content;
+        }
+        ChatTextUI chat = GameManager.Pool.GetUI(GameManager.Resource.Load<ChatTextUI>("UI/ChatText"));
+        chat.SetText(text);
+        chat.transform.SetParent(chattingContent.transform, false);
+    }
+
 }

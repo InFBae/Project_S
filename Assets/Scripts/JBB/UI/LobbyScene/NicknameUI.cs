@@ -44,6 +44,7 @@ namespace JBB
                 GameManager.DB.ExecuteNonQuery(sqlCommand);
 
                 GameManager.UI.CreatePopUpMessage("Nickname Create Success", 1f);
+                GameManager.Chat.Connect(nick);
                 this.gameObject.SetActive(false);
             }
         }

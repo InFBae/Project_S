@@ -259,6 +259,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2149267457913907036, guid: bf81af6d2de59194183d5493fa93ce4d,
+        type: 3}
+      propertyPath: m_Name
+      value: SignUpButton
+      objectReference: {fileID: 0}
     - target: {fileID: 3648915759839107716, guid: bf81af6d2de59194183d5493fa93ce4d,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -282,12 +287,17 @@ PrefabInstance:
     - target: {fileID: 3648915759839107716, guid: bf81af6d2de59194183d5493fa93ce4d,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 50.045
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3648915759839107716, guid: bf81af6d2de59194183d5493fa93ce4d,
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3648915759921990175, guid: bf81af6d2de59194183d5493fa93ce4d,
+        type: 3}
+      propertyPath: m_Name
+      value: SignUpUI
       objectReference: {fileID: 0}
     - target: {fileID: 3648915760306183251, guid: bf81af6d2de59194183d5493fa93ce4d,
         type: 3}
@@ -342,7 +352,7 @@ PrefabInstance:
     - target: {fileID: 3648915760309447027, guid: bf81af6d2de59194183d5493fa93ce4d,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 51.565
+      value: 58.45
       objectReference: {fileID: 0}
     - target: {fileID: 3648915760309447027, guid: bf81af6d2de59194183d5493fa93ce4d,
         type: 3}
@@ -372,7 +382,7 @@ PrefabInstance:
     - target: {fileID: 3648915760483473167, guid: bf81af6d2de59194183d5493fa93ce4d,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 75
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3648915760483473167, guid: bf81af6d2de59194183d5493fa93ce4d,
         type: 3}
@@ -402,7 +412,7 @@ PrefabInstance:
     - target: {fileID: 3648915760687344202, guid: bf81af6d2de59194183d5493fa93ce4d,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 50.045
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3648915760687344202, guid: bf81af6d2de59194183d5493fa93ce4d,
         type: 3}
@@ -432,13 +442,23 @@ PrefabInstance:
     - target: {fileID: 3648915760786400806, guid: bf81af6d2de59194183d5493fa93ce4d,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 75
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3648915760786400806, guid: bf81af6d2de59194183d5493fa93ce4d,
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3648915760872593928, guid: bf81af6d2de59194183d5493fa93ce4d,
+        type: 3}
+      propertyPath: buttonText
+      value: Sign Up
+      objectReference: {fileID: 0}
+    - target: {fileID: 3648915760872593935, guid: bf81af6d2de59194183d5493fa93ce4d,
+        type: 3}
+      propertyPath: m_Name
+      value: SignUpButton
+      objectReference: {fileID: 0}
     - target: {fileID: 3648915761051373112, guid: bf81af6d2de59194183d5493fa93ce4d,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -462,7 +482,7 @@ PrefabInstance:
     - target: {fileID: 3648915761051373112, guid: bf81af6d2de59194183d5493fa93ce4d,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 45.87
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3648915761051373112, guid: bf81af6d2de59194183d5493fa93ce4d,
         type: 3}
@@ -492,7 +512,7 @@ PrefabInstance:
     - target: {fileID: 3648915761764617712, guid: bf81af6d2de59194183d5493fa93ce4d,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 75
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3648915761764617712, guid: bf81af6d2de59194183d5493fa93ce4d,
         type: 3}
@@ -608,6 +628,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: GameStartUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3902800401831846586, guid: bf81af6d2de59194183d5493fa93ce4d,
+        type: 3}
+      propertyPath: buttonText
+      value: SIGN UP
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf81af6d2de59194183d5493fa93ce4d, type: 3}

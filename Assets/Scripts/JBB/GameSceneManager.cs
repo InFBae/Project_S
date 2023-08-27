@@ -106,6 +106,10 @@ namespace JBB
             //GameStart();
         }
 
+        public override void OnLeftRoom()
+        {
+            PhotonNetwork.LoadLevel("LobbyScene");
+        }
 
         public override void OnEnable()
         {

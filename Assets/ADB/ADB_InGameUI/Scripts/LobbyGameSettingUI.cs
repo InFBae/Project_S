@@ -7,19 +7,19 @@ using UnityEngine.Events;
 
 namespace ahndabi
 {
-    public class LobbyGameSettingUI : PopUpUI
+    public class LobbyGameSettingUI : BaseUI
     {
         // 배경음, 효과음, 마우스 감도
 
         [SerializeField] AudioMixer myMixer;   // 리소스로 가져오기
 
-        private void Awake()
+        protected override void Awake()
         {
             base.Awake();
 
             buttons["ReturnButton"].onClick.AddListener(() => { Return(); });
-            buttons["ApplyButton"].onClick.AddListener(() => { Debug.Log("Apply"); });
-            myMixer = GameManager.Resource.Load<AudioMixer>("MyMixer");
+            buttons["ApplyButton"].onClick.AddListener(() => { Apply(); });
+            myMixer = GameManager.Resource.Load<AudioMixer>("Sound/MyMixer");
         }
 
         // Cancle을 위한 초기값들
@@ -57,12 +57,12 @@ namespace ahndabi
             sliders["MouseSensitivitySlider"].value = initalMouseSensitivityValue;
             sliders["BackgroundSoundSlider"].value = initalBackgroundSoundValue;
             sliders["EffectSoundSlider"].value = initalEffectSoundValue;
-            CloseUI();
+            gameObject.SetActive(false);
         }
 
         public void Apply()     // 수락버튼
         {
-            CloseUI();
+            gameObject.SetActive(false);
         }
     }
 }
