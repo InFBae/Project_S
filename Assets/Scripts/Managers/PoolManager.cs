@@ -293,6 +293,12 @@ public class PoolManager : MonoBehaviour
         }
     }
 
+    public IEnumerator ReleaseUI<T>(T instance, float delay) where T : Object
+    {
+        yield return new WaitForSeconds(delay);
+        ReleaseUI(instance);
+    }
+
     private void CreateUIPool(string key, GameObject prefab)
     {
         ObjectPool<GameObject> pool = new ObjectPool<GameObject>(
