@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18074048, g: 0.22625844, b: 0.30716327, a: 1}
+  m_IndirectSpecularColor: {r: 0.18074074, g: 0.22625889, b: 0.30716392, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -10180,6 +10180,12 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 290771708}
   m_Mesh: {fileID: 4300000, guid: 6503cabca04b973458a60a29cb639f9a, type: 3}
+--- !u!1 &296481203 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5721519844314944572, guid: 10055c0b95c998a428df1a385818b3ae,
+    type: 3}
+  m_PrefabInstance: {fileID: 2088749138}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &310066967
 GameObject:
   m_ObjectHideFlags: 0
@@ -35079,6 +35085,27 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1063226640}
   m_Mesh: {fileID: 4300000, guid: b35ede3f6b50e484dba8c82382fc7bfc, type: 3}
+--- !u!1 &1066529414 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4243693414673562213, guid: 10055c0b95c998a428df1a385818b3ae,
+    type: 3}
+  m_PrefabInstance: {fileID: 2088749138}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1066529419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1066529414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03755cafb7c1a904aa3dc89ca178bb1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chatInput: {fileID: 1724397949}
+  content: {fileID: 1999234353}
+  myPV: {fileID: 0}
 --- !u!1 &1072695574
 GameObject:
   m_ObjectHideFlags: 0
@@ -51996,6 +52023,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1721605559}
   m_Mesh: {fileID: 4300000, guid: 9cf0a2d394424a34aa138f8855ff548a, type: 3}
+--- !u!114 &1724397949 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4243693415600209698, guid: 10055c0b95c998a428df1a385818b3ae,
+    type: 3}
+  m_PrefabInstance: {fileID: 2088749138}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2da0c512f12947e489f739169773d7ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1725731419
 GameObject:
   m_ObjectHideFlags: 0
@@ -71148,6 +71187,12 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!1 &1999234353 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4243693414037496500, guid: 10055c0b95c998a428df1a385818b3ae,
+    type: 3}
+  m_PrefabInstance: {fileID: 2088749138}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2000874895
 GameObject:
   m_ObjectHideFlags: 0
@@ -87592,6 +87637,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2088749149, guid: 10055c0b95c998a428df1a385818b3ae, type: 3}
+      propertyPath: content
+      value: 
+      objectReference: {fileID: 296481203}
     - target: {fileID: 38074094351558005, guid: 10055c0b95c998a428df1a385818b3ae,
         type: 3}
       propertyPath: effectSoundSlider
