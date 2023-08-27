@@ -11363,6 +11363,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 382085556}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &382923651 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 38074094351558005, guid: 10055c0b95c998a428df1a385818b3ae,
+    type: 3}
+  m_PrefabInstance: {fileID: 2088749138}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d1bd1cde44278940ad7a0def34c486c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &385226872
 GameObject:
   m_ObjectHideFlags: 0
@@ -44687,6 +44699,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1349038956}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1349702510 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1231052386677170955, guid: 10055c0b95c998a428df1a385818b3ae,
+    type: 3}
+  m_PrefabInstance: {fileID: 2088749138}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1353949464
 GameObject:
   m_ObjectHideFlags: 0
@@ -46294,6 +46318,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1448391034}
   m_Mesh: {fileID: 4300000, guid: 1548644dae207a741bb0a02d144d8b74, type: 3}
+--- !u!114 &1453424800 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2949632208025101760, guid: 10055c0b95c998a428df1a385818b3ae,
+    type: 3}
+  m_PrefabInstance: {fileID: 2088749138}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1455216373
 GameObject:
   m_ObjectHideFlags: 0
@@ -87556,6 +87592,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 38074094351558005, guid: 10055c0b95c998a428df1a385818b3ae,
+        type: 3}
+      propertyPath: effectSoundSlider
+      value: 
+      objectReference: {fileID: 1453424800}
+    - target: {fileID: 38074094351558005, guid: 10055c0b95c998a428df1a385818b3ae,
+        type: 3}
+      propertyPath: backgroundSoundSlider
+      value: 
+      objectReference: {fileID: 2137186892}
+    - target: {fileID: 38074094351558005, guid: 10055c0b95c998a428df1a385818b3ae,
+        type: 3}
+      propertyPath: mouseSensitivitySlider
+      value: 
+      objectReference: {fileID: 1349702510}
     - target: {fileID: 1068964618855149017, guid: 10055c0b95c998a428df1a385818b3ae,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -87570,6 +87621,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMin.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1231052386677170955, guid: 10055c0b95c998a428df1a385818b3ae,
+        type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1231052386677170955, guid: 10055c0b95c998a428df1a385818b3ae,
+        type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 382923651}
+    - target: {fileID: 1231052386677170955, guid: 10055c0b95c998a428df1a385818b3ae,
+        type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: MouseSensitivityControl
+      objectReference: {fileID: 0}
+    - target: {fileID: 1231052386677170955, guid: 10055c0b95c998a428df1a385818b3ae,
+        type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: JBB.InGameSettingUI, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1231052386677170955, guid: 10055c0b95c998a428df1a385818b3ae,
+        type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 2369966221421764106, guid: 10055c0b95c998a428df1a385818b3ae,
         type: 3}
@@ -87605,6 +87681,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMin.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2949632208025101760, guid: 10055c0b95c998a428df1a385818b3ae,
+        type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 382923651}
+    - target: {fileID: 2949632208025101760, guid: 10055c0b95c998a428df1a385818b3ae,
+        type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: EffectSoundControl
+      objectReference: {fileID: 0}
+    - target: {fileID: 2949632208025101760, guid: 10055c0b95c998a428df1a385818b3ae,
+        type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: JBB.InGameSettingUI, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 4173460884171137308, guid: 10055c0b95c998a428df1a385818b3ae,
         type: 3}
@@ -87760,6 +87851,36 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4803160777229126658, guid: 10055c0b95c998a428df1a385818b3ae,
+        type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4803160777229126658, guid: 10055c0b95c998a428df1a385818b3ae,
+        type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4803160777229126658, guid: 10055c0b95c998a428df1a385818b3ae,
+        type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 382923651}
+    - target: {fileID: 4803160777229126658, guid: 10055c0b95c998a428df1a385818b3ae,
+        type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: BackGroundSoundControl
+      objectReference: {fileID: 0}
+    - target: {fileID: 4803160777229126658, guid: 10055c0b95c998a428df1a385818b3ae,
+        type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: JBB.InGameSettingUI, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4803160777229126658, guid: 10055c0b95c998a428df1a385818b3ae,
+        type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 5721519844314944575, guid: 10055c0b95c998a428df1a385818b3ae,
         type: 3}
@@ -93211,6 +93332,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2136786440}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &2137186892 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4803160777229126658, guid: 10055c0b95c998a428df1a385818b3ae,
+    type: 3}
+  m_PrefabInstance: {fileID: 2088749138}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2141034196
 GameObject:
   m_ObjectHideFlags: 0
