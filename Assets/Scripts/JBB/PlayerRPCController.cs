@@ -5,6 +5,8 @@ using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class PlayerRPCController : MonoBehaviourPun
@@ -12,10 +14,18 @@ public class PlayerRPCController : MonoBehaviourPun
     PhotonView PV;
     [SerializeField] RE_PlayerTakeDamage playerTakeDamage;
     [SerializeField] RE_GunName gun;
+    [SerializeField] GameObject killLogContent;
+    RigBuilder rb;
+    PlayerInput pInput;
+    RE_PlayerAttacker playerAttacker;
+
 
     private void Awake()
     {
         PV = GetComponent<PhotonView>();
+        rb = GetComponentInChildren<RigBuilder>();
+        pInput = GetComponent<PlayerInput>();
+        playerAttacker = GetComponent<RE_PlayerAttacker>();
     }
 
     [PunRPC]
@@ -116,12 +126,30 @@ public class PlayerRPCController : MonoBehaviourPun
                 JBB.GameSceneManager.OnKilled?.Invoke(enemyPlayer, damagedPlayer, headShot);      // 죽인사람, 죽은사람, 헤드샷 판정
                 PV.RPC("CreateKillLog", RpcTarget.All ,headShot, damagedPlayer);
 
-                PhotonNetwork.Destroy(transform.parent.parent.gameObject);
-                PhotonNetwork.Instantiate("DiePlayer", transform.position, transform.rotation);
+                rb.enabled = false;
+                pInput.enabled = false;
+                //playerAttacker.gun.OnDisable();
+                playerTakeDamage.anim.SetTrigger("Die");
+
+                StartCoroutine(DieRoutine());
+
+                playerTakeDamage.ResetHp();
+                playerAttacker.gun.ResetGun();
+                playerAttacker.RespawnGun();
+
+                //PhotonNetwork.Destroy(transform.parent.parent.gameObject);
+                //PhotonNetwork.Instantiate("DiePlayer", transform.position, transform.rotation);
                
             }
         }
-
+    }
+    IEnumerator DieRoutine()
+    {
+        yield return new WaitForSeconds(5f);
+        rb.enabled = true;
+        pInput.enabled = true;
+        playerTakeDamage.anim.SetTrigger("DieEnd");
+        transform.position = Vector3.zero;
     }
 
     IEnumerator DestroyRoutine(GameObject gameObject, float time)
