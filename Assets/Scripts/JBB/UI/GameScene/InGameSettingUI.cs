@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 namespace JBB
 {
@@ -13,10 +14,14 @@ namespace JBB
     {
         // 배경음, 효과음, 감도, Cancle, 로비로 나가기, Confirm
 
-        public static UnityEvent<float> OnMouseSensiticityControl = new UnityEvent<float>();
+        public static UnityEvent<float> OnMouseSensitivityChanged = new UnityEvent<float>();
         public static UnityEvent OnPlayerInputActive = new UnityEvent();
         [SerializeField] AudioMixer myMixer;   // 리소스로 가져오기
         [SerializeField] PlayerInput playerInput;
+
+        [SerializeField] Slider backgroundSoundSlider;
+        [SerializeField] Slider effectSoundSlider;
+        [SerializeField] Slider mouseSensitivitySlider;
 
         // Cancle을 위한 초기값들
         float initalMouseSensitivityValue;
@@ -36,9 +41,9 @@ namespace JBB
         void OnEnable()
         {
             // 시작할 때의 기본 값들을 다 저장
-            initalMouseSensitivityValue = sliders["MouseSensitivitySlider"].value;
-            initalBackgroundSoundValue = sliders["BackgroundSoundSlider"].value;
-            initalEffectSoundValue = sliders["EffectSoundSlider"].value;
+            initalMouseSensitivityValue = mouseSensitivitySlider.value;
+            initalBackgroundSoundValue = backgroundSoundSlider.value;
+            initalEffectSoundValue = effectSoundSlider.value;
 
             UnityEngine.Cursor.visible = true;
             UnityEngine.Cursor.lockState = CursorLockMode.None;
@@ -50,7 +55,7 @@ namespace JBB
             {
                 if (player.IsLocal)
                 {
-                    float volume = sliders["BackgroundSoundSlider"].value;
+                    float volume = backgroundSoundSlider.value;
                     myMixer.SetFloat("BGM", volume);
                 }
             }
@@ -62,7 +67,7 @@ namespace JBB
             {
                 if (player.IsLocal)
                 {
-                    float volume = sliders["EffectSoundSlider"].value;
+                    float volume = effectSoundSlider.value;
                     myMixer.SetFloat("SFX", volume);
 
                 }
@@ -75,7 +80,7 @@ namespace JBB
             {
                 if (player.IsLocal)
                 {
-                    OnMouseSensiticityControl?.Invoke(sliders["MouseSensitivitySlider"].value);
+                    OnMouseSensitivityChanged?.Invoke(mouseSensitivitySlider.value);
                 }
             }
         }
@@ -91,9 +96,9 @@ namespace JBB
         {
             // STart()에서 기초 값들을 다 저장해놓고 그 기초값들로 다 바꿔줌
 
-            sliders["MouseSensitivitySlider"].value = initalMouseSensitivityValue;
-            sliders["BackgroundSoundSlider"].value = initalBackgroundSoundValue;
-            sliders["EffectSoundSlider"].value = initalEffectSoundValue;
+            mouseSensitivitySlider.value = initalMouseSensitivityValue;
+            backgroundSoundSlider.value = initalBackgroundSoundValue;
+            effectSoundSlider.value = initalEffectSoundValue;
             UnityEngine.Cursor.lockState = CursorLockMode.Locked;
             OnPlayerInputActive?.Invoke();      // Player의 InputSystem을 Active해주는 이벤트
             gameObject.SetActive(false);

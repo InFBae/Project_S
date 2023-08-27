@@ -14,7 +14,7 @@ public class PlayerMover : MonoBehaviour
     [SerializeField] private float crouchSpeed;
     [SerializeField] private Camera cam;
     [SerializeField] RE_GunName gun;
-    [SerializeField] AudioClip clip;
+    public AudioSource audioSource;
 
     private LayerMask layerMask = 64;
 
@@ -40,7 +40,9 @@ public class PlayerMover : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         // ºÎµúÇûÀ» ‹š È¸Àü ¹æÁö
         rb.freezeRotation = true;
-        PV = GetComponentInParent<PhotonView>();
+        PV = GetComponent<PhotonView>();
+
+        audioSource = GetComponent<AudioSource>();
 
         StartCoroutine(MoveSoundRoutine());
     }
@@ -75,14 +77,14 @@ public class PlayerMover : MonoBehaviour
         }
         Move();
     }
-
+    
     IEnumerator MoveSoundRoutine()
     {
         while (true)
         {
             if (isMove && !isJump)
             {
-                PV.RPC("MoveSound", RpcTarget.AllViaServer);
+                PV.RPC("MoveSound", RpcTarget.AllViaServer, this.transform.position);
                 yield return new WaitForSeconds(0.3f);
             }
             else
@@ -93,9 +95,9 @@ public class PlayerMover : MonoBehaviour
     }
 
     [PunRPC]
-    public void MoveSound()
+    public void MoveSound(Vector3 position)
     {
-        AudioSource.PlayClipAtPoint(clip, this.transform.position);
+        audioSource.Play();
     }
 
 
@@ -164,7 +166,7 @@ public class PlayerMover : MonoBehaviour
         {
             zSpeed += Physics.gravity.y * Time.deltaTime;
 
-            Debug.Log("zSpeed : " + zSpeed);
+            //Debug.Log("zSpeed : " + zSpeed);
             if(IsGrounded() && zSpeed < 0)
             {
                 zSpeed = -1;
