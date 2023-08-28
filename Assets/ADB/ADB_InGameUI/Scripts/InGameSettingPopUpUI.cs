@@ -41,14 +41,8 @@ namespace ahndabi
             initalEffectSoundValue = sliders["EffectSoundSlider"].value;
         }
 
-        /*
-        public void BackGroundSoundTest(float volume)
-        {
-            myMixer.SetFloat("BGM", Mathf.Log10(volume) * 20);
-        }*/
-
         public void BacckGroundSoundControl()
-        {/*
+        {
             foreach (Photon.Realtime.Player player in PhotonNetwork.PlayerList)
             {
                 if (player.IsLocal)
@@ -56,10 +50,7 @@ namespace ahndabi
                     float volume = sliders["BackgroundSoundSlider"].value;
                     myMixer.SetFloat("BGM", volume);
                 }
-            }*/
-
-            float volume = sliders["BackgroundSoundSlider"].value;
-            myMixer.SetFloat("BGM", volume);
+            }
         }
 
         public void EffectSoundControl()
@@ -69,7 +60,6 @@ namespace ahndabi
                 if (player.IsLocal)
                 {
                     float volume = sliders["EffectSoundSlider"].value;
-                    //myMixer.SetFloat("SFX", Mathf.Log10(volume) * 20);
                     myMixer.SetFloat("SFX", volume);
 
                 }
