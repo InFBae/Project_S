@@ -20,6 +20,7 @@ namespace ahndabi
             UnityEngine.Cursor.visible = true;
             UnityEngine.Cursor.lockState = CursorLockMode.None;
             gameObject.GetComponent<PlayerInput>().enabled = false;     // Fire 되면 안됨. PlayerInput을 비활성화
+            
         }
 
         void OnPopUpUI(InputValue value)

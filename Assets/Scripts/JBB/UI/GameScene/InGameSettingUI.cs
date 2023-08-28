@@ -1,4 +1,5 @@
 using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,12 +16,14 @@ namespace JBB
 
         public static UnityEvent<float> OnMouseSensitivityChanged = new UnityEvent<float>();
         public static UnityEvent OnPlayerInputActive = new UnityEvent();
-        AudioMixer myMixer;   // 리소스로 가져오기
+        [SerializeField] AudioMixer myMixer;   // 리소스로 가져오기
         [SerializeField] PlayerInput playerInput;
 
         [SerializeField] Slider backgroundSoundSlider;
         [SerializeField] Slider effectSoundSlider;
         [SerializeField] Slider mouseSensitivitySlider;
+
+        PhotonView myPV;
 
         // Cancle을 위한 초기값들
         float initalMouseSensitivityValue;
@@ -30,6 +33,9 @@ namespace JBB
         protected override void Awake()
         {
             base.Awake();
+            backgroundSoundSlider = sliders["BackgroundSoundSlider"];
+            effectSoundSlider = sliders["EffectSoundSlider"];
+            mouseSensitivitySlider = sliders["MouseSensitivitySlider"];
             buttons["ApplyButton"].onClick.AddListener(Apply);
             buttons["CancelButton"].onClick.AddListener(Cancel);
             buttons["BackToLobbyButton"].onClick.AddListener(BackToLobby);
@@ -46,6 +52,21 @@ namespace JBB
 
             UnityEngine.Cursor.visible = true;
             UnityEngine.Cursor.lockState = CursorLockMode.None;
+
+
+            if (myPV == null)
+            {
+                PhotonView[] pvList = FindObjectsOfType<PhotonView>();
+
+                foreach (PhotonView pv in pvList)
+                {
+                    if (pv.IsMine)
+                    {
+                        myPV = pv;
+                    }
+                }
+            }
+            myPV.gameObject.GetComponent<PlayerInput>().enabled = false;
         }
 
         public void BackGroundSoundControl()
@@ -55,7 +76,7 @@ namespace JBB
                 if (player.IsLocal)
                 {
                     float volume = backgroundSoundSlider.value;
-                    myMixer.SetFloat("BGM", Mathf.Log10(volume) * 20);
+                    myMixer.SetFloat("BGM", volume);
                 }
             }
         }
@@ -67,7 +88,6 @@ namespace JBB
                 if (player.IsLocal)
                 {
                     float volume = effectSoundSlider.value;
-                    //myMixer.SetFloat("SFX", Mathf.Log10(volume) * 20);
                     myMixer.SetFloat("SFX", volume);
 
                 }
@@ -76,6 +96,8 @@ namespace JBB
 
         public void MouseSensitivityControl()
         {
+           // OnMouseSensitivityChanged?.Invoke(mouseSensitivitySlider.value);
+            
             foreach (Photon.Realtime.Player player in PhotonNetwork.PlayerList)
             {
                 if (player.IsLocal)
@@ -90,6 +112,7 @@ namespace JBB
             UnityEngine.Cursor.lockState = CursorLockMode.Locked;
             OnPlayerInputActive?.Invoke();      // Player의 InputSystem을 Active해주는 이벤트
             gameObject.SetActive(false);
+
         }
 
         public void Cancel()
