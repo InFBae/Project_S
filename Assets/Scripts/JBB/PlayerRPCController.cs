@@ -171,11 +171,11 @@ public class PlayerRPCController : MonoBehaviourPun
     {
         if (killLogContent == null)
         {
-            killLogContent = FindObjectOfType<InGameChattingUI>().GetComponent<InGameChattingUI>().content;
+            killLogContent = FindObjectOfType<KillLogUI>().GetComponent<KillLogUI>().content;
         }
         KillLogText killLogText = GameManager.Pool.GetUI(GameManager.Resource.Load<KillLogText>("UI/KillLogText"));
         killLogText.SetKillLogText(isHeadShot, killed);
-        killLogText.transform.parent = killLogContent.transform;        
+        killLogText.transform.SetParent(killLogContent.transform, false);        
         GameManager.Pool.ReleaseUI(killLogText.gameObject, 5f);
     }
 

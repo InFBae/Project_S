@@ -10,7 +10,8 @@ namespace JBB
 {
     public class KillLogUI : BaseUI
     {
-        [SerializeField] GameObject content;
+        public GameObject content;
+        public PhotonView myPV;
 
         protected override void Awake()
         {
@@ -24,8 +25,19 @@ namespace JBB
 
         public void CreateKillLog(Player killed, Player dead, bool isHeadShot)
         {
+            if (myPV == null)
+            {
+                PhotonView[] pvList = FindObjectsOfType<PhotonView>();
+                foreach (PhotonView pv in pvList)
+                {
+                    if (pv.IsMine)
+                    {
+                        myPV = pv;
+                    }
+                }
+            }
             Debug.Log($"Create KillLog {killed.GetNickname()} killed {dead.GetNickname()}");
-            
+            myPV.RPC("CreateKillLog", RpcTarget.All, isHeadShot, killed);
         }
     }
 }

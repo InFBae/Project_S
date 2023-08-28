@@ -17,7 +17,7 @@ public class ClearTextUI : BaseUI
     {
         for(int i = 0; i < rankingBoardUI.rankers.Length; i++)
         {
-            if (rankingBoardUI.rankers[i].IsLocal)
+            if (rankingBoardUI.rankers[i] != null && rankingBoardUI.rankers[i].IsLocal)
             {
                 texts["Rank"].text = (i+1).ToString();
             }
