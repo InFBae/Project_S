@@ -115,8 +115,8 @@ public class PlayerRPCController : MonoBehaviourPun
         {
             if (playerTakeDamage.Hp <= 0)
                 return;
-            //if (enemyPlayer == damagedPlayer)
-            //    return;
+            if (enemyPlayer == damagedPlayer)
+                return;
 
             Debug.Log($"{damagedPlayer.GetNickname()} TakeDamage by {enemyPlayer.GetNickname()}");
 
