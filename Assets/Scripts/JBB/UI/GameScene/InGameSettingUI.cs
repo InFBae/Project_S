@@ -17,7 +17,6 @@ namespace JBB
         public static UnityEvent<float> OnMouseSensitivityChanged = new UnityEvent<float>();
         public static UnityEvent OnPlayerInputActive = new UnityEvent();
         [SerializeField] AudioMixer myMixer;   // 리소스로 가져오기
-        [SerializeField] PlayerInput playerInput;
 
         [SerializeField] Slider backgroundSoundSlider;
         [SerializeField] Slider effectSoundSlider;
@@ -53,7 +52,6 @@ namespace JBB
             UnityEngine.Cursor.visible = true;
             UnityEngine.Cursor.lockState = CursorLockMode.None;
 
-
             if (myPV == null)
             {
                 PhotonView[] pvList = FindObjectsOfType<PhotonView>();
@@ -63,10 +61,11 @@ namespace JBB
                     if (pv.IsMine)
                     {
                         myPV = pv;
-                        myPV.gameObject.GetComponent<PlayerInput>().enabled = false;
                     }
                 }
             }
+            myPV.gameObject.GetComponent<PlayerInput>().enabled = false;
+
         }
 
         public void BackGroundSoundControl()

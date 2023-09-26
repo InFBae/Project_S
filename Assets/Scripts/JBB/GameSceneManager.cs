@@ -71,8 +71,9 @@ namespace JBB
             {
                 {"IsPlaying" , false},
                 { "GameType", "SOLO"},
-                {"GameTime", 20 },
-                {"Intrusion", false}
+                {"GameTime", 1 },
+                {"Intrusion", false},
+                {"MaxKill", 5 }
             };
 
             roomOptions.CustomRoomProperties = RoomCustomProps;
@@ -198,21 +199,18 @@ namespace JBB
 
         IEnumerator EndRoutine()
         {
-            while (true)
-            {
-                PlayerInput[] inputs = GetComponents<PlayerInput>();
-                foreach (PlayerInput input in inputs)
-                {
-                    input.enabled = false;
-                }
-                UnityEngine.Cursor.lockState = CursorLockMode.None;
+            //PlayerInput[] inputs = GetComponents<PlayerInput>();
+            //foreach (PlayerInput input in inputs)
+            //{
+            //    input.enabled = false;
+            //}
+            UnityEngine.Cursor.lockState = CursorLockMode.None;
 
-                Time.timeScale = 0f;
-                clearTextUI.gameObject.SetActive(true);
-                yield return new WaitForSecondsRealtime(2f);
-                resultUI.gameObject.SetActive(true);
-                Time.timeScale = 1f;
-            }
+            clearTextUI.gameObject.SetActive(true);
+            yield return new WaitForSecondsRealtime(2f);
+            clearTextUI.gameObject.SetActive(false);
+            resultUI.gameObject.SetActive(true);
+
         }
 
         private int PlayerLoadCount()

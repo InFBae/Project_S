@@ -19,6 +19,7 @@ public class PlayerRPCController : MonoBehaviourPun
     RigBuilder rb;
     PlayerInput pInput;
     RE_PlayerAttacker playerAttacker;
+    bool isHittable = true;
 
 
     private void Awake()
@@ -111,7 +112,7 @@ public class PlayerRPCController : MonoBehaviourPun
     [PunRPC]
     public void TakeDamage(int damage, Photon.Realtime.Player enemyPlayer, Photon.Realtime.Player damagedPlayer, bool headShot)
     {
-        if (damagedPlayer.IsLocal)
+        if (damagedPlayer.IsLocal && isHittable)
         {
             if (playerTakeDamage.Hp <= 0)
                 return;
@@ -151,7 +152,9 @@ public class PlayerRPCController : MonoBehaviourPun
     }
     IEnumerator DieRoutine()
     {
+        isHittable = false;
         yield return new WaitForSeconds(5f);
+        isHittable = true;
         rb.enabled = true;
         pInput.enabled = true;
         playerTakeDamage.anim.SetTrigger("DieEnd");
@@ -171,12 +174,12 @@ public class PlayerRPCController : MonoBehaviourPun
     {
         if (killLogContent == null)
         {
-            killLogContent = FindObjectOfType<InGameChattingUI>().GetComponent<InGameChattingUI>().content;
+            killLogContent = FindObjectOfType<KillLogUI>().GetComponent<KillLogUI>().content;
         }
         KillLogText killLogText = GameManager.Pool.GetUI(GameManager.Resource.Load<KillLogText>("UI/KillLogText"));
         killLogText.SetKillLogText(isHeadShot, killed);
-        killLogText.transform.parent = killLogContent.transform;        
-        GameManager.Pool.ReleaseUI(killLogText.gameObject, 5f);
+        killLogText.transform.SetParent(killLogContent.transform, false);
+        killLogText.StartCoroutine(killLogText.ReleaseRoutine(killLogText, 2f));
     }
 
 
