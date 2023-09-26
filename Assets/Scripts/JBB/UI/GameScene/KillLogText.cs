@@ -17,4 +17,9 @@ public class KillLogText : BaseUI
         texts["Nickname"].text = killed.GetNickname();
     }
 
+    public IEnumerator ReleaseRoutine(KillLogText text, float time)
+    {
+        yield return new WaitForSeconds(time);
+        GameManager.Pool.ReleaseUI(text);
+    }
 }
