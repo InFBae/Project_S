@@ -3767,7 +3767,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -6718,7 +6718,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -10902,6 +10902,12 @@ MonoBehaviour:
   - Type: 9
     SynchronizeType: 2
     Name: TakeDamage
+  - Type: 9
+    SynchronizeType: 2
+    Name: Die
+  - Type: 9
+    SynchronizeType: 2
+    Name: DieEnd
   m_SynchronizeLayers:
   - SynchronizeType: 2
     LayerIndex: 0
@@ -10909,6 +10915,8 @@ MonoBehaviour:
     LayerIndex: 1
   - SynchronizeType: 2
     LayerIndex: 2
+  - SynchronizeType: 2
+    LayerIndex: 3
 --- !u!1 &8990216316604627735
 GameObject:
   m_ObjectHideFlags: 0
