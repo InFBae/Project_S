@@ -96,6 +96,8 @@ namespace JBB
 
         public void MouseSensitivityControl()
         {
+           // OnMouseSensitivityChanged?.Invoke(mouseSensitivitySlider.value);
+            
             foreach (Photon.Realtime.Player player in PhotonNetwork.PlayerList)
             {
                 if (player.IsLocal)
@@ -111,6 +113,7 @@ namespace JBB
             myPV.gameObject.GetComponent<PlayerInput>().enabled = true;
 
             gameObject.SetActive(false);
+
         }
 
         public void Cancel()

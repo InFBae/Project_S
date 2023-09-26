@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -38,7 +39,16 @@ namespace JBB
                 }
                 else
                 {
-                    inGameSettingUI.gameObject.SetActive(true);
+                    foreach (Photon.Realtime.Player player in PhotonNetwork.PlayerList)
+                    {
+                        if (player.IsLocal)
+                        {
+                            inGameSettingUI.gameObject.SetActive(true);
+                            UnityEngine.Cursor.visible = true;
+                            UnityEngine.Cursor.lockState = CursorLockMode.None;
+                            //gameObject.GetComponent<PlayerInput>().enabled = false;     // Fire 되면 안됨. PlayerInput을 비활성화
+                        }
+                    }
                 }                              
             }
         }
