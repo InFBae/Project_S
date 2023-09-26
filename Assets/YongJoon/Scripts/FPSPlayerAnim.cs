@@ -120,4 +120,5 @@ public class FPSPlayerAnim : MonoBehaviour
             anim.SetBool("IsZoom", false);
         }
     }
+
 }

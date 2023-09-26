@@ -48,7 +48,7 @@ namespace JBB
             else
             {
                 // Debug Mode
-            }           
+            }
         }
 
         public override void OnConnectedToMaster()
