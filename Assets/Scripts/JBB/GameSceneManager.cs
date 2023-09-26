@@ -72,7 +72,8 @@ namespace JBB
                 {"IsPlaying" , false},
                 { "GameType", "SOLO"},
                 {"GameTime", 1 },
-                {"Intrusion", false}
+                {"Intrusion", false},
+                {"MaxKill", 5 }
             };
 
             roomOptions.CustomRoomProperties = RoomCustomProps;

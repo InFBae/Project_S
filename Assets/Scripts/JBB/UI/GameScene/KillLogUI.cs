@@ -37,7 +37,10 @@ namespace JBB
                 }
             }
             Debug.Log($"Create KillLog {killed.GetNickname()} killed {dead.GetNickname()}");
-            myPV.RPC("CreateKillLog", RpcTarget.All, isHeadShot, killed);
+            if (killed == PhotonNetwork.LocalPlayer)
+            {
+                myPV.RPC("CreateKillLog", RpcTarget.All, isHeadShot, killed);
+            }            
         }
     }
 }
