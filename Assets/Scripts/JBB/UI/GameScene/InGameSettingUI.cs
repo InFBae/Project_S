@@ -63,10 +63,10 @@ namespace JBB
                     if (pv.IsMine)
                     {
                         myPV = pv;
+                        myPV.gameObject.GetComponent<PlayerInput>().enabled = false;
                     }
                 }
             }
-            myPV.gameObject.GetComponent<PlayerInput>().enabled = false;
         }
 
         public void BackGroundSoundControl()
@@ -110,7 +110,8 @@ namespace JBB
         public void Apply()
         {
             UnityEngine.Cursor.lockState = CursorLockMode.Locked;
-            OnPlayerInputActive?.Invoke();      // Player의 InputSystem을 Active해주는 이벤트
+            myPV.gameObject.GetComponent<PlayerInput>().enabled = true;
+
             gameObject.SetActive(false);
 
         }
@@ -123,7 +124,8 @@ namespace JBB
             backgroundSoundSlider.value = initalBackgroundSoundValue;
             effectSoundSlider.value = initalEffectSoundValue;
             UnityEngine.Cursor.lockState = CursorLockMode.Locked;
-            OnPlayerInputActive?.Invoke();      // Player의 InputSystem을 Active해주는 이벤트
+            myPV.gameObject.GetComponent<PlayerInput>().enabled = true;
+
             gameObject.SetActive(false);
         }
 
@@ -143,6 +145,7 @@ namespace JBB
                 PhotonNetwork.LeaveRoom();
             }           
         }
+
     }
 }
 
