@@ -16,6 +16,7 @@ namespace JBB
         {
             base.OnEnable();
             GameManager.Instance.SceneLoadInit();
+            GameManager.Sound.Play("LobbySceneBGM", SoundManager.Sound.BGM);
         }
 
         public override void OnDisable()

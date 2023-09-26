@@ -114,6 +114,7 @@ namespace JBB
         {
             base.OnEnable();
             GameManager.Instance.SceneLoadInit();
+            GameManager.Sound.Play("GameSceneBGM", SoundManager.Sound.BGM);
 
             OnKilled.AddListener(ChangeKillDeathProperty);
         }
@@ -209,8 +210,10 @@ namespace JBB
             clearTextUI.gameObject.SetActive(true);
             yield return new WaitForSecondsRealtime(2f);
             clearTextUI.gameObject.SetActive(false);
+            PhotonNetwork.LocalPlayer.SetKillCount(0);
+            PhotonNetwork.LocalPlayer.SetDeathCount(0);
+            PhotonNetwork.LocalPlayer.SetReady(false);
             resultUI.gameObject.SetActive(true);
-
         }
 
         private int PlayerLoadCount()
