@@ -141,7 +141,7 @@ namespace JBB
                 }
                 inGameUI.InitUI();
             }  
-            if (changedProps.ContainsKey("KillCount"))
+            if (changedProps.ContainsKey("KillCount") || changedProps.ContainsKey("DeathCount"))
             {
                 if (targetPlayer == PhotonNetwork.LocalPlayer)
                 {
@@ -155,10 +155,6 @@ namespace JBB
                 {
                     StartCoroutine(EndRoutine());
                 }
-            }
-            if (changedProps.ContainsKey("DeathCount"))
-            {
-                inGameUI.UpdateKillDeathUI();
             }
         }
         public override void OnRoomPropertiesUpdate(PhotonHashtable propertiesThatChanged)
